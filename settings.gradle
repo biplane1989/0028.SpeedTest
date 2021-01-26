@@ -1,0 +1,4 @@
+include ':nettraffic'
+include ':vpncore'
+include ':app'
+rootProject.name = "0028.SpeedTest"
