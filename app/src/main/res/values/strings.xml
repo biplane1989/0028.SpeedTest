@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">0028.SpeedTest</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting_screen_tv_testing">Testing</string>
+    <string name="setting_screen_units">Units</string>
+    <string name="setting_screen_scale">Scale</string>
+    <string name="setting_screen_network_signal_scanning">Network signal scanning</string>
+    <string name="setting_screen_speedtest_title">SPEEDTEST</string>
+    <string name="setting_screen_learn_more">Help us improve our coverage maps by enabling network signal scanning in the background. Coverage data may be shared
+with third parties. <font color="#5EC7D3"><u>Learn More</u></font></string>
+    <string name="setting_screen_adchoice">Adchoice</string>
+    <string name="setting_screen_remove_ads">Remove ADS</string>
+    <string name="setting_screen_restore_purchase">Restore Purchase</string>
+    <string name="setting_screen_help">Help</string>
+    <string name="setting_screen_speedtest_help">Speedtest Help</string>
+    <string name="setting_screen_language">Language</string>
+    <string name="setting_screen_give_us_feedback">Give Us Feedback</string>
+    <string name="setting_screen_about_speedtest">About Speedtest</string>
+    <string name="setting_screen_privacy_policy">Privacy Policy</string>
+    <string name="setting_screen_terms_of_use">Terms of Use</string>
+    <string name="setting_screen_version">Version</string>
+    <string name="setting_screen_language_dialog_viet_nam">Viet Nam</string>
+    <string name="setting_screen_language_dialog_english">English</string>
+    <string name="setting_screen_language_dialog_ok">OK</string>
+    <string name="setting_screen_language_dialog_cancel">CANCEL</string>
+    <string name="setting_screen_language_dialog_language">Language</string>
+    <string name="setting_screen_mbp_s">Mbp/s</string>
+    <string name="setting_screen_mb_s">MB/s</string>
+    <string name="setting_screen_kb_s">KB/s</string>
+    <string name="setting_screen_rate_app">Rate App</string>
+    <string name="setting_screen_english">English</string>
+
 </resources>
