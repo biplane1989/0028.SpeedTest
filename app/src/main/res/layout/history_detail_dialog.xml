@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.tapi.a0028speedtest.functions.detail.viewmodel.HistoryDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        paddingTopSystemWindowInsets="@{true}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/history_fragment_bg">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/back_button"
+            android:layout_width="40dp"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/selectableItemBackground"
+            android:paddingStart="@dimen/common_padding_start_end"
+            android:scaleType="centerInside"
+            android:src="@drawable/comon_back_ic"
+            app:layout_constraintEnd_toStartOf="@id/action_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_title"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/font_roboto_bold"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/setting_screen_speedtest_title"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@id/delete_button"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/delete_button"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="?selectableItemBackground"
+            android:scaleType="center"
+            app:layout_constraintEnd_toStartOf="@id/share_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/common_delete_ic" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/share_button"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="?selectableItemBackground"
+            android:scaleType="center"
+            app:layout_constraintEnd_toStartOf="@id/vip_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/history_screen_share_ic" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/vip_button"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="?selectableItemBackground"
+            android:scaleType="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/common_ic_vip" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?actionBarSize"
+            android:background="#80363950">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/setting_bg"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="@dimen/common_padding_start_end"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:text="@string/history_info_screen_tapi_gruop"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="@id/background"
+                    app:layout_constraintTop_toTopOf="@id/background" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:textColor="#A9A9A9"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="@id/title_tv"
+                    app:layout_constraintTop_toBottomOf="@id/title_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/ping_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/history_screen_ping_ic"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/history_detail_ping"
+                    android:textColor="#C8252A"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/ping_tv"
+                    app:layout_constraintStart_toStartOf="@id/ping_tv"
+                    app:layout_constraintTop_toBottomOf="@id/date_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/ping_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="28dp"
+                    app:layout_constraintEnd_toStartOf="@id/download_tv"
+                    app:layout_constraintStart_toStartOf="@id/background"
+                    app:layout_constraintTop_toBottomOf="@id/ping_title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/ping_mbp_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/history_detail_mbps"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/ping_tv"
+                    app:layout_constraintStart_toStartOf="@id/ping_tv"
+                    app:layout_constraintTop_toBottomOf="@id/ping_tv" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/download_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/history_screen_download_ic"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/history_detail_download"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/download_tv"
+                    app:layout_constraintStart_toStartOf="@id/download_tv"
+                    app:layout_constraintTop_toTopOf="@id/ping_title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/download_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="28dp"
+                    app:layout_constraintEnd_toStartOf="@id/upload_tv"
+                    app:layout_constraintStart_toEndOf="@id/ping_tv"
+                    app:layout_constraintTop_toTopOf="@id/ping_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/download_mbp_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/history_detail_mbps"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+
+                    app:layout_constraintEnd_toEndOf="@id/download_tv"
+                    app:layout_constraintStart_toStartOf="@id/download_tv"
+                    app:layout_constraintTop_toBottomOf="@id/download_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/upload_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/history_screen_upload_ic"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/history_detail_upload"
+                    android:textColor="#FFA723"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/upload_tv"
+                    app:layout_constraintStart_toStartOf="@id/upload_tv"
+                    app:layout_constraintTop_toTopOf="@id/ping_title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/upload_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="28dp"
+                    app:layout_constraintEnd_toEndOf="@id/background"
+                    app:layout_constraintStart_toEndOf="@id/download_tv"
+                    app:layout_constraintTop_toTopOf="@id/ping_tv" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/upload_mbp_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/history_detail_mbps"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/upload_tv"
+                    app:layout_constraintStart_toStartOf="@id/upload_tv"
+                    app:layout_constraintTop_toBottomOf="@id/upload_tv" />
+
+
+                <com.tapi.a0028speedtest.ui.viewscustom.linespeedview.views.LineCharView
+                    android:id="@+id/line_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    app:layout_constraintBottom_toTopOf="@+id/connections_iv"
+                    app:layout_constraintTop_toBottomOf="@id/ping_mbp_tv"
+                    app:lv_color_line_download="@color/colorLineDownload"
+                    app:lv_color_line_upload="@color/colorLineUpload"
+                    app:lv_ratiogap="3" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/connections_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="@dimen/common_padding_start_end"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/info_history_screen_connections_ic"
+                    app:layout_constraintStart_toStartOf="@id/background"
+                    app:layout_constraintTop_toBottomOf="@id/line_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/connections_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/history_detail_connections"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/connections_iv"
+                    app:layout_constraintEnd_toStartOf="@id/connections_account_tv"
+                    app:layout_constraintStart_toEndOf="@id/connections_iv"
+                    app:layout_constraintTop_toTopOf="@id/connections_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/connections_account_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center_vertical"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/connections_iv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/connections_tv"
+                    app:layout_constraintTop_toTopOf="@id/connections_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/network_providers_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="@dimen/common_padding_start_end"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/info_history_network_providers"
+                    app:layout_constraintStart_toStartOf="@id/background"
+                    app:layout_constraintTop_toBottomOf="@id/connections_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/network_providers_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/history_detail_network_providers"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/network_providers_iv"
+                    app:layout_constraintEnd_toStartOf="@id/network_providers_account_tv"
+                    app:layout_constraintStart_toEndOf="@id/network_providers_iv"
+                    app:layout_constraintTop_toTopOf="@id/network_providers_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/network_providers_account_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center_vertical"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/network_providers_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/network_providers_tv"
+                    app:layout_constraintTop_toTopOf="@id/network_providers_tv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/user_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="@dimen/common_padding_start_end"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/info_history_screen_user"
+                    app:layout_constraintStart_toStartOf="@id/background"
+                    app:layout_constraintTop_toBottomOf="@id/network_providers_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/user_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/history_detail_user"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/user_iv"
+                    app:layout_constraintEnd_toStartOf="@id/user_account_tv"
+                    app:layout_constraintStart_toEndOf="@id/user_iv"
+                    app:layout_constraintTop_toTopOf="@id/user_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/user_account_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center_vertical"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/user_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/user_tv"
+                    app:layout_constraintTop_toTopOf="@id/user_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/location_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/history_detail_user_location"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="@id/user_tv"
+                    app:layout_constraintTop_toBottomOf="@id/user_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lat_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/history_detail_lat"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/location_tv"
+                    app:layout_constraintStart_toStartOf="@+id/location_tv"
+                    app:layout_constraintTop_toBottomOf="@id/location_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lat_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/lat_tv"
+                    app:layout_constraintStart_toEndOf="@id/lat_tv"
+                    app:layout_constraintTop_toTopOf="@id/lat_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lon_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/history_detail_lon"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/location_tv"
+                    app:layout_constraintStart_toStartOf="@+id/location_tv"
+                    app:layout_constraintTop_toBottomOf="@id/lat_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lon_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/lon_tv"
+                    app:layout_constraintStart_toEndOf="@id/lon_tv"
+                    app:layout_constraintTop_toTopOf="@id/lon_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/internal_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/history_detail_internal_ip"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/location_tv"
+                    app:layout_constraintStart_toStartOf="@+id/location_tv"
+                    app:layout_constraintTop_toBottomOf="@id/lon_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/internal_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/internal_tv"
+                    app:layout_constraintStart_toEndOf="@id/internal_tv"
+                    app:layout_constraintTop_toTopOf="@id/internal_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/external_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/history_detail_external_ip"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/location_tv"
+                    app:layout_constraintStart_toStartOf="@+id/location_tv"
+                    app:layout_constraintTop_toBottomOf="@id/internal_tv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/external_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:textColor="#5EC7D3"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/external_tv"
+                    app:layout_constraintStart_toEndOf="@id/external_tv"
+                    app:layout_constraintTop_toTopOf="@id/external_tv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
+

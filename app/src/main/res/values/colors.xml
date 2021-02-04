@@ -15,4 +15,11 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="callassistantColorBgDialog">#66000000</color>
+    <color name="history_screen_title_color">#A9A9A9</color>
+    <color name="history_screen_download_color">#A9A9A9</color>
+    <color name="history_screen_upload_color">#FFA723</color>
+    <color name="colorLineDownload">#03A9F4</color>
+    <color name="colorLineUpload">#FFEB3B</color>
+
+
 </resources>

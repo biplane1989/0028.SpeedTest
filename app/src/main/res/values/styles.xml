@@ -8,4 +8,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <declare-styleable name="LineCharView">
+        <attr name="lv_ratiogap" format="integer" />
+        <attr name="lv_ratioSmoothLine" format="integer" />
+        <attr name="lv_densityscreen" format="integer" />
+        <attr name="lv_color_line_upload" format="color" />
+        <attr name="lv_color_line_download" format="color" />
+    </declare-styleable>
 </resources>

@@ -2,7 +2,7 @@ package com.tapi.a0028speedtest.core.settting
 
 import androidx.lifecycle.LiveData
 import com.tapi.a0028speedtest.core.manager.SettingManager
-import com.tapi.a0028speedtest.core.settting.objects.DataRateUnits
+import com.tapi.a0028speedtest.database.objects.DataRateUnits
 import com.tapi.a0028speedtest.core.settting.objects.Setting
 
 class SettingManagerImpl :SettingManager{

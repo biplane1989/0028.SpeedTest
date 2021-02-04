@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.tapi.a0028speedtest.base.BaseFragment
-import com.tapi.a0028speedtest.databinding.FragmentSettingScreenBinding
+import com.tapi.a0028speedtest.databinding.SettingScreenBinding
 import com.tapi.a0028speedtest.functions.setting.dialogs.LanguageDialog
 import com.tapi.a0028speedtest.functions.setting.dialogs.LanguageDialogListener
 import com.tapi.a0028speedtest.functions.setting.viewmodels.SettingViewModel
@@ -16,7 +16,7 @@ import com.tapi.a0028speedtest.functions.setting.viewmodels.SettingViewModel
 
 class SettingScreen : BaseFragment(), LanguageDialogListener {
 
-    private var _binding: FragmentSettingScreenBinding? = null
+    private var _binding: SettingScreenBinding? = null
     private val binding get() = _binding!!
     val TAG = "giangtd"
     private val settingViewModel: SettingViewModel by viewModels()
@@ -93,7 +93,7 @@ class SettingScreen : BaseFragment(), LanguageDialogListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        _binding = FragmentSettingScreenBinding.inflate(inflater, container, false)
+        _binding = SettingScreenBinding.inflate(inflater, container, false)
         binding.viewmodel = settingViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

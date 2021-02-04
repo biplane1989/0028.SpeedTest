@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="1dp"
+        android:background="#60363950">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/type"
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toStartOf="@id/date"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/font_roboto_regular"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/download"
+            app:layout_constraintStart_toEndOf="@id/type" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/download"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/font_roboto_bold"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="#5EC7D3"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@+id/upload"
+
+            app:layout_constraintStart_toEndOf="@id/date" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/upload"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/font_roboto_bold"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="#FFA723"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@+id/arrow"
+            app:layout_constraintStart_toEndOf="@id/download" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/arrow"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/history_screen_arrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/upload" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

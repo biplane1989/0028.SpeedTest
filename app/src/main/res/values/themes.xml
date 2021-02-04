@@ -28,7 +28,7 @@
         <item name="android:windowExitAnimation">@anim/medium_fade_out</item>
     </style>
 
-    <style name="DialogGray" parent="@style/Theme.AppCompat.Light">
+    <style name="DefaultDialogTheme" parent="@style/Theme.AppCompat.Light">
         <item name="colorControlHighlight">@color/colorControlHighlight</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>

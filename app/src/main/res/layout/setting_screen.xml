@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.tapi.a0028speedtest.core.settting.objects.DataRateUnits" />
+        <import type="com.tapi.a0028speedtest.database.objects.DataRateUnits" />
 
         <import type="com.tapi.a0028speedtest.R" />
 
@@ -35,7 +35,7 @@
                 android:layout_height="?actionBarSize"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:scaleType="centerInside"
-                android:src="@mipmap/common_ic_vip"
+                android:src="@drawable/common_ic_vip"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/setting_bg"
+                android:src="@drawable/setting_bg"
                 app:layout_constraintDimensionRatio="H,1080:878"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -342,7 +342,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_bg_learn_more" />
 
@@ -362,7 +362,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_creen_restore_purchase"
+                android:src="@drawable/setting_creen_restore_purchase"
                 app:layout_constraintBottom_toBottomOf="@+id/restore_iv"
                 app:layout_constraintEnd_toEndOf="@id/restore_iv"
                 app:layout_constraintStart_toStartOf="@id/restore_iv"
@@ -384,7 +384,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_remove_ads"
+                android:src="@drawable/setting_screen_remove_ads"
                 app:layout_constraintBottom_toBottomOf="@+id/remove_iv"
                 app:layout_constraintEnd_toEndOf="@id/remove_iv"
                 app:layout_constraintStart_toStartOf="@id/remove_iv"
@@ -432,7 +432,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/speedtest_help_iv"
                 app:layout_constraintEnd_toEndOf="@id/speedtest_help_iv"
                 app:layout_constraintTop_toTopOf="@id/speedtest_help_iv" />
@@ -478,7 +478,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/language_iv"
                 app:layout_constraintEnd_toEndOf="@id/language_iv"
                 app:layout_constraintTop_toTopOf="@id/language_iv" />
@@ -512,7 +512,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/give_us_iv"
                 app:layout_constraintEnd_toEndOf="@id/give_us_iv"
                 app:layout_constraintTop_toTopOf="@id/give_us_iv" />
@@ -546,7 +546,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/about_iv"
                 app:layout_constraintEnd_toEndOf="@id/about_iv"
                 app:layout_constraintTop_toTopOf="@id/about_iv" />
@@ -580,7 +580,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/privacy_policy_iv"
                 app:layout_constraintEnd_toEndOf="@id/privacy_policy_iv"
                 app:layout_constraintTop_toTopOf="@id/privacy_policy_iv" />
@@ -614,7 +614,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/terms_iv"
                 app:layout_constraintEnd_toEndOf="@id/terms_iv"
                 app:layout_constraintTop_toTopOf="@id/terms_iv" />
@@ -648,7 +648,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/rate_iv"
                 app:layout_constraintEnd_toEndOf="@id/rate_iv"
                 app:layout_constraintTop_toTopOf="@id/rate_iv" />
@@ -692,7 +692,7 @@
                 android:layout_width="@dimen/setting_screen_iv_height"
                 android:layout_height="@dimen/setting_screen_iv_height"
                 android:scaleType="centerInside"
-                android:src="@mipmap/setting_screen_next_ic"
+                android:src="@drawable/setting_screen_next_ic"
                 app:layout_constraintBottom_toBottomOf="@id/version_iv"
                 app:layout_constraintEnd_toEndOf="@id/version_iv"
                 app:layout_constraintTop_toTopOf="@id/version_iv" />

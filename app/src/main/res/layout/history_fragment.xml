@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tapi.a0028speedtest.functions.history.HistoryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        paddingTopSystemWindowInsets="@{true}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/history_fragment_bg">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_title"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/font_roboto_bold"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/setting_screen_speedtest_title"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@id/delete_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/delete_button"
+            visibleIf="@{!viewModel.empty &amp;&amp; !viewModel.loading}"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="?selectableItemBackground"
+            android:scaleType="center"
+            app:layout_constraintEnd_toStartOf="@id/share_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/common_delete_ic" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/share_button"
+            visibleIf="@{!viewModel.empty &amp;&amp; !viewModel.loading}"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="?selectableItemBackground"
+            android:scaleType="center"
+            app:layout_constraintEnd_toStartOf="@id/vip_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/history_screen_share_ic" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/vip_button"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="?selectableItemBackground"
+            android:scaleType="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/common_ic_vip" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,1080:878"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/setting_bg"
+            app:layout_constraintTop_toBottomOf="@+id/action_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#95363950"
+            app:layout_constraintBottom_toBottomOf="@id/type_button"
+            app:layout_constraintTop_toTopOf="@id/type_button" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/type_button"
+            visibleIf="@{!viewModel.empty}"
+            android:layout_width="?actionBarSize"
+            android:layout_height="40dp"
+            android:fontFamily="@font/font_roboto_regular"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.sortType()}"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/history_screen_type"
+            android:textColor="@color/history_sort_button_selector"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@id/date_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/action_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/date_button"
+            visibleIf="@{!viewModel.empty}"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/font_roboto_regular"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.sortDate()}"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/history_screen_date"
+            android:textColor="@color/history_sort_button_selector"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/type_button"
+            app:layout_constraintEnd_toStartOf="@id/sort_download_button"
+            app:layout_constraintStart_toEndOf="@id/type_button"
+            app:layout_constraintTop_toTopOf="@id/type_button" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sort_download_button"
+            visibleIf="@{!viewModel.empty}"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:drawableStart="@drawable/history_screen_download_ic"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/font_roboto_regular"
+            android:gravity="center"
+            android:maxLines="1"
+            android:onClick="@{() -> viewModel.sortDownload()}"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/history_screen_download_type_mbps"
+            android:textColor="@color/history_sort_button_selector"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/type_button"
+            app:layout_constraintEnd_toStartOf="@id/sort_upload_button"
+            app:layout_constraintStart_toEndOf="@id/date_button"
+            app:layout_constraintTop_toTopOf="@id/type_button" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sort_upload_button"
+            visibleIf="@{!viewModel.empty}"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:drawableStart="@drawable/history_screen_upload_ic"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/font_roboto_regular"
+            android:gravity="center"
+            android:maxLines="1"
+            android:onClick="@{() -> viewModel.sortUpload()}"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/history_screen_download_type_mbps"
+            android:textColor="@color/history_sort_button_selector"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/type_button"
+            app:layout_constraintEnd_toStartOf="@id/view"
+            app:layout_constraintStart_toEndOf="@id/sort_download_button"
+            app:layout_constraintTop_toTopOf="@id/type_button" />
+
+        <View
+            android:id="@+id/view"
+            visibleIf="@{!viewModel.empty}"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@id/type_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sort_upload_button"
+            app:layout_constraintTop_toTopOf="@id/type_button" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            visibleIf="@{viewModel.loading}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/type_button" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="1dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type_button"
+            tools:listitem="@layout/history_item" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/empty_iv"
+            visibleIf="@{viewModel.empty}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/history_screen_empty_iv"
+            app:layout_constraintBottom_toTopOf="@+id/empty_txt"
+            app:layout_constraintEnd_toEndOf="@id/empty_txt"
+            app:layout_constraintStart_toStartOf="@id/empty_txt" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/empty_txt"
+            visibleIf="@{viewModel.empty}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_roboto_regular"
+            android:text="@string/hist_tory_screen_empty_text"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/type_button" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/test_start_button"
+            visibleIf="@{viewModel.empty}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/history_screen_empty_button"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="@string/history_screen_test_start"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="@id/empty_txt"
+            app:layout_constraintStart_toStartOf="@id/empty_txt"
+            app:layout_constraintTop_toBottomOf="@+id/empty_txt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

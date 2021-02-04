@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tapi.a0028speedtest.base.BaseViewModel
 import com.tapi.a0028speedtest.base.SingleLiveEvent
-import com.tapi.a0028speedtest.core.settting.objects.DataRateUnits
+import com.tapi.a0028speedtest.database.objects.DataRateUnits
 import com.tapi.a0028speedtest.util.Constances
 import com.tapi.a0028speedtest.util.ToastMessage
 

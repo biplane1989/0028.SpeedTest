@@ -3,20 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/settingScreen">
+    app:startDestination="@id/historyScreen">
 
     <fragment
         android:id="@+id/settingScreen"
         android:name="com.tapi.a0028speedtest.functions.setting.screens.SettingScreen"
         android:label="fragment_setting_screen"
-        tools:layout="@layout/fragment_setting_screen" >
-        <action
-            android:id="@+id/action_settingScreen_to_testFragment"
-            app:destination="@id/testFragment" />
-    </fragment>
+        tools:layout="@layout/setting_screen" />
     <fragment
-        android:id="@+id/testFragment"
-        android:name="com.tapi.a0028speedtest.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        android:id="@+id/historyScreen"
+        android:name="com.tapi.a0028speedtest.functions.history.screen.HistoryFragment"
+        android:label="fragment_history_screen"
+        tools:layout="@layout/history_fragment">
+    </fragment>
 </navigation>
