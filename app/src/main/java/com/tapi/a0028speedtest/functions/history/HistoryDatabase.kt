@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.tapi.a0028speedtest.database.DBHelper
 import com.tapi.a0028speedtest.database.objects.HistoryItem
 import com.tapi.a0028speedtest.database.objects.NetworkType
-import com.tapi.a0028speedtest.functions.main.objects.ConnectionType
+import com.tapi.a0028speedtest.functions.home.objects.ConnectionType
 import com.tapi.vpncore.objects.Host
 import kotlinx.coroutines.*
 

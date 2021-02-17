@@ -21,19 +21,6 @@ class HistoryViewModel : BaseViewModel() {
 
     private var convertItemJob: Job? = null
 
-//    private val _historyItems = MutableLiveData<List<HistoryItem>>()
-//    val historyItems: LiveData<List<HistoryItem>> = TransformationsUnit.map(_historyItems, _sortType) { historyItems, type ->
-//        when (type) {
-//            SortType.DATE_ASC -> historyItems?.sortedBy { it.created }
-//            SortType.DATE_DSC -> historyItems?.sortedByDescending { it.created }
-//            SortType.DOWNLOAD_ASC -> historyItems?.sortedBy { it.downloadRate }
-//            SortType.DOWNLOAD_DSC -> historyItems?.sortedByDescending { it.downloadRate }
-//            SortType.UPLOAD_ASC -> historyItems?.sortedBy { it.updateRate }
-//            SortType.UPLOAD_DSC -> historyItems?.sortedByDescending { it.updateRate }
-//            else -> historyItems?.sortedBy { it.created }
-//        } ?: emptyList()
-//    }
-
     private val _loading = MutableLiveData<Boolean>(true)
     val loading: LiveData<Boolean> get() = _loading
 

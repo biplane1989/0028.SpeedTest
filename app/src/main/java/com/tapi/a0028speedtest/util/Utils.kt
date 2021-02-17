@@ -6,7 +6,7 @@ import android.graphics.PointF
 import android.net.Uri
 import android.util.TypedValue
 import com.tapi.a0028speedtest.R
-import com.tapi.a0028speedtest.functions.main.objects.Vector
+import com.tapi.a0028speedtest.functions.home.objects.Vector
 import kotlin.math.pow
 
 object Utils {

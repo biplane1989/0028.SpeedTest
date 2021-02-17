@@ -16,6 +16,7 @@ import com.tapi.a0028speedtest.functions.history.adapter.HistoryAdapter
 import com.tapi.a0028speedtest.functions.history.dialog.HistoryDeleteDialog
 import com.tapi.a0028speedtest.functions.history.dialog.HistoryDeleteDialog.HistoryDialogListener
 import com.tapi.a0028speedtest.functions.detail.screen.HistoryDetailDialogFragment
+import com.tapi.a0028speedtest.functions.home.screen.HomeScreen
 import com.tapi.a0028speedtest.util.Utils
 
 class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListener {
@@ -62,15 +63,16 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
     }
 
     private fun setSortSelected(type: SortType) {
-        binding.typeButton.isSelected = type == SortType.TYPE_ASC
+        binding.typeButton.isSelected = type == SortType.TYPE_ASC || type == SortType.TYPE_DES
         binding.dateButton.isSelected = type == SortType.DATE_ASC || type == SortType.DATE_DSC
         binding.sortDownloadButton.isSelected = type == SortType.DOWNLOAD_ASC || type == SortType.DOWNLOAD_DSC
         binding.sortUploadButton.isSelected = type == SortType.UPLOAD_ASC || type == SortType.UPLOAD_DSC
     }
 
     private fun onItemClicked(item: HistoryItem) {
-        if(childFragmentManager.findFragmentByTag(HistoryDetailDialogFragment.TAG) == null) {
+        if (childFragmentManager.findFragmentByTag(HistoryDetailDialogFragment.TAG) == null) {
             val dialog = HistoryDetailDialogFragment.newInstance(item.id)
+            
             dialog.show(childFragmentManager, HistoryDetailDialogFragment.TAG)
         }
     }
@@ -98,5 +100,13 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
 
     override fun onOKListener() {
         viewModel.deleteAllItem()
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(): HistoryFragment {
+            val historyFragment = HistoryFragment()
+            return historyFragment
+        }
     }
 }

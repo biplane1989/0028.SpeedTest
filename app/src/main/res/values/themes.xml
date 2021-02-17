@@ -29,6 +29,8 @@
     </style>
 
     <style name="DefaultDialogTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
         <item name="colorControlHighlight">@color/colorControlHighlight</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>

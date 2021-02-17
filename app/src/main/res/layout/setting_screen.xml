@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -20,14 +21,12 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        marginTopSystemWindowInsets="@{true}">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#141D2B"
-            tools:context=".functions.setting.screens.SettingScreen">
+            android:background="@drawable/history_fragment_bg">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_vipic"
@@ -36,7 +35,6 @@
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:scaleType="centerInside"
                 android:src="@drawable/common_ic_vip"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -310,7 +308,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_roboto_regular"
-                android:onClick="@{() -> viewmodel.clickedLearnMoreButton()}"
                 android:paddingStart="30dp"
                 android:paddingTop="12dp"
                 android:paddingEnd="30dp"
@@ -329,7 +326,6 @@
                 android:background="@drawable/setting_screen_bg_textview"
                 android:fontFamily="@font/font_roboto_bold"
                 android:gravity="start|center_vertical"
-                android:onClick="@{() -> viewmodel.clickOnAdchoiceButton()}"
                 android:text="@string/setting_screen_adchoice"
                 android:textColor="#FFFFFF"
                 android:textSize="16dp"
@@ -354,7 +350,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickOnRestonePurchaseButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/adchoice_tv" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -376,7 +371,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickOnRemoveADSButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/restore_iv" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -411,7 +405,6 @@
                 android:layout_marginStart="@dimen/common_padding_start_end"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickOnSpeedTestHelpButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/help_tv" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -446,7 +439,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickOnLanguageButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/speedtest_help_iv" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -491,7 +483,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickOnGiveUsFeedbackButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/language_iv" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -525,7 +516,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickOnAboutSpeedTestButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/give_us_iv" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -559,7 +549,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickedOnPrivacyPolicyButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/about_iv" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -593,7 +582,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickedOnTermsOfUseButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/privacy_policy_iv" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -627,7 +615,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickedOnRateAppButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/terms_iv" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -661,7 +648,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_select_bg"
-                android:onClick="@{() -> viewmodel.clickedOnVersionButton()}"
                 app:layout_constraintTop_toBottomOf="@+id/rate_iv" />
 
             <androidx.appcompat.widget.AppCompatTextView

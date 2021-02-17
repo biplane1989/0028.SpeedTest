@@ -1,6 +1,6 @@
 package com.tapi.a0028speedtest.database.objects
 
-import com.tapi.a0028speedtest.functions.main.objects.ConnectionType
+import com.tapi.a0028speedtest.functions.home.objects.ConnectionType
 import com.tapi.vpncore.objects.Host
 
 enum class NetworkType{

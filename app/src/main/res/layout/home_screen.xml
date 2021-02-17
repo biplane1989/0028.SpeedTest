@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.tapi.a0028speedtest.functions.home.viewmodel.HomeButtonType" />
+
+        <variable
+            name="viewmodel"
+            type="com.tapi.a0028speedtest.functions.home.viewmodel.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        marginTopSystemWindowInsets="@{true}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".functions.home.screen.HomeScreen">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#000000"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <com.tapi.a0028speedtest.ui.home.HomeImageView
+            android:id="@+id/speedtest"
+            selected="@{viewmodel.selectLivedata}"
+            type="@{HomeButtonType.SPEEDTEST_TYPE}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?selectableItemBackground"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_screen_speed_test_unselect_ic"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toStartOf="@id/left"
+            app:layout_constraintStart_toStartOf="@id/view"
+            app:layout_constraintTop_toTopOf="@id/view" />
+
+        <View
+            android:id="@+id/left"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="#252B32"
+
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toStartOf="@id/history"
+            app:layout_constraintStart_toEndOf="@id/speedtest"
+            app:layout_constraintTop_toTopOf="@id/view" />
+
+
+        <com.tapi.a0028speedtest.ui.home.HomeImageView
+            android:id="@+id/history"
+            selected="@{viewmodel.selectLivedata}"
+            type="@{HomeButtonType.HISTORY_TYPE}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?selectableItemBackground"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_screen_history_unselect_ic"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toStartOf="@id/right"
+            app:layout_constraintStart_toEndOf="@id/left"
+            app:layout_constraintTop_toTopOf="@id/view" />
+
+        <View
+            android:id="@+id/right"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="#252B32"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toStartOf="@id/setting"
+            app:layout_constraintStart_toEndOf="@id/history"
+            app:layout_constraintTop_toTopOf="@id/view" />
+
+        <com.tapi.a0028speedtest.ui.home.HomeImageView
+            android:id="@+id/setting"
+            selected="@{viewmodel.selectLivedata}"
+            type="@{HomeButtonType.SETTING_TYPE}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?selectableItemBackground"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_screen_setting_unselect_ic"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toEndOf="@id/view"
+            app:layout_constraintStart_toEndOf="@id/right"
+            app:layout_constraintTop_toTopOf="@id/view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

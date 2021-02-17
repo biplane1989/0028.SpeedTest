@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -86,7 +87,7 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.DefaultDialogTheme)
+        setStyle(STYLE_NO_TITLE, R.style.HistoryDetailDialog)
 
     }
 
@@ -110,7 +111,7 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
                 dismiss()
             }
             binding.deleteButton -> {
-                if(childFragmentManager.findFragmentByTag(HistoryDetailDeleteDialog.TAG) == null){
+                if (childFragmentManager.findFragmentByTag(HistoryDetailDeleteDialog.TAG) == null) {
                     val dialog = HistoryDetailDeleteDialog.newInstance(this)
                     dialog.show(childFragmentManager, HistoryDetailDeleteDialog.TAG)
                 }

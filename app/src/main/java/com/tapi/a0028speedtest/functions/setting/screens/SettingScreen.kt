@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.tapi.a0028speedtest.base.BaseFragment
@@ -12,115 +13,43 @@ import com.tapi.a0028speedtest.databinding.SettingScreenBinding
 import com.tapi.a0028speedtest.functions.setting.dialogs.LanguageDialog
 import com.tapi.a0028speedtest.functions.setting.dialogs.LanguageDialogListener
 import com.tapi.a0028speedtest.functions.setting.viewmodels.SettingViewModel
+import com.tapi.a0028speedtest.util.ToastMessage
 
 
-class SettingScreen : BaseFragment(), LanguageDialogListener {
+class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListener {
 
     private var _binding: SettingScreenBinding? = null
     private val binding get() = _binding!!
     val TAG = "giangtd"
     private val settingViewModel: SettingViewModel by viewModels()
 
-    val onLearnMoreObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onLearnMoreObserver ")
-        }
-    }
-
-    val onAdchoiceObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onAdchoiceObserver ")
-        }
-    }
-
-    val onRestonePurchaseObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onRestonePurchaseObserver ")
-        }
-    }
-    val onclickOnRemoveADSObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onclickOnRemoveADSObserver ")
-        }
-    }
-
-    val onclickOnSpeedtestHelpObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onclickOnSpeedtestHelpObserver ")
-        }
-    }
-
-    val onclickOnLanguageObserver = Observer<Boolean> {
-        if (it) {
-            showLanguageDialog()
-        }
-    }
-
-    val onclickOnGiveUsFeedbackObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onclickOnGiveUsFeedbackObserver ")
-        }
-    }
-
-    val onclickOnAboutSpeedtestObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onclickOnAboutSpeedtestObserver ")
-        }
-    }
-    val onPrivacyPolicyObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onPrivacyPolicyObserver ")
-        }
-    }
-
-    val onTermsOfUseObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onTermsOfUseObserver ")
-        }
-    }
-
-    val onRateAppObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onRateAppObserver ")
-        }
-    }
-
-    val onVersionObserver = Observer<Boolean> {
-        if (it) {
-            Log.d(TAG, "onVersionObserver ")
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         _binding = SettingScreenBinding.inflate(inflater, container, false)
         binding.viewmodel = settingViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        observerData()
-
         return binding.root
-    }
-
-    private fun observerData() {
-        settingViewModel.onLearnMoreButtonClicked.observe(viewLifecycleOwner, onLearnMoreObserver)
-        settingViewModel.onAdchoiceButtonClicked.observe(viewLifecycleOwner, onAdchoiceObserver)
-        settingViewModel.onRestonePurchaseButtonClicked.observe(viewLifecycleOwner, onRestonePurchaseObserver)
-        settingViewModel.onRemoveADSButtonClicked.observe(viewLifecycleOwner, onclickOnRemoveADSObserver)
-        settingViewModel.onSpeedtestHelpButtonClicked.observe(viewLifecycleOwner, onclickOnSpeedtestHelpObserver)
-        settingViewModel.onLanguageButtonClicked.observe(viewLifecycleOwner, onclickOnLanguageObserver)
-        settingViewModel.onGiveUsFeedbackButtonClicked.observe(viewLifecycleOwner, onclickOnGiveUsFeedbackObserver)
-        settingViewModel.onAboutSpeedtestButtonClicked.observe(viewLifecycleOwner, onclickOnAboutSpeedtestObserver)
-        settingViewModel.onPrivacyPolicyButtonClicked.observe(viewLifecycleOwner, onPrivacyPolicyObserver)
-        settingViewModel.onTermsOfUseButtonClicked.observe(viewLifecycleOwner, onTermsOfUseObserver)
-        settingViewModel.onRateAppButtonClicked.observe(viewLifecycleOwner, onRateAppObserver)
-        settingViewModel.onVersionButtonClicked.observe(viewLifecycleOwner, onVersionObserver)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initListenner()
+    }
 
+    private fun initListenner() {
+        binding.learnMoreTv.setOnClickListener(this)
+        binding.adchoiceTv.setOnClickListener(this)
+        binding.restorePurcahseIv.setOnClickListener(this)
+        binding.removeAdsIv.setOnClickListener(this)
+        binding.speedtestHelpIv.setOnClickListener(this)
+        binding.languageIv.setOnClickListener(this)
+        binding.giveUsFeedbackIv.setOnClickListener(this)
+        binding.aboutIv.setOnClickListener(this)
+        binding.privacyPolicyIv.setOnClickListener(this)
+        binding.termsIv.setOnClickListener(this)
+        binding.rateIv.setOnClickListener(this)
+        binding.versionIv.setOnClickListener(this)
     }
 
     private fun showLanguageDialog() {
@@ -135,11 +64,55 @@ class SettingScreen : BaseFragment(), LanguageDialogListener {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) = SettingScreen().apply {}
+        fun newInstance(): SettingScreen {
+            val settingScreen = SettingScreen()
+            return settingScreen
+        }
     }
 
     override fun onOKListener(typeLanguage: Int) {      // ok listener Language dialog
 
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            binding.learnMoreTv -> {
+                ToastMessage.show("learnMoreTv")
+            }
+            binding.adchoiceTv -> {
+                ToastMessage.show("adchoiceTv")
+            }
+            binding.restorePurcahseIv -> {
+                ToastMessage.show("restorePurcahseIv")
+            }
+            binding.removeAdsIv -> {
+                ToastMessage.show("removeAdsIv")
+            }
+            binding.speedtestHelpIv -> {
+                ToastMessage.show("speedtestHelpIv")
+            }
+            binding.languageIv -> {
+                showLanguageDialog()
+            }
+            binding.giveUsIv -> {
+                ToastMessage.show("giveUsIv")
+            }
+            binding.aboutIv -> {
+                ToastMessage.show("aboutIv")
+            }
+            binding.privacyPolicyIv -> {
+                ToastMessage.show("privacyPolicyIv")
+            }
+            binding.termsIv -> {
+                ToastMessage.show("termsIv")
+            }
+            binding.rateIv -> {
+                ToastMessage.show("rateIv")
+            }
+            binding.versionIv -> {
+                ToastMessage.show("versionIv")
+            }
+        }
     }
 
 }

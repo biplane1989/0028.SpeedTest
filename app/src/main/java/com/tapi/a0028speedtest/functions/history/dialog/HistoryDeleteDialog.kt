@@ -7,26 +7,30 @@ import android.view.ViewGroup
 import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.base.BaseDialog
 import com.tapi.a0028speedtest.databinding.HistoryDeleteDialogBinding
+import com.tapi.a0028speedtest.functions.detail.dialog.HistoryDetailDeleteDialog
 
 class HistoryDeleteDialog : BaseDialog(), View.OnClickListener {
 
     private var _binding: HistoryDeleteDialogBinding? = null
     private val binding: HistoryDeleteDialogBinding get() = _binding!!
+    private var listener: HistoryDialogListener? = null
 
     companion object {
         val TAG = "LanguageDialog"
-        lateinit var listener: HistoryDialogListener
 
         @JvmStatic
         fun newInstance(listener: HistoryDialogListener): HistoryDeleteDialog {
-            this.listener = listener
             val dialog = HistoryDeleteDialog()
+            dialog.listener = listener
             return dialog
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = HistoryDeleteDialogBinding.inflate(inflater, container, false)
+        if (listener == null) {
+            dismiss()
+        }
         return binding.root
     }
 
@@ -53,7 +57,7 @@ class HistoryDeleteDialog : BaseDialog(), View.OnClickListener {
                 dismiss()
             }
             binding.okTv -> {
-                listener.onOKListener()
+                listener?.onOKListener()
                 dismiss()
             }
         }

@@ -17,7 +17,6 @@ class HistoryDetailDeleteDialog : BaseDialog(), View.OnClickListener {
     companion object {
         val TAG = "HistoryDetailDeleteDialog"
 
-
         @JvmStatic
         fun newInstance(listener: HistoryDetailDialogListener): HistoryDetailDeleteDialog {
             val dialog = HistoryDetailDeleteDialog()

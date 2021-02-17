@@ -7,11 +7,10 @@ import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.database.objects.HistoryItem
 import com.tapi.a0028speedtest.database.objects.NetworkType
 import com.tapi.a0028speedtest.databinding.HistoryItemBinding
-import com.tapi.a0028speedtest.functions.history.clientName
 import com.tapi.a0028speedtest.functions.history.dateCreated
 import com.tapi.a0028speedtest.functions.history.getdownloadRate
 import com.tapi.a0028speedtest.functions.history.getupdateRate
-import com.tapi.a0028speedtest.functions.main.objects.ConnectionType
+import com.tapi.a0028speedtest.functions.home.objects.ConnectionType
 
 class HistoryItemViewHolder(val binding: HistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
 

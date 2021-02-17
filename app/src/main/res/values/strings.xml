@@ -53,5 +53,23 @@ with third parties. <font color="#5EC7D3"><u>Learn More</u></font></string>
     <string name="history_detail_lon">Lon :</string>
     <string name="history_detail_internal_ip">Internal IP</string>
     <string name="history_detail_external_ip">External IP :</string>
+    <string name="home_screen_color_tab_blue">#5EC7D3</string>
+    <string name="home_screen_color_tab_white">#FFFFFF</string>
+
+    <string name="help_us_improve">Help us Improve</string>
+    <string name="did_you_like_our_app">Did you like our App?</string>
+    <string name="yes">Yes</string>
+    <string name="thank_you">Thank you!</string>
+    <string name="recommend_us_to_other_by_rating_us_n_on_app_store">Recommend us to other by rating us\n on App Store</string>
+    <string name="no_thanks">No, Thanks</string>
+    <string name="yes_rate_it_now">Yes, rate it now!</string>
+    <string name="speedtest">SPEEDTEST</string>
+    <string name="upgrade_to_premium_version">Upgrade to premium version</string>
+    <string name="no_more_annoying_ads">No more annoying Ads</string>
+    <string name="unlimited_project">Unlimited Project</string>
+    <string name="tons_of_feature_update_in_future">Tons of feature update in future</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="upgrade_now">UPGRADE NOW</string>
 
 </resources>
