@@ -6,11 +6,11 @@ import com.tapi.vpncore.objects.Host
 
 interface NetworkFetcher {
     @Throws(MyNetworkException::class)
-    fun getMyNetwork(context: Context): Host
+    suspend fun getMyNetwork(context: Context): Host
 
     @Throws(MyNetworkException::class)
-    fun getListServers(): List<Host>
+    suspend fun getListServers(): List<Host>
 
     @Throws(MyNetworkException::class)
-    fun findBestServer(servers: List<Host>): Host
+    suspend fun findBestServer(servers: List<Host>): Host
 }

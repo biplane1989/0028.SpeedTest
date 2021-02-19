@@ -47,21 +47,23 @@ class NetworkMeasureAndroidTest {
 
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val server = "speedtestkv1a.viettel.vn"
-        val uploadingUrl = "http://speedtestkv1a.viettel.vn:8080/speedtest/upload.php"
-        val downloadingUrl = "http://speedtestkv1a.viettel.vn:8080/speedtest/random2000x2000.jpg"
+        val server = "speedtestkv3b.viettel.vn"
+        val uploadingUrl = "http://speedtestkv3b.viettel.vn:8080/speedtest/upload.php"
+        val downloadingUrl = "http://speedtestkv3b.viettel.vn:8080/speedtest/random2000x2000.jpg"
 
         val networkMeasureConfig =
-                NetworkMeasureConfig(server, uploadingUrl, downloadingUrl, ConnectionType.MULTI)
+                NetworkMeasureConfig(server, uploadingUrl, downloadingUrl, ConnectionType.SINGLE)
         val networkMeasure =
                 NetworkMeasureFactory.createNetworkMeasure(appContext, networkMeasureConfig)
         val pingStatistic = networkMeasure.connect()
-        networkMeasure.testDownloadChannel()
+        var counter = 0
+        networkMeasure.testUploadChannel()
             .catch {
                 Log.d("taihhhhh", "exception")
             }
             .collect {
-            Log.d("taihhhhh", "bit rate: ${it}")
+                counter += 1
+            Log.d("taihhhhh", "counter : ${counter}")
         }
     }
 

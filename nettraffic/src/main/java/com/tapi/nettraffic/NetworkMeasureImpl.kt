@@ -114,7 +114,10 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                             if (countCompletedTimes == DEFAULT_REPEAT_TIMES_TO_MULTI_MODE) {
                                 close()
                             } else {
-                                speedTestSocket.startDownload(config.downloadingUrl)
+                                speedTestSocket.startUpload(
+                                    config.uploadingUrl,
+                                    config.sizeOfFileToUpload
+                                )
                             }
                         }
                     }
