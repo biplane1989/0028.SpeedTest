@@ -3,11 +3,10 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Customize your theme here. -->
-        <item name="colorControlHighlight">@color/colorControlHighlight</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
     </style>
+
     <declare-styleable name="LineCharView">
         <attr name="lv_ratiogap" format="integer" />
         <attr name="lv_ratioSmoothLine" format="integer" />
@@ -15,11 +14,4 @@
         <attr name="lv_color_line_upload" format="color" />
         <attr name="lv_color_line_download" format="color" />
     </declare-styleable>
-
-    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
 </resources>

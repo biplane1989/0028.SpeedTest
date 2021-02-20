@@ -14,7 +14,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".functions.home.screen.HomeScreen">
+        tools:context=".functions.home.screen.HomeScreen"
+        android:background="@drawable/bg_color"
+        paddingTopSystemWindowInsets="@{true}"
+        paddingBottomSystemWindowInsets="@{true}">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"

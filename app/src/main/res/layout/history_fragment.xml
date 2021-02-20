@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/history_fragment_bg">
+        android:background="@drawable/bg_color">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_title"
