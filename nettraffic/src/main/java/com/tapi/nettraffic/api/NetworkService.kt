@@ -3,6 +3,7 @@ package com.tapi.nettraffic.api
 import com.tapi.nettraffic.api.data.NetworkInfo
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okio.Timeout
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -30,6 +31,7 @@ abstract class CallDelegate<TIn, TOut>(
     override fun request(): Request = proxy.request()
     override fun isExecuted() = proxy.isExecuted
     override fun isCanceled() = proxy.isCanceled
+    override fun timeout(): Timeout  = proxy.timeout()
 
     abstract fun enqueueImpl(callback: Callback<TOut>)
     abstract fun cloneImpl(): Call<TOut>

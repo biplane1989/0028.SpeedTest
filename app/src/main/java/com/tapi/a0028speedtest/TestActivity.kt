@@ -1,20 +1,24 @@
 package com.tapi.a0028speedtest
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import com.tapi.nettraffic.NetworkMeasure
-import com.tapi.nettraffic.objects.DownloadChannelInfo
-import com.tapi.nettraffic.objects.PingChannelInfo
-import com.tapi.nettraffic.objects.UploadChannelInfo
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.isActive
 
 
 class TestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
         setContentView(R.layout.activity_test_setting)
+
     }
 }
