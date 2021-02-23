@@ -3,4 +3,13 @@
     <dimen name="common_padding_start_end">16dp</dimen>
     <dimen name="setting_screen_iv_height">40dp</dimen>
     <dimen name="history_screen_width_height_icon_actionbar">40dp</dimen>
+    <dimen name="d_16">16dp</dimen>
+    <dimen name="d_20">20dp</dimen>
+    <dimen name="d_25">25dp</dimen>
+    <dimen name="d_30">30dp</dimen>
+    <dimen name="d_10">10dp</dimen>
+    <dimen name="d_text_result">25dp</dimen>
+    <dimen name="d_5">5dp</dimen>
+    <dimen name="d_18">18dp</dimen>
+    <dimen name="d_02">0.2dp</dimen>
 </resources>

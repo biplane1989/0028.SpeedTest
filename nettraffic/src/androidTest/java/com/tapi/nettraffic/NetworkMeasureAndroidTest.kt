@@ -1,14 +1,11 @@
 package com.tapi.nettraffic
 
-import android.os.Build
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.tapi.nettraffic.objects.ConnectionType
 import com.tapi.nettraffic.objects.NetworkMeasureConfig
 import com.tapi.nettraffic.objects.NetworkType
 import com.tapi.nettraffic.objects.countPacketReceived
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -47,23 +44,21 @@ class NetworkMeasureAndroidTest {
 
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val server = "speedtestkv3b.viettel.vn"
-        val uploadingUrl = "http://speedtestkv3b.viettel.vn:8080/speedtest/upload.php"
-        val downloadingUrl = "http://speedtestkv3b.viettel.vn:8080/speedtest/random2000x2000.jpg"
+        val server = "speedtestkv1a.viettel.vn"
+        val uploadingUrl = "http://speedtestkv1a.viettel.vn:8080/speedtest/upload.php"
+        val downloadingUrl = "http://speedtestkv1a.viettel.vn:8080/speedtest/random2000x2000.jpg"
 
         val networkMeasureConfig =
-                NetworkMeasureConfig(server, uploadingUrl, downloadingUrl, ConnectionType.SINGLE)
+                NetworkMeasureConfig(server, uploadingUrl, downloadingUrl, ConnectionType.MULTI)
         val networkMeasure =
                 NetworkMeasureFactory.createNetworkMeasure(appContext, networkMeasureConfig)
         val pingStatistic = networkMeasure.connect()
-        var counter = 0
         networkMeasure.testUploadChannel()
             .catch {
                 Log.d("taihhhhh", "exception")
             }
             .collect {
-                counter += 1
-            Log.d("taihhhhh", "counter : ${counter}")
+            Log.d("taihhhhh", "percent ${it.percent} bit rate: ${it.rate}")
         }
     }
 

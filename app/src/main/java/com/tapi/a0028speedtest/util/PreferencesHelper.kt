@@ -7,8 +7,10 @@ import java.util.*
 object PreferencesHelper {
     private val SHARED_PREFERENCES_NAME = "speed_test_pref"
     private lateinit var sharedPreferences: SharedPreferences
+
     fun start(appContext: Context) {
-        sharedPreferences = appContext.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        sharedPreferences =
+            appContext.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
 
 

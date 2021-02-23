@@ -3,15 +3,16 @@ package com.tapi.a0028speedtest.functions.history
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tapi.a0028speedtest.database.DBHelper
-import com.tapi.a0028speedtest.database.objects.HistoryItem
-import com.tapi.a0028speedtest.database.objects.NetworkType
-import com.tapi.a0028speedtest.functions.home.objects.ConnectionType
+import com.tapi.nettraffic.objects.ConnectionType
+import com.tapi.a0028speedtest.data.History
 import com.tapi.vpncore.objects.Host
+import com.tapi.a0028speedtest.data.NetworkType
+
 import kotlinx.coroutines.*
 
 object HistoryDatabase : DBHelper {
 
-    private val _listHistoryItems = MutableLiveData<List<HistoryItem>>()
+    private val _listHistoryItems = MutableLiveData<List<History>>()
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
@@ -27,12 +28,12 @@ object HistoryDatabase : DBHelper {
             }
             val hosts = Host("aa", "sss", "ss", "ss", "fff", "djsand")
 
-            val listHistory = ArrayList<HistoryItem>()
+            val listHistory = ArrayList<History>()
 
-            listHistory.add(HistoryItem(1, hosts, hosts, 5000 * 10000 , 1000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1 * 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.MULTI))
-            listHistory.add(HistoryItem(21, hosts, hosts, 4000 * 10000, 3000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.SINGLE))
-            listHistory.add(HistoryItem(2, hosts, hosts, 6000 * 10000, 5000 * 10000, 10, floatsDownload, floatsUpload, "12345", 2 * 1000 * 60 * 60 * 24, NetworkType._2G, ConnectionType.MULTI))
-            listHistory.add(HistoryItem(3, hosts, hosts, 8000 * 10000, 6000 * 10000, 10, floatsDownload, floatsUpload, "12345", 3 * 1000 * 60 * 60 * 24, NetworkType._3G, ConnectionType.SINGLE))
+            listHistory.add(History(1, hosts, hosts, 5000 * 10000, 1000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1 * 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.MULTI))
+            listHistory.add(History(21, hosts, hosts, 4000 * 10000, 3000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.SINGLE))
+            listHistory.add(History(2, hosts, hosts, 6000 * 10000, 5000 * 10000, 10, floatsDownload, floatsUpload, "12345", 2 * 1000 * 60 * 60 * 24, NetworkType._2G, ConnectionType.MULTI))
+            listHistory.add(History(3, hosts, hosts, 8000 * 10000, 6000 * 10000, 10, floatsDownload, floatsUpload, "12345", 3 * 1000 * 60 * 60 * 24, NetworkType._3G, ConnectionType.SINGLE))
 /*        listHistory.add(HistoryItem(3, hosts, hosts, 9000 * 10000, 7000 * 10000, 10, floats, floats, "12345", System.currentTimeMillis()))
         listHistory.add(HistoryItem(4, hosts, hosts, 7000 * 10000, 4000 * 10000, 10, floats, floats, "12345", System.currentTimeMillis() + 1000 * 60 * 60 * 24))
         listHistory.add(HistoryItem(5, hosts, hosts, 1000 * 10000, 9000 * 10000, 10, floats, floats, "12345", System.currentTimeMillis() + 2 * 1000 * 60 * 60 * 24))
@@ -48,12 +49,16 @@ object HistoryDatabase : DBHelper {
         }
     }
 
-    override suspend fun saveHistory(item: HistoryItem) {
+    override suspend fun saveHistory(item: List<History>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveHistory(item: History) {
         TODO("Not yet implemented")
     }
 
     override suspend fun deleteHistory(id: Int) {
-        _listHistoryItems.value = _listHistoryItems.value?.filter { it.id !=  id}
+        _listHistoryItems.value = _listHistoryItems.value?.filter { it.id != id }
     }
 
     override suspend fun deleteAllHistory() {
@@ -62,11 +67,11 @@ object HistoryDatabase : DBHelper {
         }
     }
 
-    override fun getHistoryItems(): LiveData<List<HistoryItem>> {
+    override fun getHistoryItems(): LiveData<List<History>> {
         return _listHistoryItems
     }
 
-    override fun getHistoryItemById(id: Int): HistoryItem? {
+    override suspend fun getHistoryItemById(id: Int): History? {
         for (item in _listHistoryItems.value!!) {
             if (item.id == id) return item
         }

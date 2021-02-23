@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <import type="com.tapi.nettraffic.objects.ConnectionType" />
+
+        <variable
+            name="mainmodel"
+            type="com.tapi.a0028speedtest.functions.maintab.viewmodels.MainTabModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        paddingTopSystemWindowInsets="@{true}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/child_maintab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actionbar_tv"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="-46dp">
+
+            <View
+                android:id="@+id/view_actionbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/colorBackground"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <ImageView
+                android:id="@+id/background_bottom_iv"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_background_maintab_screen"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/background_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/setting_bg"
+                app:layout_constraintBottom_toTopOf="@id/guideline_m"
+                app:layout_constraintTop_toBottomOf="@id/view_actionbar" />
+
+            <com.tapi.a0028speedtest.ui.viewscustom.circlewaveview.CircleWaveView
+                android:id="@+id/circle_wave_view"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/background_iv"
+                app:layout_constraintLeft_toLeftOf="@id/background_iv"
+                app:layout_constraintRight_toRightOf="@id/background_iv"
+                app:layout_constraintTop_toTopOf="@id/background_iv"
+                app:pointCount="24"
+                app:pointCount2="24"
+                app:useAnimation="true" />
+
+
+            <com.tapi.a0028speedtest.ui.viewscustom.connectview.ConnectView
+                android:id="@+id/connect_view"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/background_iv"
+                app:layout_constraintLeft_toLeftOf="@id/background_iv"
+                app:layout_constraintRight_toRightOf="@id/background_iv"
+                app:layout_constraintTop_toTopOf="@id/background_iv"
+                tools:ignore="MissingConstraints" />
+
+            <com.tapi.a0028speedtest.ui.viewscustom.speedview.view.SpeedometerView
+                android:id="@+id/sp_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/background_iv"
+                app:layout_constraintLeft_toLeftOf="@id/background_iv"
+                app:layout_constraintRight_toRightOf="@id/background_iv"
+                app:layout_constraintTop_toTopOf="@id/background_iv"
+                app:sv_backgroundCircleColor="@color/whitealpha"
+                app:sv_centerCircleColor="@color/colorGrayCircleSpeedview"
+                app:sv_indicatorWidth="5dp"
+                app:sv_markColor="@color/colorMarks"
+                app:sv_markWidth="1dp"
+                app:sv_marksPadding="50dp"
+                app:sv_maxSpeed="100"
+                app:sv_pointerColor="@color/colorBlue"
+                app:sv_speedTextColor="@color/white"
+                app:sv_speedometerColor="@color/colorSpeedMeters"
+                app:sv_speedometerWidth="@dimen/d_20"
+                app:sv_textColor="@color/white"
+                app:sv_tickNumber="11"
+                app:sv_tickPadding="@dimen/d_30"
+                app:sv_tickRotation="false"
+                app:sv_tickTextFormat="INTEGER"
+                app:sv_unit="Mbps/s"
+                app:sv_unitTextColor="@color/white"
+                app:sv_withTremble="false" />
+
+            <com.tapi.a0028speedtest.ui.viewscustom.linespeedview.views.LineCharView
+                android:id="@+id/line_char"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/child_ct"
+                app:lv_color_line_download="@color/colorLineDownload"
+                app:lv_color_line_upload="@color/colorLineUpload"
+                app:lv_ratiogap="10" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/child_result"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:paddingVertical="@dimen/d_16"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="MissingConstraints">
+
+                <View
+                    android:id="@+id/view_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toStartOf="@id/view_2"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/ping_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_20"
+                    android:drawableStart="@drawable/ic_circle_ping_maintab_screen"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:text="Ping"
+                    android:textColor="@color/colorRed"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/view_2"
+                    app:layout_constraintTop_toTopOf="@id/view_1" />
+
+
+                <TextView
+                    android:id="@+id/ping_result_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:text="@{mainmodel._resultPing}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/d_text_result"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/view_2"
+                    app:layout_constraintTop_toBottomOf="@id/ping_tv" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/ms_unit_pingrate_maintab"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/view_2"
+                    app:layout_constraintTop_toBottomOf="@id/ping_result_tv" />
+
+                <View
+                    android:layout_width="@dimen/d_02"
+                    android:layout_height="@dimen/d_text_result"
+                    android:background="@color/colorGrayText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/view_2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/view_2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toStartOf="@id/view_3"
+                    app:layout_constraintStart_toEndOf="@id/view_1"
+                    tools:layout_editor_absoluteY="37dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/download_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_20"
+                    android:drawableLeft="@drawable/ic_circle_download_maintabscreen"
+                    android:drawablePadding="@dimen/d_5"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:text="Download"
+                    android:textColor="@color/colorLineDownload"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintLeft_toRightOf="@id/view_1"
+                    app:layout_constraintRight_toLeftOf="@id/view_3"
+                    app:layout_constraintTop_toTopOf="@id/view_2" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/download_result_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:text="@{mainmodel._resultDownload}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/d_text_result"
+                    app:layout_constraintLeft_toRightOf="@id/view_1"
+                    app:layout_constraintRight_toLeftOf="@id/view_3"
+                    app:layout_constraintTop_toBottomOf="@id/download_tv" />
+
+                <TextView
+                    unit_tv="@{mainmodel.unitState}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="Mbps"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintLeft_toRightOf="@id/view_1"
+                    app:layout_constraintRight_toLeftOf="@id/view_3"
+                    app:layout_constraintTop_toBottomOf="@id/ping_result_tv" />
+
+                <View
+                    android:layout_width="@dimen/d_02"
+                    android:layout_height="@dimen/d_text_result"
+                    android:background="@color/colorGrayText"
+                    android:paddingVertical="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/view_3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view_3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/view_2" />
+
+
+                <TextView
+                    android:id="@+id/upload_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_20"
+                    android:drawablePadding="@dimen/d_5"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:text="Upload"
+                    android:textColor="@color/colorLineUpload"
+                    android:textSize="@dimen/d_18"
+                    app:drawableLeftCompat="@drawable/ic_circle_upload_maintabscreen"
+                    app:layout_constraintLeft_toRightOf="@id/view_2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/view_3" />
+
+
+                <TextView
+                    android:id="@+id/upload_result_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:text="@{mainmodel._resultUpload}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/d_text_result"
+                    app:layout_constraintLeft_toRightOf="@id/view_2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/upload_tv" />
+
+                <TextView
+                    unit_tv="@{mainmodel.unitState}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="Mbps"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/d_18"
+
+                    app:layout_constraintLeft_toRightOf="@id/view_2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/upload_result_tv" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/child_ct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/d_16"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:id="@+id/connections_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/d_16"
+                    android:text="@string/tv_connections_maintab_screen"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/telecom_iv"
+                    android:layout_width="160dp"
+                    android:layout_height="?actionBarSize"
+                    app:layout_constraintTop_toBottomOf="@id/connections_tv"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/telecom_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/d_16"
+                    android:text="@string/tv_telecom_maintab_screen"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintTop_toBottomOf="@+id/connections_tv"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginLeft="@dimen/d_16"
+                    android:src="@drawable/ic_next_maintab_screen"
+                    app:layout_constraintLeft_toRightOf="@id/telecom_tv"
+                    app:layout_constraintTop_toBottomOf="@id/connections_tv"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/network_provider_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/d_16"
+                    android:text="@string/tv_network_providers_maintab_screen"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintTop_toBottomOf="@+id/telecom_tv"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/single_tv"
+                    bg_select="@{mainmodel.stateClick==ConnectionType.SINGLE}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:onClick="@{()->mainmodel.clickTvSingle()}"
+                    android:paddingEnd="@dimen/d_16"
+                    android:text="@string/tv_single_maintab_screen"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/multi_tv"
+                    tools:ignore="MissingConstraints,RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/multi_tv"
+                    bg_select="@{mainmodel.stateClick==ConnectionType.MULTI}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginEnd="@dimen/d_30"
+                    android:gravity="center"
+                    android:onClick="@{()->mainmodel.clickTvMulti()}"
+                    android:text="@string/tv_multi_maintab_screen"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintRight_toLeftOf="@+id/single_tv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/telecom_rs_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:text="Nanning"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintLeft_toLeftOf="@id/multi_tv"
+                    app:layout_constraintTop_toBottomOf="@id/multi_tv"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/network_provider_result_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/d_18"
+                    app:layout_constraintLeft_toLeftOf="@id/multi_tv"
+                    app:layout_constraintTop_toBottomOf="@id/telecom_rs_tv"
+                    tools:ignore="MissingConstraints" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/child_nointernet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/background_ivnon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/setting_bg"
+                app:layout_constraintBottom_toTopOf="@id/guideline_m_non" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No internet"
+                android:textColor="@color/white"
+                android:textSize="@dimen/d_18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_m_non"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/close_process_iv"
+            android:layout_width="@dimen/d_25"
+            android:layout_height="?actionBarSize"
+            android:layout_marginLeft="@dimen/d_16"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close_process"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/actionbar_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:layout_marginLeft="@dimen/d_10"
+            android:fontFamily="@font/font_roboto_bold"
+            android:gravity="center_vertical"
+            android:text="SPEEDTEST"
+            android:textColor="@color/white"
+            android:textSize="@dimen/d_20"
+            app:layout_constraintLeft_toRightOf="@+id/close_process_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="@dimen/d_30"
+            android:layout_height="?actionBarSize"
+            android:layout_marginRight="@dimen/d_16"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_vip_mainscreen"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

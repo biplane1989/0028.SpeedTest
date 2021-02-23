@@ -4,21 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.base.BaseDialog
-import com.tapi.a0028speedtest.database.objects.HistoryItem
 import com.tapi.a0028speedtest.databinding.HistoryDetailDialogBinding
 import com.tapi.a0028speedtest.functions.detail.viewmodel.HistoryDetailViewModel
 import com.tapi.a0028speedtest.functions.detail.dialog.HistoryDetailDeleteDialog
 import com.tapi.a0028speedtest.functions.history.dateCreated
 import com.tapi.a0028speedtest.functions.history.getdownloadRate
 import com.tapi.a0028speedtest.functions.history.getupdateRate
-import com.tapi.a0028speedtest.ui.viewscustom.linespeedview.objs.DataNetwork
 import com.tapi.a0028speedtest.util.Utils
+import com.tapi.a0028speedtest.data.History
 import kotlinx.coroutines.delay
 
 class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryDetailDeleteDialog.HistoryDetailDialogListener {
@@ -28,7 +26,7 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
 
     private val viewModel: HistoryDetailViewModel by viewModels()
 
-    val historyItemObserver = Observer<HistoryItem> {
+    val historyItemObserver = Observer<History> {
         binding.dateTv.text = it.dateCreated
         binding.pingTv.text = it.pingRate.toString()
         binding.downloadTv.text = it.getdownloadRate
@@ -47,18 +45,12 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
             var percentDownload = 0
             for (item in it.downloadTrace) {
                 percentDownload++
-                val mData = DataNetwork()
-                mData.transferRate = item
-                mData.percent = percentDownload.toFloat()
-                binding.lineView.startDrawDownload(mData)
+                binding.lineView.startDrawDownload(item, percentDownload.toFloat())
             }
             var percentUpload = 0
             for (item in it.uploadTrace) {
                 percentUpload++
-                val mData = DataNetwork()
-                mData.transferRate = item
-                mData.percent = percentUpload.toFloat()
-                binding.lineView.startDrawUpload(mData)
+                binding.lineView.startDrawUpload(item, percentUpload.toFloat())
             }
         }
 

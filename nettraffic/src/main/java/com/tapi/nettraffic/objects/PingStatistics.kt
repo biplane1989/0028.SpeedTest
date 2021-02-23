@@ -6,7 +6,6 @@ fun PingStatistics.countPacketReceived(): Int {
     return icmpPackets.size - icmpPackets.filter { it.isPacketLost() }.size
 }
 
-
 fun PingStatistics.countLostPacket(): Int {
     return icmpPackets.filter { it.isPacketLost() }.size
 }

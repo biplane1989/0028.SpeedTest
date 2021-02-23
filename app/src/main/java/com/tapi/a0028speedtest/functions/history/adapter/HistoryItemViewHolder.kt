@@ -4,17 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tapi.a0028speedtest.R
-import com.tapi.a0028speedtest.database.objects.HistoryItem
-import com.tapi.a0028speedtest.database.objects.NetworkType
 import com.tapi.a0028speedtest.databinding.HistoryItemBinding
 import com.tapi.a0028speedtest.functions.history.dateCreated
 import com.tapi.a0028speedtest.functions.history.getdownloadRate
 import com.tapi.a0028speedtest.functions.history.getupdateRate
-import com.tapi.a0028speedtest.functions.home.objects.ConnectionType
+import com.tapi.nettraffic.objects.ConnectionType
+import com.tapi.a0028speedtest.data.History
+import com.tapi.a0028speedtest.data.NetworkType
 
 class HistoryItemViewHolder(val binding: HistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: HistoryItem, listener: (HistoryItem) -> Unit) {
+    fun bind(item: History, listener: (History) -> Unit) {
         binding.date.text = item.dateCreated
         binding.download.text = item.getdownloadRate
         binding.upload.text = item.getupdateRate
@@ -26,7 +26,7 @@ class HistoryItemViewHolder(val binding: HistoryItemBinding) : RecyclerView.View
         }
     }
 
-    private fun setNetworkIcon(item: HistoryItem) {
+    private fun setNetworkIcon(item: History) {
         when (item.networkType) {
             NetworkType.WIFI -> {
                 if (item.connectionType == ConnectionType.MULTI) {

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:fitsSystemWindows="true"
+        tools:context=".functions.maintab.dialogs.NetworkProviderDialog">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/child_actionbar"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:drawableStart="@drawable/ic_exchange_server"
+                android:drawablePadding="@dimen/d_10"
+                android:fontFamily="@font/font_roboto_bold"
+                android:gravity="center"
+                android:paddingLeft="@dimen/d_16"
+                android:id="@+id/back_dialog_tv"
+                android:scaleType="centerInside"
+                android:text="CHANGE SERVER"
+                android:textColor="@color/white"
+                android:textSize="@dimen/d_18"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_seach_network_screen"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/child_search"
+            android:layout_marginTop="5.5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/view_ed"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginHorizontal="@dimen/d_16"
+                android:background="@drawable/bg_search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:textColor="@color/white"
+                android:theme="@style/editTextTheme"
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginHorizontal="72dp"
+                android:fontFamily="@font/font_roboto_regular"
+                android:hint="Search Server..."
+                android:singleLine="true"
+                android:textColorHint="@color/colorGrayText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="?attr/selectableItemBackground"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_back_network_screen"
+                app:layout_constraintLeft_toLeftOf="@id/view_ed"
+                app:layout_constraintTop_toTopOf="@+id/view_ed" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="?attr/selectableItemBackground"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_close"
+                app:layout_constraintRight_toRightOf="@id/view_ed"
+                app:layout_constraintTop_toTopOf="@+id/view_ed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:id="@+id/automatic_tv"
+            android:drawableStart="@drawable/ic_focus_network_screen"
+            android:drawablePadding="@dimen/d_10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_height="?actionBarSize"
+            android:gravity="center"
+            android:text="Select automatically"
+            android:textColor="@color/colorBlue"
+            android:textSize="18dp"
+            app:layout_constraintTop_toBottomOf="@id/child_actionbar"
+            tools:ignore="MissingConstraints" />
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?actionBarSize"
+            android:scaleType="centerCrop"
+            android:src="@drawable/setting_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:overScrollMode="never"
+            android:id="@+id/rv_network"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/automatic_tv"
+            tools:ignore="MissingConstraints"
+            tools:listitem="@layout/item_network" />
+
+        <TextView
+            android:id="@+id/empty_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_roboto_regular"
+            android:text="@string/no_server_found_dialog_network"
+            android:textColor="@color/white"
+            android:textSize="@dimen/d_16"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

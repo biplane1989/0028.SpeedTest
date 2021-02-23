@@ -30,6 +30,16 @@ with third parties. <font color="#5EC7D3"><u>Learn More</u></font></string>
     <string name="setting_screen_kb_s">KB/s</string>
     <string name="setting_screen_rate_app">Rate App</string>
     <string name="setting_screen_english">English</string>
+    <string name="tv_multi_maintab_screen">Multi</string>
+    <string name="tv_single_maintab_screen">Single</string>
+    <string name="tv_connections_maintab_screen">Connections</string>
+    <string name="tv_telecom_maintab_screen">GX-Telecom</string>
+    <string name="tv_network_providers_maintab_screen">FPT Telecom</string>
+    <string name="test_with_this_server_menuitem">Test with this server</string>
+    <string name="favorite_with_this_server_menuitem">Favorite this server</string>
+    <string name="start">START</string>
+    <string name="test_again_dialog_maintab_result">Test Again</string>
+    <string name="no_server_found_dialog_network">No server found</string>
     <string name="history_screen_type">Type</string>
     <string name="history_screen_date">Date</string>
     <string name="history_info_screen_tapi_gruop">Tapi Group</string>
@@ -71,5 +81,6 @@ with third parties. <font color="#5EC7D3"><u>Learn More</u></font></string>
     <string name="monthly">Monthly</string>
     <string name="yearly">Yearly</string>
     <string name="upgrade_now">UPGRADE NOW</string>
+    <string name="ms_unit_pingrate_maintab">Ms</string>
 
 </resources>

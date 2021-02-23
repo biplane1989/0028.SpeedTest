@@ -1,14 +1,40 @@
 package com.tapi.a0028speedtest.util
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.PointF
+import android.net.ConnectivityManager
+import android.util.Log
+import android.content.Intent
 import android.net.Uri
 import android.util.TypedValue
-import com.tapi.a0028speedtest.R
-import com.tapi.a0028speedtest.functions.home.objects.Vector
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import com.tapi.a0028speedtest.functions.main.objs.Vector
+import com.tapi.a0028speedtest.ui.viewscustom.speedview.components.Section
+import com.tapi.speedtest.ui.speedview.view.Gauge
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.util.*
 import kotlin.math.pow
+import com.tapi.a0028speedtest.R
 
+typealias OnSpeedChangeListener = (gauge: Gauge, isSpeedUp: Boolean, isByTremble: Boolean) -> Unit
+typealias OnSectionChangeListener = (previousSection: Section?, newSection: Section?) -> Unit
+typealias OnPrintTickLabelListener = (tickPosition: Int, tick: Float) -> CharSequence?
+
+
+
+fun Gauge.doOnSections(action: (section: Section) -> Unit) {
+    val sections = ArrayList(this.sections)
+    // this will also clear observers.
+    this.clearSections()
+    sections.forEach { action.invoke(it) }
+    this.addSections(sections)
+}
+
+fun getRoundAngle(a: Float, d: Float): Float {
+    return (a * .5f * 360 / (d  * Math.PI)).toFloat()
+}
 object Utils {
     fun dpToPx(context: Context, dp: Float): Int {
         return (dp * context.resources.displayMetrics.density + 0.5f).toInt()
@@ -45,6 +71,25 @@ object Utils {
         }
     }
 
+
+    fun <X, Y, Z> map(
+        sourceX: LiveData<X>,
+        sourceY: LiveData<Y>,
+        mapFunc: (x: X?, y: Y?) -> Z
+    ): LiveData<Z> {
+
+        var result = MediatorLiveData<Z>()
+        result.addSource(sourceX) {
+            result.value = mapFunc(it, sourceY.value)
+        }
+        result.addSource(sourceY) {
+            result.value = mapFunc(sourceX.value, it)
+        }
+        return result
+
+
+    }
+
     fun shareMutilpleFile(context: Context, listUri: ArrayList<Uri>, pkgName: String?) {
         val shareIntent = Intent()
         if (pkgName != null) {
@@ -56,18 +101,6 @@ object Utils {
         context.startActivity(Intent.createChooser(shareIntent, context.resources.getString(R.string.Choose_in_app_inten)))
     }
 
-    fun findYCoordinatis(oldPoint: PointF, newPoint: PointF, xPos: Float): Float {
-        //directionVector
-//        val directionVector = Vector(p2.x - p1.x, p2.y - p1.y)
-        //normalVector
-        val normalVector = Vector(x = oldPoint.y - newPoint.y, y = newPoint.x - oldPoint.x)
-        return if (((oldPoint.y - newPoint.y).toDouble()
-                .pow(2) + (newPoint.x - oldPoint.x).toDouble()
-                .pow(2)) > 0
-        ) {
-            (((normalVector.x * oldPoint.x) + (normalVector.y * oldPoint.y)) - (normalVector.x * xPos)) / normalVector.y
-        } else
-            -1f
-    }
+
 
 }

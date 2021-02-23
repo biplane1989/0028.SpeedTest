@@ -7,15 +7,21 @@ import com.tapi.nettraffic.objects.NetworkMeasureConfig
 import com.tapi.nettraffic.objects.PingStatistics
 import kotlinx.coroutines.flow.Flow
 
+data class NetworkRate(val percent: Float, val rate: Float) {
+    override fun toString(): String {
+        return "percent : $percent rate :$rate"
+    }
+}
+
 interface NetworkMeasure {
     @Throws(MyNetworkException::class)
     suspend fun connect(): PingStatistics
 
     @Throws(MyNetworkException::class)
-    fun testDownloadChannel(): Flow<Float>
+    fun testDownloadChannel(): Flow<NetworkRate>
 
     @Throws(MyNetworkException::class)
-    fun testUploadChannel(): Flow<Float>
+    fun testUploadChannel(): Flow<NetworkRate>
 
     fun getMyNetworkInfo(): MyNetworkInfo
 }

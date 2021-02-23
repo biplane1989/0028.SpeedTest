@@ -1,24 +1,23 @@
 package com.tapi.a0028speedtest.functions.history
 
-import android.annotation.SuppressLint
-import com.tapi.a0028speedtest.database.objects.DataRateUnits
-import com.tapi.a0028speedtest.database.objects.HistoryItem
-import com.tapi.a0028speedtest.database.objects.getDownloadRate
-import com.tapi.a0028speedtest.database.objects.getUpdateRate
+import com.tapi.a0028speedtest.data.DataRateUnits
+import com.tapi.a0028speedtest.data.History
+import com.tapi.a0028speedtest.data.getDownloadRate
+import com.tapi.a0028speedtest.data.getUpdateRate
 import java.text.SimpleDateFormat
 import java.util.*
 
-val HistoryItem.getdownloadRate: String
+val History.getdownloadRate: String
     get() = String.format("%.2f", getDownloadRate(DataRateUnits.MbPS))
 
 
-val HistoryItem.getupdateRate: String
+val History.getupdateRate: String
     get() = String.format("%.2f", getUpdateRate(DataRateUnits.MbPS))
 
 
-val HistoryItem.dateCreated: String
+val History.dateCreated: String
     get() = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).format(created)
 
 
-val HistoryItem.clientName: String
+val History.clientName: String
     get() = client.name

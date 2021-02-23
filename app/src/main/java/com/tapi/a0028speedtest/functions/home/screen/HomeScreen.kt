@@ -12,7 +12,6 @@ import com.tapi.a0028speedtest.base.BaseFragment
 import com.tapi.a0028speedtest.databinding.HomeScreenBinding
 import com.tapi.a0028speedtest.functions.home.adapter.HomeViewPagerAdapter
 import com.tapi.a0028speedtest.functions.home.viewmodel.HomeViewModel
-import com.tapi.a0028speedtest.functions.home.viewmodel.SelectType
 
 
 class HomeScreen : BaseFragment(), View.OnClickListener {

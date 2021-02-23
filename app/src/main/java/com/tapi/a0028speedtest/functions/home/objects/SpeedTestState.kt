@@ -3,7 +3,10 @@ package com.tapi.a0028speedtest.functions.home.objects
 enum class SpeedTestState {
     IDLE,
     CONNECTING,
-    RUNNING,
+    RUNNINGDOWNLOAD,
+    RUNNINGUPLOAD,
     NO_INTERNET,
-    DONE
+    DONE,
+    DOWNLOAD_EXCEED,
+    UPLOAD_EXCEED
 }

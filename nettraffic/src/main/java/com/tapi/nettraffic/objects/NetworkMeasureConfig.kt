@@ -1,5 +1,6 @@
 package com.tapi.nettraffic.objects
 
+
 const val DEFAULT_PING_TIMES = 4
 const val DEFAULT_SIZE_OF_FILE_TO_UPLOAD = 5000000
 const val DEFAULT_REPEAT_TIMES_TO_MULTI_MODE = 2

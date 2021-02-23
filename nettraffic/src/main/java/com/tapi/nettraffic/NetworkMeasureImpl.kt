@@ -1,6 +1,7 @@
 package com.tapi.nettraffic
 
 import android.content.Context
+import android.util.Log
 import com.tapi.nettraffic.api.NetworkService
 import com.tapi.nettraffic.api.Result
 import com.tapi.nettraffic.core.SpeedTestReport
@@ -51,16 +52,16 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
     }
 
     @ExperimentalCoroutinesApi
-    override fun testDownloadChannel(): Flow<Float> {
+    override fun testDownloadChannel(): Flow<NetworkRate> {
         if (NetUtil.isNetworkAvailable(appContext) && mMyNetworkInfo.ip.isNotEmpty()) {
             return callbackFlow {
                 val speedTestSocket = SpeedTestSocket()
                 var countCompletedTimes = 0
                 speedTestSocket.addSpeedTestListener(object : ISpeedTestListener {
                     override fun onCompletion(report: SpeedTestReport) {
-                        offer(report.getTransferRateBit().toFloat())
                         countCompletedTimes++
                         if (config.connectionType == ConnectionType.SINGLE) {
+                            offer(NetworkRate(1f, report.getTransferRateBit().toFloat()))
                             close()
                         } else {
                             if (countCompletedTimes == DEFAULT_REPEAT_TIMES_TO_MULTI_MODE) {
@@ -72,7 +73,16 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                     }
 
                     override fun onProgress(percent: Float, report: SpeedTestReport) {
-                        offer(report.getTransferRateBit().toFloat())
+                        if (config.connectionType == ConnectionType.SINGLE) {
+                            offer(NetworkRate(percent/100f, report.getTransferRateBit().toFloat()))
+                        } else {
+                            offer(
+                                NetworkRate(
+                                    (countCompletedTimes + percent / 100f) / DEFAULT_REPEAT_TIMES_TO_MULTI_MODE,
+                                    report.getTransferRateBit().toFloat()
+                                )
+                            )
+                        }
                     }
 
                     override fun onError(speedTestError: SpeedTestError, errorMessage: String) {
@@ -96,19 +106,21 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                 "test download channel failed cause no internet"
             )
         }
+
     }
 
     @ExperimentalCoroutinesApi
-    override fun testUploadChannel(): Flow<Float> {
+    override fun testUploadChannel(): Flow<NetworkRate> {
         if (NetUtil.isNetworkAvailable(appContext) && mMyNetworkInfo.ip.isNotEmpty()) {
             return callbackFlow {
                 val speedTestSocket = SpeedTestSocket()
                 var countCompletedTimes = 0
                 speedTestSocket.addSpeedTestListener(object : ISpeedTestListener {
                     override fun onCompletion(report: SpeedTestReport) {
-                        offer(report.getTransferRateBit().toFloat())
+
                         countCompletedTimes++
                         if (config.connectionType == ConnectionType.SINGLE) {
+                            offer(NetworkRate(1f, report.getTransferRateBit().toFloat()))
                             close()
                         } else {
                             if (countCompletedTimes == DEFAULT_REPEAT_TIMES_TO_MULTI_MODE) {
@@ -123,7 +135,17 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                     }
 
                     override fun onProgress(percent: Float, report: SpeedTestReport) {
-                        offer(report.getTransferRateBit().toFloat())
+
+                        if (config.connectionType == ConnectionType.SINGLE) {
+                            offer(NetworkRate(percent/100f, report.getTransferRateBit().toFloat()))
+                        } else {
+                            offer(
+                                NetworkRate(
+                                    (countCompletedTimes + percent / 100f)  / DEFAULT_REPEAT_TIMES_TO_MULTI_MODE,
+                                    report.getTransferRateBit().toFloat()
+                                )
+                            )
+                        }
                     }
 
                     override fun onError(speedTestError: SpeedTestError, errorMessage: String) {

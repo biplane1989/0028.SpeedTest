@@ -1,8 +1,14 @@
 package com.tapi.a0028speedtest.functions.history
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.tapi.a0028speedtest.base.BaseViewModel
-import com.tapi.a0028speedtest.database.objects.HistoryItem
+import com.tapi.a0028speedtest.data.History
+import com.tapi.a0028speedtest.data.NetworkType
+import com.tapi.a0028speedtest.database.DBHelper
+import com.tapi.a0028speedtest.database.DBHelperFactory
+import com.tapi.nettraffic.objects.ConnectionType
+import com.tapi.vpncore.objects.Host
 import kotlinx.coroutines.*
 
 enum class SortType {
@@ -10,14 +16,14 @@ enum class SortType {
 }
 
 class HistoryViewModel : BaseViewModel() {
-
+    private val dbHelper: DBHelper = DBHelperFactory.getDBHelper()
     private val _sortType = MutableLiveData<SortType>(SortType.TYPE_ASC)
     val sortType: LiveData<SortType> get() = _sortType
 
-    private val _listHistory = MediatorLiveData<List<HistoryItem>>()
-    val listHistory: LiveData<List<HistoryItem>> = _listHistory
+    private val _listHistory = MediatorLiveData<List<History>>()
+    val listHistory: LiveData<List<History>> = _listHistory
 
-    private val _listHistoryItem = HistoryDatabase.getHistoryItems()
+    private val _listHistoryItem = dbHelper.getHistoryItems()
 
     private var convertItemJob: Job? = null
 
@@ -29,6 +35,28 @@ class HistoryViewModel : BaseViewModel() {
     }
 
     init {
+        viewModelScope.launch {
+
+            val floatsDownload = ArrayList<Float>()
+            for (i in 1 until 100) {
+                floatsDownload.add((i * 5..i * 10).random().toFloat())
+            }
+
+            val floatsUpload = ArrayList<Float>()
+            for (i in 1 until 100) {
+                floatsUpload.add((i * 5..i * 10).random().toFloat())
+            }
+            val hosts = Host("aa", "sss", "ss", "ss", "fff", "ppppp")
+
+            val history1 = History(0,hosts, hosts, 5000 * 10000, 1000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1 * 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.MULTI)
+            val history2 = History(0, hosts, hosts, 4000 * 10000, 3000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.SINGLE)
+            val history3 = History(0, hosts, hosts, 6000 * 10000, 5000 * 10000, 10, floatsDownload, floatsUpload, "12345", 2 * 1000 * 60 * 60 * 24, NetworkType._2G, ConnectionType.MULTI)
+            val history4 = History(0, hosts, hosts, 8000 * 10000, 6000 * 10000, 10, floatsDownload, floatsUpload, "12345", 3 * 1000 * 60 * 60 * 24, NetworkType._3G, ConnectionType.SINGLE)
+
+            DBHelperFactory.getDBHelper().saveHistory(arrayListOf(history1, history2, history3, history4))
+
+        }
+
         _listHistory.addSource(_sortType) {
             convertItemJob?.cancel()
             convertItemJob = viewModelScope.launch {
@@ -68,6 +96,9 @@ class HistoryViewModel : BaseViewModel() {
                     }
                 }
             }
+            for (item in listItem) {
+                Log.d("giangtd", "item id: " + item.id)
+            }
         }
     }
 
@@ -91,7 +122,7 @@ class HistoryViewModel : BaseViewModel() {
 
     fun deleteAllItem() {
         viewModelScope.launch(Dispatchers.Default) {
-            HistoryDatabase.deleteAllHistory()
+            dbHelper.deleteAllHistory()
         }
     }
 

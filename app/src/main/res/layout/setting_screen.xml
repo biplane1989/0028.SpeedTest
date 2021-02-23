@@ -6,7 +6,7 @@
 
     <data>
 
-        <import type="com.tapi.a0028speedtest.database.objects.DataRateUnits" />
+        <import type="com.tapi.a0028speedtest.data.DataRateUnits" />
 
         <import type="com.tapi.a0028speedtest.R" />
 
@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_testting" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_units"
+                android:id="@+id/tv_units_bg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -126,7 +126,7 @@
                 android:textSize="14dp"
                 app:layout_constraintBottom_toTopOf="@id/tv_mbp_value"
                 app:layout_constraintEnd_toStartOf="@+id/tv_mb"
-                app:layout_constraintStart_toEndOf="@+id/tv_units"
+                app:layout_constraintStart_toEndOf="@+id/tv_units_bg"
                 app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
 
             <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
@@ -195,7 +195,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
                 app:layout_constraintEnd_toStartOf="@+id/tv_mbp_value"
                 app:layout_constraintStart_toStartOf="@id/iv_bg_testting"
-                app:layout_constraintTop_toBottomOf="@+id/tv_units" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_units_bg" />
 
             <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
                 android:id="@+id/tv_mbp_value"
@@ -270,7 +270,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_kb" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_network"
+                android:id="@+id/network_name"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginStart="@dimen/common_padding_start_end"
@@ -301,7 +301,7 @@
                 android:layout_marginStart="@dimen/common_padding_start_end"
                 android:layout_marginEnd="@dimen/common_padding_start_end"
                 android:background="@drawable/setting_screen_bg_view"
-                app:layout_constraintTop_toBottomOf="@+id/tv_network" />
+                app:layout_constraintTop_toBottomOf="@+id/network_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/learn_more_tv"

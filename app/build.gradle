@@ -16,7 +16,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,6 +35,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 }
 
@@ -62,9 +63,14 @@ dependencies {
     // room db
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+
 
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
 
 }

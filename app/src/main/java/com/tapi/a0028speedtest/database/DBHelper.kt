@@ -1,13 +1,13 @@
 package com.tapi.a0028speedtest.database
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import com.tapi.a0028speedtest.database.objects.HistoryItem
+import com.tapi.a0028speedtest.data.History
 
 interface DBHelper {
-    suspend fun saveHistory(item: HistoryItem)
+    suspend fun saveHistory(item: History)
+    suspend fun saveHistory(item: List<History>)
     suspend fun deleteHistory(id: Int)
     suspend fun deleteAllHistory()
-    fun getHistoryItems(): LiveData<List<HistoryItem>>
-    fun getHistoryItemById(id: Int): HistoryItem?
+    fun getHistoryItems(): LiveData<List<History>>
+    suspend fun getHistoryItemById(id: Int): History?
 }

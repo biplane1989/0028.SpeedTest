@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_test"
+    app:startDestination="@id/mainTabScreen">
+
+    <fragment
+        android:id="@+id/mainTabScreen"
+        android:name="com.tapi.a0028speedtest.functions.maintab.screens.MainTabScreen"
+        android:label="MainTabScreen"
+        tools:layout="@layout/main_tab_screen"/>
+</navigation>

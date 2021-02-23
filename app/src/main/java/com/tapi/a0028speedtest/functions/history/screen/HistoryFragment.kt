@@ -7,17 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.tapi.a0028speedtest.base.BaseFragment
-import com.tapi.a0028speedtest.database.objects.HistoryItem
 import com.tapi.a0028speedtest.databinding.HistoryFragmentBinding
-import com.tapi.a0028speedtest.functions.detail.dialog.HistoryDetailDeleteDialog
 import com.tapi.a0028speedtest.functions.history.HistoryViewModel
 import com.tapi.a0028speedtest.functions.history.SortType
 import com.tapi.a0028speedtest.functions.history.adapter.HistoryAdapter
 import com.tapi.a0028speedtest.functions.history.dialog.HistoryDeleteDialog
 import com.tapi.a0028speedtest.functions.history.dialog.HistoryDeleteDialog.HistoryDialogListener
 import com.tapi.a0028speedtest.functions.detail.screen.HistoryDetailDialogFragment
-import com.tapi.a0028speedtest.functions.home.screen.HomeScreen
 import com.tapi.a0028speedtest.util.Utils
+import com.tapi.a0028speedtest.data.History
 
 class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListener {
 
@@ -69,7 +67,7 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
         binding.sortUploadButton.isSelected = type == SortType.UPLOAD_ASC || type == SortType.UPLOAD_DSC
     }
 
-    private fun onItemClicked(item: HistoryItem) {
+    private fun onItemClicked(item: History) {
         if (childFragmentManager.findFragmentByTag(HistoryDetailDialogFragment.TAG) == null) {
             val dialog = HistoryDetailDialogFragment.newInstance(item.id)
             
@@ -91,9 +89,7 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
             binding.shareButton -> {
                 Utils.shareFileAudio(requireContext(), "tomato", null)          // share data
             }
-
             binding.testStartButton -> {
-
             }
         }
     }

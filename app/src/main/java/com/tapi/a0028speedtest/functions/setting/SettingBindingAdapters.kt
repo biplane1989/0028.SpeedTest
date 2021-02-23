@@ -10,5 +10,6 @@ import com.tapi.a0028speedtest.ui.setting.DataRateUnitView
 
 @BindingAdapter(value = ["is_selected"])
 fun DataRateUnitView.setSelected(isSelected: Boolean) {
+    Log.d("001", "isSelected: " + isSelected)
     this.background = if (isSelected) ContextCompat.getDrawable(this.context, R.drawable.setting_screen_bg_speed_tv) else null
 }
