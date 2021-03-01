@@ -8,15 +8,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.base.BaseFragment
 import com.tapi.a0028speedtest.databinding.SettingScreenBinding
+import com.tapi.a0028speedtest.functions.common.ThankDialog
+import com.tapi.a0028speedtest.functions.common.VipDialogFragment
+import com.tapi.a0028speedtest.functions.detail.dialog.HistoryDetailDeleteDialog
 import com.tapi.a0028speedtest.functions.setting.dialogs.LanguageDialog
 import com.tapi.a0028speedtest.functions.setting.dialogs.LanguageDialogListener
 import com.tapi.a0028speedtest.functions.setting.viewmodels.SettingViewModel
+import com.tapi.a0028speedtest.util.PreferencesHelper
 import com.tapi.a0028speedtest.util.ToastMessage
+import com.tapi.a0028speedtest.util.Utils
+import java.util.*
 
 
-class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListener {
+class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListener, VipDialogFragment.VipDialogListener, ThankDialog.ThankDialogListener {
 
     private var _binding: SettingScreenBinding? = null
     private val binding get() = _binding!!
@@ -35,13 +42,18 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListenner()
+        if (Utils.getDefaultLanguage().equals("vi")) {
+            binding.languageTv.text = resources.getString(R.string.setting_screen_language_dialog_viet_nam)
+        } else {
+            binding.languageTv.text = resources.getString(R.string.setting_screen_language_dialog_english)
+        }
     }
 
     private fun initListenner() {
         binding.learnMoreTv.setOnClickListener(this)
         binding.adchoiceTv.setOnClickListener(this)
-        binding.restorePurcahseIv.setOnClickListener(this)
-        binding.removeAdsIv.setOnClickListener(this)
+        binding.restoreIv.setOnClickListener(this)
+        binding.removeIv.setOnClickListener(this)
         binding.speedtestHelpIv.setOnClickListener(this)
         binding.languageIv.setOnClickListener(this)
         binding.giveUsFeedbackIv.setOnClickListener(this)
@@ -50,6 +62,7 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
         binding.termsIv.setOnClickListener(this)
         binding.rateIv.setOnClickListener(this)
         binding.versionIv.setOnClickListener(this)
+        binding.ivVipic.setOnClickListener(this)
     }
 
     private fun showLanguageDialog() {
@@ -71,7 +84,22 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
     }
 
     override fun onOKListener(typeLanguage: Int) {      // ok listener Language dialog
-
+        when(typeLanguage){
+            LanguageDialog.ENGLISH_TYPE->{
+                PreferencesHelper.putString(PreferencesHelper.APP_LANGUAGE, "en")
+                val myLocale = Locale("en")
+                Utils.updateLocale(requireContext(), myLocale)
+                binding.languageTv.text = resources.getString(R.string.setting_screen_language_dialog_english)
+                requireActivity().recreate()
+            }
+            LanguageDialog.VIET_NAM_TYPE->{
+                PreferencesHelper.putString(PreferencesHelper.APP_LANGUAGE, "vi")
+                val myLocale = Locale("vi")
+                Utils.updateLocale(requireContext(), myLocale)
+                binding.languageTv.text = resources.getString(R.string.setting_screen_language_dialog_viet_nam)
+                requireActivity().recreate()
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -82,10 +110,13 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
             binding.adchoiceTv -> {
                 ToastMessage.show("adchoiceTv")
             }
-            binding.restorePurcahseIv -> {
-                ToastMessage.show("restorePurcahseIv")
+            binding.restoreIv -> {
+                if (childFragmentManager.findFragmentByTag(VipDialogFragment.TAG) == null) {
+                    val dialog = VipDialogFragment(this)
+                    dialog.show(childFragmentManager, VipDialogFragment.TAG)
+                }
             }
-            binding.removeAdsIv -> {
+            binding.removeIv -> {
                 ToastMessage.show("removeAdsIv")
             }
             binding.speedtestHelpIv -> {
@@ -108,11 +139,36 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
             }
             binding.rateIv -> {
                 ToastMessage.show("rateIv")
+                if (childFragmentManager.findFragmentByTag(ThankDialog.TAG) == null) {
+                    val dialog = ThankDialog(this)
+                    dialog.show(childFragmentManager, ThankDialog.TAG)
+                }
             }
             binding.versionIv -> {
                 ToastMessage.show("versionIv")
             }
+            binding.ivVipic -> {
+                if (childFragmentManager.findFragmentByTag(VipDialogFragment.TAG) == null) {
+                    val dialog = VipDialogFragment(this)
+                    dialog.show(childFragmentManager, VipDialogFragment.TAG)
+                }
+            }
         }
+    }
+
+    //todo
+    override fun actionUpgate() {
+        Log.d(TAG, "actionUpgate: vipdialogFragment")
+    }
+
+    //todo
+    override fun actionYes() {
+        Log.d(TAG, "actionUpgate: actionYes")
+    }
+
+    //todo
+    override fun actionNo() {
+        Log.d(TAG, "actionUpgate: actionNo")
     }
 
 }

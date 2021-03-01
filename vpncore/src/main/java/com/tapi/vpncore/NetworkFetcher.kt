@@ -1,8 +1,8 @@
 package com.tapi.vpncore
 
 import android.content.Context
-import com.example.testretrofill2.server.Server
 import com.tapi.vpncore.exceptions.MyNetworkException
+import com.tapi.vpncore.listserver.Server
 import com.tapi.vpncore.objects.Host
 
 interface NetworkFetcher {

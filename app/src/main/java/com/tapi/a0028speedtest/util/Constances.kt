@@ -1,8 +1,13 @@
 package com.tapi.a0028speedtest.util
 
+import android.accounts.NetworkErrorException
+
 object Constances {
 
-    val SETTING_MBP_VALUE_100 = 1001
+    val INTENT_KEY_SERVER="INTENT_KEY_SERVER"
+    val NETWORK_PROVIDER_FAVORITE = "NETWORK_PROVIDER_FAVORITE"
+
+    val SETTING_MBP_VALUE_100 = 100
     val SETTING_MBP_VALUE_500 = 500
     val SETTING_MBP_VALUE_1000 = 1000
 

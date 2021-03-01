@@ -6,7 +6,5 @@ enum class SpeedTestState {
     RUNNINGDOWNLOAD,
     RUNNINGUPLOAD,
     NO_INTERNET,
-    DONE,
-    DOWNLOAD_EXCEED,
-    UPLOAD_EXCEED
+    DONE
 }

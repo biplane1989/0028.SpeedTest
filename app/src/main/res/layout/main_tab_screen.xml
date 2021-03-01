@@ -15,7 +15,6 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        paddingTopSystemWindowInsets="@{true}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground">
@@ -104,7 +103,6 @@
                 app:sv_markColor="@color/colorMarks"
                 app:sv_markWidth="1dp"
                 app:sv_marksPadding="50dp"
-                app:sv_maxSpeed="100"
                 app:sv_pointerColor="@color/colorBlue"
                 app:sv_speedTextColor="@color/white"
                 app:sv_speedometerColor="@color/colorSpeedMeters"
@@ -156,7 +154,7 @@
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center"
-                    android:text="Ping"
+                    android:text="@string/ping_result_maintab_screen"
                     android:textColor="@color/colorRed"
                     android:textSize="@dimen/d_18"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -170,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/d_16"
                     android:fontFamily="@font/font_roboto_bold"
-                    android:text="@{mainmodel._resultPing}"
+                    android:text="@{mainmodel.resultPing}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/d_text_result"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -215,7 +213,7 @@
                     android:drawablePadding="@dimen/d_5"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center"
-                    android:text="Download"
+                    android:text="@string/download_maintab_screen"
                     android:textColor="@color/colorLineDownload"
                     android:textSize="@dimen/d_18"
                     app:layout_constraintLeft_toRightOf="@id/view_1"
@@ -229,7 +227,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/d_16"
                     android:fontFamily="@font/font_roboto_bold"
-                    android:text="@{mainmodel._resultDownload}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/d_text_result"
                     app:layout_constraintLeft_toRightOf="@id/view_1"
@@ -237,12 +234,12 @@
                     app:layout_constraintTop_toBottomOf="@id/download_tv" />
 
                 <TextView
-                    unit_tv="@{mainmodel.unitState}"
+                    unit_tv="@{mainmodel.settingValue.testingUnits}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/d_16"
+                    android:id="@+id/download_rateunit_tv"
                     android:fontFamily="@font/font_roboto_regular"
-                    android:text="Mbps"
                     android:textColor="@color/colorGrayText"
                     android:textSize="@dimen/d_18"
                     app:layout_constraintLeft_toRightOf="@id/view_1"
@@ -274,7 +271,7 @@
                     android:drawablePadding="@dimen/d_5"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center"
-                    android:text="Upload"
+                    android:text="@string/upload_result_maintabscreen"
                     android:textColor="@color/colorLineUpload"
                     android:textSize="@dimen/d_18"
                     app:drawableLeftCompat="@drawable/ic_circle_upload_maintabscreen"
@@ -289,7 +286,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/d_16"
                     android:fontFamily="@font/font_roboto_bold"
-                    android:text="@{mainmodel._resultUpload}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/d_text_result"
                     app:layout_constraintLeft_toRightOf="@id/view_2"
@@ -297,15 +293,13 @@
                     app:layout_constraintTop_toBottomOf="@id/upload_tv" />
 
                 <TextView
-                    unit_tv="@{mainmodel.unitState}"
+                    unit_tv="@{mainmodel.settingValue.testingUnits}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/d_16"
                     android:fontFamily="@font/font_roboto_regular"
-                    android:text="Mbps"
                     android:textColor="@color/colorGrayText"
                     android:textSize="@dimen/d_18"
-
                     app:layout_constraintLeft_toRightOf="@id/view_2"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/upload_result_tv" />
@@ -407,7 +401,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="?actionBarSize"
                     android:gravity="center"
-                    android:text="Nanning"
+                    android:text="@string/nanning_maintab_screen"
                     android:textColor="@color/colorGrayText"
                     android:textSize="@dimen/d_18"
                     app:layout_constraintLeft_toLeftOf="@id/multi_tv"
@@ -448,7 +442,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="No internet"
+                android:text="@string/no_internet_maintab_screen"
                 android:textColor="@color/white"
                 android:textSize="@dimen/d_18"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -481,7 +475,7 @@
             android:layout_marginLeft="@dimen/d_10"
             android:fontFamily="@font/font_roboto_bold"
             android:gravity="center_vertical"
-            android:text="SPEEDTEST"
+            android:text="@string/speedtest_actionbar_text_maintabscreen"
             android:textColor="@color/white"
             android:textSize="@dimen/d_20"
             app:layout_constraintLeft_toRightOf="@+id/close_process_iv"

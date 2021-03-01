@@ -29,6 +29,10 @@
     <color name="colorYellowCenter4">#FFA800</color>
     <color name="colorYellowCenter5">#F9CF30</color>
 
+    <color name="colorYellowUpdate1">#FFD068</color>
+    <color name="colorYellowUpdate2">#FFBF49</color>
+    <color name="colorYellowUpdate3">#FF9900</color>
+
     <color name="materialRed">#f44336</color>
     <color name="materialPink">#E91E63</color>
     <color name="materialPurple">#9C27B0</color>
@@ -36,7 +40,7 @@
     <color name="materialIndigo">#3F51B5</color>
     <color name="materialBlue">#2196F3</color>
     <color name="colorBgFragment">#141D2B</color>
-    <color name="colorBgBtnVip">#201E36</color>
+    <color name="colorBgBtnVip">#222222</color>
 
     <color name="colorBlueText">#00FFF0</color>
     <color name="colorBlue">#7DF6FF</color>

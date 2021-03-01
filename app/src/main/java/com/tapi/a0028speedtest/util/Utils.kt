@@ -5,10 +5,12 @@ import android.graphics.PointF
 import android.net.ConnectivityManager
 import android.util.Log
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.util.TypedValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.tapi.a0028speedtest.functions.main.objs.Vector
 import com.tapi.a0028speedtest.ui.viewscustom.speedview.components.Section
 import com.tapi.speedtest.ui.speedview.view.Gauge
@@ -71,12 +73,42 @@ object Utils {
         }
     }
 
+    fun getIPAddress(useIPv4: Boolean): String {
+        try {
+            val interfaces: List<NetworkInterface> =
+                Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (intf in interfaces) {
+                val addrs: List<InetAddress> = Collections.list(intf.inetAddresses)
+                for (addr in addrs) {
+                    if (!addr.isLoopbackAddress) {
+                        val sAddr = addr.hostAddress
+                        //boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+                        val isIPv4 = sAddr.indexOf(':') < 0
+                        if (useIPv4) {
+                            if (isIPv4) return sAddr
+                        } else {
+                            if (!isIPv4) {
+                                val delim = sAddr.indexOf('%') // drop ip6 zone suffix
+                                return if (delim < 0) sAddr.toUpperCase(Locale.ROOT) else sAddr.substring(
+                                    0,
+                                    delim
+                                ).toUpperCase(Locale.ROOT)
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+        } // for now eat exceptions
+        return ""
+    }
+
 
     fun <X, Y, Z> map(
         sourceX: LiveData<X>,
         sourceY: LiveData<Y>,
         mapFunc: (x: X?, y: Y?) -> Z
-    ): LiveData<Z> {
+    ): MutableLiveData<Z> {
 
         var result = MediatorLiveData<Z>()
         result.addSource(sourceX) {
@@ -101,6 +133,22 @@ object Utils {
         context.startActivity(Intent.createChooser(shareIntent, context.resources.getString(R.string.Choose_in_app_inten)))
     }
 
+    fun getDefaultLanguage(): String {
+        val language = PreferencesHelper.getLanguage()
+        if (language.equals("vi")) {
+            return language
+        } else {
+            return "en"
+        }
+    }
 
+    fun updateLocale(c: Context, localeToSwitchTo: Locale) {        // update ngôn ngữ hệ thống
+        var context = c
+        val resources: Resources = context.resources
+        val configuration = resources.configuration
+
+        configuration.setLocale(localeToSwitchTo)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+    }
 
 }

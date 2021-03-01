@@ -22,6 +22,10 @@ class ThankDialog(val listener: ThankDialogListener) : DialogFragment() {
     private val binding get() = _binding!!
     private var colorAnimation: ValueAnimator? = null
 
+    companion object {
+        val TAG = "ThankDialog"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.DefaultDialogTheme)

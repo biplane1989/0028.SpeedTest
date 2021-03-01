@@ -9,6 +9,7 @@ import com.tapi.a0028speedtest.base.BaseDialog
 import com.tapi.a0028speedtest.databinding.HistoryDetailDeleteDialogBinding
 import com.tapi.a0028speedtest.databinding.SettingScreenLanguageDialogBinding
 import com.tapi.a0028speedtest.functions.detail.dialog.HistoryDetailDeleteDialog
+import com.tapi.a0028speedtest.util.Utils
 import kotlinx.android.synthetic.main.setting_screen_language_dialog.*
 
 
@@ -56,6 +57,12 @@ class LanguageDialog : BaseDialog(), View.OnClickListener {
         binding.cancelTv.setOnClickListener(this)
         binding.vietnamRb.setOnClickListener(this)
         binding.englishRb.setOnClickListener(this)
+
+        if (Utils.getDefaultLanguage().equals("vi")){
+            binding.vietnamRb.isChecked = true
+        }else{
+            binding.englishRb.isChecked = true
+        }
     }
 
     override fun onClick(v: View?) {

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.tapi.a0028speedtest.base.BaseViewModel
-import com.tapi.a0028speedtest.functions.history.HistoryDatabase
 import com.tapi.a0028speedtest.data.History
 import com.tapi.a0028speedtest.database.DBHelperFactory
 import kotlinx.coroutines.Dispatchers

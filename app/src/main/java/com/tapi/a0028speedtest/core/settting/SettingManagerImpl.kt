@@ -8,7 +8,7 @@ import com.tapi.a0028speedtest.data.Setting
 import com.tapi.a0028speedtest.util.Constances
 import com.tapi.a0028speedtest.util.PreferencesHelper
 
-class SettingManagerImpl : SettingManager {
+object SettingManagerImpl : SettingManager {
 
     private val _settingType = MutableLiveData<Setting>()
     val settingType: LiveData<Setting> get() = _settingType

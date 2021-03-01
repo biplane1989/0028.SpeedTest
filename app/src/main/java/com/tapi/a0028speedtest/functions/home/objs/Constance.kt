@@ -5,9 +5,9 @@ object Constance {
     const val DENSITY_VALUE = 2000
 
 
-    const val RATE_KBS=0.000125
-    const val RATE_MBS=0.000000125
-    const val RATE_Mbps=0.000001
+    const val RATE_KBS=(1024 * 8f)
+    const val RATE_MBS=(1024 * 1024f * 8)
+    const val RATE_Mbps=(1024f * 1024)
     const val DEFAULT_SMOOTH = 2
     const val DEFAULT_GAP = 1
     const val TEXT_SIZE_CONNECTVIEW = 25f

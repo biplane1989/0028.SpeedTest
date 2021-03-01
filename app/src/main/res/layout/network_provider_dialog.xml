@@ -3,12 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.tapi.a0028speedtest.functions.maintab.viewmodels.NetworkProviderModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         android:fitsSystemWindows="true"
-        tools:context=".functions.maintab.dialogs.NetworkProviderDialog">
+        tools:context=".functions.maintab.dialogs.NetworkProviderActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -18,12 +25,13 @@
             app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
             android:id="@+id/child_actionbar"
+            android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/back_dialog_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="?actionBarSize"
                 android:drawableStart="@drawable/ic_exchange_server"
@@ -31,7 +39,6 @@
                 android:fontFamily="@font/font_roboto_bold"
                 android:gravity="center"
                 android:paddingLeft="@dimen/d_16"
-                android:id="@+id/back_dialog_tv"
                 android:scaleType="centerInside"
                 android:text="CHANGE SERVER"
                 android:textColor="@color/white"
@@ -52,9 +59,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/child_search"
-            android:layout_marginTop="5.5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5.5dp"
             android:visibility="invisible"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -68,8 +75,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:textColor="@color/white"
-                android:theme="@style/editTextTheme"
                 android:id="@+id/edt_search"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -77,7 +82,10 @@
                 android:fontFamily="@font/font_roboto_regular"
                 android:hint="Search Server..."
                 android:singleLine="true"
+                android:backgroundTint="#363950"
+                android:textColor="@color/white"
                 android:textColorHint="@color/colorGrayText"
+                android:theme="@style/editTextTheme"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,17 +112,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
             android:id="@+id/automatic_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
             android:drawableStart="@drawable/ic_focus_network_screen"
             android:drawablePadding="@dimen/d_10"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_height="?actionBarSize"
             android:gravity="center"
             android:text="Select automatically"
             android:textColor="@color/colorBlue"
             android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/child_actionbar"
             tools:ignore="MissingConstraints" />
 
@@ -130,10 +138,11 @@
             tools:layout_editor_absoluteX="0dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:overScrollMode="never"
             android:id="@+id/rv_network"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/automatic_tv"
             tools:ignore="MissingConstraints"
             tools:listitem="@layout/item_network" />
@@ -151,6 +160,29 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            visibleIf="@{viewmodel.loading}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            visibleIf="@{viewmodel.empty}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/network_provider_dialog_no_data"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -35,28 +35,6 @@ class HistoryViewModel : BaseViewModel() {
     }
 
     init {
-        viewModelScope.launch {
-
-            val floatsDownload = ArrayList<Float>()
-            for (i in 1 until 100) {
-                floatsDownload.add((i * 5..i * 10).random().toFloat())
-            }
-
-            val floatsUpload = ArrayList<Float>()
-            for (i in 1 until 100) {
-                floatsUpload.add((i * 5..i * 10).random().toFloat())
-            }
-            val hosts = Host("aa", "sss", "ss", "ss", "fff", "ppppp")
-
-            val history1 = History(0,hosts, hosts, 5000 * 10000, 1000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1 * 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.MULTI)
-            val history2 = History(0, hosts, hosts, 4000 * 10000, 3000 * 10000, 10, floatsDownload, floatsUpload, "12345", System.currentTimeMillis() - 1000 * 60 * 60 * 24, NetworkType.WIFI, ConnectionType.SINGLE)
-            val history3 = History(0, hosts, hosts, 6000 * 10000, 5000 * 10000, 10, floatsDownload, floatsUpload, "12345", 2 * 1000 * 60 * 60 * 24, NetworkType._2G, ConnectionType.MULTI)
-            val history4 = History(0, hosts, hosts, 8000 * 10000, 6000 * 10000, 10, floatsDownload, floatsUpload, "12345", 3 * 1000 * 60 * 60 * 24, NetworkType._3G, ConnectionType.SINGLE)
-
-            DBHelperFactory.getDBHelper().saveHistory(arrayListOf(history1, history2, history3, history4))
-
-        }
-
         _listHistory.addSource(_sortType) {
             convertItemJob?.cancel()
             convertItemJob = viewModelScope.launch {

@@ -21,7 +21,7 @@ class SettingViewModel : BaseViewModel() {
 
     private var settingUnitType = PreferencesHelper.getString(Constances.SETTING_UNITS, DataRateUnits.MbPS.toString())
 
-    val settingManager: SettingManager = SettingManagerImpl()
+    val settingManager: SettingManager = SettingManagerImpl
 
     private val _mbpValue = MutableLiveData<String>()
     val mbpValue: LiveData<String> get() = _mbpValue
@@ -85,22 +85,22 @@ class SettingViewModel : BaseViewModel() {
         }
     }
 
-    fun mbpSeepdOnclick() {
+    fun onClickMbpSeepd() {
         settingUnitType = DataRateUnits.MbPS.toString()
         settingManager.changeUnits(DataRateUnits.MbPS)
     }
 
-    fun mbSeepdOnclick() {
+    fun onClickMbSeepd() {
         settingUnitType = DataRateUnits.MBPS.toString()
         settingManager.changeUnits(DataRateUnits.MBPS)
     }
 
-    fun kbSpeedOnclick() {
+    fun onClickKbSpeed() {
         settingUnitType = DataRateUnits.KBPS.toString()
         settingManager.changeUnits(DataRateUnits.KBPS)
     }
 
-    fun mbpValueSeepdOnclick() {
+    fun onClickMbpValueSeepd() {
         when (settingUnitType) {
             DataRateUnits.MbPS.toString() -> {
                 settingManager.changeGaugeScale(DataRateUnits.MbPS, Constances.SETTING_MBP_VALUE_100)
@@ -114,7 +114,7 @@ class SettingViewModel : BaseViewModel() {
         }
     }
 
-    fun mbValueSeepdOnclick() {
+    fun onClickMbValueSeepd() {
         when (settingUnitType) {
             DataRateUnits.MbPS.toString() -> {
                 settingManager.changeGaugeScale(DataRateUnits.MbPS, Constances.SETTING_MBP_VALUE_500)
@@ -128,7 +128,7 @@ class SettingViewModel : BaseViewModel() {
         }
     }
 
-    fun kbValueSeepdOnclick() {
+    fun onClickKbValueSeepd() {
         when (settingUnitType) {
             DataRateUnits.MbPS.toString() -> {
                 settingManager.changeGaugeScale(DataRateUnits.MbPS, Constances.SETTING_MBP_VALUE_1000)

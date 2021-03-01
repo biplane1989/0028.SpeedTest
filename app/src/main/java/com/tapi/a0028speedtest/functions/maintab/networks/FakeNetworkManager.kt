@@ -20,20 +20,20 @@ object FakeNetworkManager : NetworkMeasure {
 
         for (i in 1 until 201) {
             delay(20)
-            emit(NetworkRate(  percent = i / 200f, rate = (i * 5..i * 10).random().toFloat()))
+            emit(NetworkRate(  percent = i / 200f, rate = (i * 500..i * 1000).random().toFloat()))
         }
 
-        emit(NetworkRate(  percent = 1f, rate = (200 * 5..200 * 10).random().toFloat()))
+        emit(NetworkRate(  percent = 1f, rate = (200 * 500..200 * 1000).random().toFloat()))
 
     }
 
     override fun testUploadChannel(): Flow<NetworkRate> = flow {
         for (i in 1 until 201) {
             delay(20)
-            emit(NetworkRate(  percent = i / 200f, rate = (i * 5..i * 10).random().toFloat()))
+            emit(NetworkRate(  percent = i / 200f, rate = (i * 500..i * 1000).random().toFloat()))
 
         }
-        emit(NetworkRate(  percent = 1f, rate = (200 * 5..200 * 10).random().toFloat()))
+        emit(NetworkRate(  percent = 1f, rate = (200 * 500..200 * 1000).random().toFloat()))
     }
 
     override fun getMyNetworkInfo(): MyNetworkInfo {

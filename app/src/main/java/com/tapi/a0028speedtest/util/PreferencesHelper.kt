@@ -7,6 +7,7 @@ import java.util.*
 object PreferencesHelper {
     private val SHARED_PREFERENCES_NAME = "speed_test_pref"
     private lateinit var sharedPreferences: SharedPreferences
+    val APP_LANGUAGE = "APP_LANGUAGE"
 
     fun start(appContext: Context) {
         sharedPreferences =
@@ -60,5 +61,9 @@ object PreferencesHelper {
 
     fun putStringSet(key: String, value: Set<String>) {
         sharedPreferences.edit().putStringSet(key, value).apply()
+    }
+
+    fun getLanguage():String{
+        return getString(APP_LANGUAGE, "en")
     }
 }

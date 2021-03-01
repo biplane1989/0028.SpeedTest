@@ -1,14 +1,12 @@
 package com.tapi.a0028speedtest.functions.maintab.objs
 
 import com.tapi.nettraffic.objects.NetworkType
+import com.tapi.vpncore.Util
+import com.tapi.vpncore.listserver.Server
 
-data class NetworkItem(
-    val nameNetwork: String,
-    val location: String, val networkType: NetworkType
-) {
-    override fun toString(): String {
-        return "nameNetwork :$nameNetwork  location $location"
-    }
+fun Server.distance(lat:Double, lon:Double):Float{
+return Util.distance(this.lat, this.lon, lat, lon)
 }
+data class NetWorkViewItem(val server: Server, val networkType: NetworkType, var favorite: Boolean, var distance : String, var isSelect : Boolean = false)
 
-class NetWorkView(val networkItem: NetworkItem, var favorite: Boolean)
+val NETWORK_VIEW_ITEM_FAKE = NetWorkViewItem(Server(), NetworkType.WIFI, false, "", false)

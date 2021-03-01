@@ -1,7 +1,7 @@
 package com.tapi.vpncore.api
 
-import com.example.testretrofill2.server.Settings
 import com.tapi.vpncore.api.server.NetworkInfo
+import com.tapi.vpncore.listserver.Settings
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.Timeout

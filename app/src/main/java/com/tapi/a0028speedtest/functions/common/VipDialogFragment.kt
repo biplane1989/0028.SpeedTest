@@ -11,24 +11,25 @@ import com.tapi.a0028speedtest.buttongradient.Rainbow
 import com.tapi.a0028speedtest.buttongradient.contextColor
 import com.tapi.a0028speedtest.databinding.CommonVipDialogLayoutBinding
 
-enum class UpgradeCode{
-    WEEK,MONTH,YEAR
+enum class UpgradeCode {
+    WEEK, MONTH, YEAR
 }
-class VipDialogFragment(val listener : VipDialogListener) : DialogFragment(), View.OnClickListener {
+
+class VipDialogFragment(val listener: VipDialogListener) : DialogFragment(), View.OnClickListener {
     private var _binding: CommonVipDialogLayoutBinding? = null
     private val binding get() = _binding!!
-    private var upgradeCode : UpgradeCode = UpgradeCode.YEAR
+    private var upgradeCode: UpgradeCode = UpgradeCode.YEAR
+
+    companion object {
+        val TAG = "VipDialogFragment"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.DefaultDialogTheme)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = CommonVipDialogLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -48,7 +49,7 @@ class VipDialogFragment(val listener : VipDialogListener) : DialogFragment(), Vi
                 +contextColor(R.color.colorYellowCenter4)
                 +contextColor(R.color.colorYellowCenter5)
                 +contextColor(R.color.colorYellowEnd)
-            }.background(radius = 8)
+            }.background(radius = 6)
             Rainbow(binding.cardWeekHolder).palette {
                 +contextColor(R.color.colorYellowStart)
                 +contextColor(R.color.colorYellowCenter1)
@@ -57,7 +58,7 @@ class VipDialogFragment(val listener : VipDialogListener) : DialogFragment(), Vi
                 +contextColor(R.color.colorYellowCenter4)
                 +contextColor(R.color.colorYellowCenter5)
                 +contextColor(R.color.colorYellowEnd)
-            }.background(radius = 8)
+            }.background(radius = 6)
             Rainbow(binding.cardYearHolder).palette {
                 +contextColor(R.color.colorYellowStart)
                 +contextColor(R.color.colorYellowCenter1)
@@ -66,22 +67,30 @@ class VipDialogFragment(val listener : VipDialogListener) : DialogFragment(), Vi
                 +contextColor(R.color.colorYellowCenter4)
                 +contextColor(R.color.colorYellowCenter5)
                 +contextColor(R.color.colorYellowEnd)
-            }.background(radius = 8)
-            Rainbow(binding.cardUpgateNow).palette {
-                +contextColor(R.color.colorYellowStart)
-                +contextColor(R.color.colorYellowCenter1)
-                +contextColor(R.color.colorYellowCenter2)
-                +contextColor(R.color.colorYellowCenter3)
-                +contextColor(R.color.colorYellowCenter4)
-                +contextColor(R.color.colorYellowCenter5)
-                +contextColor(R.color.colorYellowEnd)
-            }.background(radius = 8)
+            }.background(radius = 6)
+
+//            Rainbow(binding.cardUpgateNow).palette {
+//                +contextColor(R.color.colorYellowStart)
+//                +contextColor(R.color.colorYellowCenter1)
+//                +contextColor(R.color.colorYellowCenter2)
+//                +contextColor(R.color.colorYellowCenter3)
+//                +contextColor(R.color.colorYellowCenter4)
+//                +contextColor(R.color.colorYellowCenter5)
+//                +contextColor(R.color.colorYellowEnd)
+//            }.background(radius = 8)
+
+//            Rainbow(binding.cardUpgateNow).palette {
+//                +contextColor(R.color.colorYellowCenter3)
+//                +contextColor(R.color.colorYellowCenter2)
+//                +contextColor(R.color.colorYellowCenter1)
+//            }.background(radius = 3)
 
             binding.cardUpgateNow.setOnClickListener(this@VipDialogFragment)
-            binding.cardUpgateNow.enableScale(true)
+//            binding.cardUpgateNow.enableScale(true)
             binding.cardWeek.setOnClickListener(this@VipDialogFragment)
             binding.cardYear.setOnClickListener(this@VipDialogFragment)
             binding.cardMonth.setOnClickListener(this@VipDialogFragment)
+            binding.back.setOnClickListener(this@VipDialogFragment)
         }
     }
 
@@ -91,17 +100,29 @@ class VipDialogFragment(val listener : VipDialogListener) : DialogFragment(), Vi
     }
 
     override fun onClick(v: View?) {
-        when(v){
-            binding.cardWeek -> {selectedCard(binding.cardWeek)}
-            binding.cardYear ->  {selectedCard(binding.cardYear)}
-            binding.cardMonth -> {selectedCard(binding.cardMonth)}
-            binding.cardUpgateNow -> {listener.actionUpgate()}
+        when (v) {
+            binding.cardWeek -> {
+                selectedCard(binding.cardWeek)
+            }
+            binding.cardYear -> {
+                selectedCard(binding.cardYear)
+            }
+            binding.cardMonth -> {
+                selectedCard(binding.cardMonth)
+            }
+            binding.cardUpgateNow -> {
+                listener.actionUpgate()
+                dismiss()
+            }
+            binding.back -> {
+                dismiss()
+            }
         }
     }
 
     private fun selectedCard(card: View) {
-        when(card){
-            binding.cardWeek ->{
+        when (card) {
+            binding.cardWeek -> {
                 upgradeCode = UpgradeCode.WEEK
                 binding.weekSelectImg.setImageResource(R.drawable.common_check_vip_icon)
                 binding.monthSelectImg.setImageResource(R.drawable.common_uncheck_vip_icon)

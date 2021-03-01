@@ -16,6 +16,7 @@ import com.tapi.a0028speedtest.functions.history.dialog.HistoryDeleteDialog.Hist
 import com.tapi.a0028speedtest.functions.detail.screen.HistoryDetailDialogFragment
 import com.tapi.a0028speedtest.util.Utils
 import com.tapi.a0028speedtest.data.History
+import com.tapi.a0028speedtest.functions.common.VipDialogFragment
 
 class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListener {
 
@@ -83,8 +84,10 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
     override fun onClick(v: View?) {
         when (v) {
             binding.deleteButton -> {
-                val dialog = HistoryDeleteDialog.newInstance(this)
-                dialog.show(childFragmentManager, HistoryDeleteDialog.TAG)
+                if (childFragmentManager.findFragmentByTag(HistoryDeleteDialog.TAG) == null) {
+                    val dialog = HistoryDeleteDialog.newInstance(this)
+                    dialog.show(childFragmentManager, HistoryDeleteDialog.TAG)
+                }
             }
             binding.shareButton -> {
                 Utils.shareFileAudio(requireContext(), "tomato", null)          // share data

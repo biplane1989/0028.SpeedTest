@@ -4,14 +4,20 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.tapi.a0028speedtest.base.BaseViewModel
-import com.tapi.a0028speedtest.base.SingleLiveEvent
+import com.tapi.a0028speedtest.core.manager.SettingManager
+import com.tapi.a0028speedtest.core.settting.SettingManagerImpl
 import com.tapi.a0028speedtest.data.DataRateUnits
+import com.tapi.a0028speedtest.data.Setting
 import com.tapi.a0028speedtest.functions.home.objects.SpeedTestState
 import com.tapi.a0028speedtest.functions.main.objs.Constance
 import com.tapi.a0028speedtest.functions.maintab.networks.FakeNetworkManager
-import com.tapi.a0028speedtest.functions.maintab.objs.NetworkItem
+import com.tapi.a0028speedtest.functions.maintab.objs.NETWORK_VIEW_ITEM_FAKE
+import com.tapi.a0028speedtest.functions.maintab.objs.NetWorkViewItem
+
 import com.tapi.a0028speedtest.ui.viewscustom.linespeedview.objs.DataNetwork
+import com.tapi.a0028speedtest.util.Utils
 import com.tapi.nettraffic.NetworkMeasure
 import com.tapi.nettraffic.NetworkMeasureFactory
 import com.tapi.nettraffic.NetworkRate
@@ -23,35 +29,42 @@ import com.tapi.nettraffic.objects.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
+import kotlin.math.roundToInt
 
+
+fun Float.convertNumber(): Float {
+    return if (!this.isNaN()) {
+        Log.d("TAG", "convertNumber: $this")
+        (this * 100.0).roundToInt() / 100.0f
+    } else {
+        -1f
+    }
+}
 
 class SpeedData(
-    var dataDownload: DataNetwork,
-    var dataUpload: DataNetwork,
+
+    var dataDownload: DataNetwork = DataNetwork(),
+    var dataUpload: DataNetwork = DataNetwork(),
     var speedState: SpeedTestState = SpeedTestState.IDLE,
     var maxTransferRateDownload: Float = 0f,
     var maxTransferRateUpload: Float = 0f,
-    var averageDownload: Float = 0f,
-    var averageUpload: Float = 0f,
+    var averagePing: Float = 0f,
     var listDataDownload: ArrayList<NetworkRate> = ArrayList(),
-    var listDataUpload: ArrayList<NetworkRate> = ArrayList(), var maxSpeedRate: Int = 100
+    var listDataUpload: ArrayList<NetworkRate> = ArrayList(),
+    var maxSpeed: Int = 100,
+    var rateUnit: DataRateUnits = DataRateUnits.KBPS
 
 )
 
 class MainTabModel : BaseViewModel() {
 
-
+    val settingManager: SettingManager = SettingManagerImpl
     private var pingStatics: PingStatistics? = null
     private val TAG: String = MainTabModel::class.java.name
-    private var _onNetworkProviderClicked = SingleLiveEvent<Boolean>()
 
-    private var _unitState = MutableLiveData<DataRateUnits>()
-    val unitState: LiveData<DataRateUnits> get() = _unitState
+    private var _resultPing = MutableLiveData<String>()
+    val resultPing: LiveData<String> = _resultPing
 
-    var _resultPing = MutableLiveData<String>()
-    var _rateSpeed = MutableLiveData<Float>()
-    var _resultDownload = MutableLiveData<String>()
-    var _resultUpload = MutableLiveData<String>()
 
     private var _stateClick = MutableLiveData<ConnectionType>()
     val stateClick: LiveData<ConnectionType> get() = _stateClick
@@ -62,91 +75,86 @@ class MainTabModel : BaseViewModel() {
     private var _speedData = MutableLiveData<SpeedData>()
     val speedData: LiveData<SpeedData> get() = _speedData
 
-    val listDataDownload = ArrayList<NetworkRate>()
-    val listDataUpload = ArrayList<NetworkRate>()
+
     private lateinit var networkMeasure: NetworkMeasure
-    private var mSpeedData = SpeedData(DataNetwork(), DataNetwork(), SpeedTestState.IDLE)
 
-    var maxTransferRateDownload = 0f
-    var maxTransferRateUpload = 0f
+    var networkItem: NetWorkViewItem = NETWORK_VIEW_ITEM_FAKE
 
-    var transferRateDownload = 0f
-    var transferRateUpload = 0f
+    private var _settingValue = MutableLiveData<Setting>()
+    val settingValue: LiveData<Setting> = _settingValue
 
 
-    var networkItem: NetworkItem = NetworkItem("", "", NetworkType._4G)
-    var _density = Constance.DEFAULT_DENSITY_VALUE
-
-    private var _connectionType = ConnectionType.SINGLE
-    var connectionType: ConnectionType
-        get() = _connectionType
-        set(value) = setValueConnectionType(value)
+    private val observerSetting = Observer<Setting> {
+        _settingValue.value = it
+    }
 
 
-    private var density: Int
-        get() = _density
-        set(value) = setNewDensity(value)
+    private var _resultDownload = Utils.map(speedData, settingValue) { speedData, setting ->
+
+        if (speedData != null && setting != null) {
+            convertUnitListRate(speedData.listDataDownload, setting.testingUnits)
+        } else {
+            -1f
+        }
+    }
+    val resultDownload: LiveData<Float> = _resultDownload
+
+    var _resultUpload = Utils.map(speedData, settingValue) { speedData, setting ->
+        if (speedData != null && setting != null) {
+            convertUnitListRate(speedData.listDataUpload, setting.testingUnits)
+        } else {
+            -1f
+        }
+    }
+    val resultUpload: LiveData<Float> = _resultUpload
 
 
     init {
+        settingManager.getSetting().observeForever(observerSetting)
         _resultPing.value = "0.0"
-        _resultDownload.value = "0.0"
-        _resultUpload.value = "0.0"
-        _unitState.value = DataRateUnits.KBPS
         _stateClick.value = ConnectionType.SINGLE
-        _rateSpeed.value = 100f
-
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        settingManager.getSetting().removeObserver(observerSetting)
+    }
 
 
     fun initNetworkMesure(context: Context) {
-
         val server = "speedtestkv1a.viettel.vn"
         val uploadingUrl = "http://speedtestkv1a.viettel.vn:8080/speedtest/upload.php"
         val downloadingUrl = "http://speedtestkv1a.viettel.vn:8080/speedtest/random2000x2000.jpg"
-        val networkMeasureConfig =
-            NetworkMeasureConfig(server, uploadingUrl, downloadingUrl, connectionType)
-        Log.d(TAG, "initNetworkMesure: $connectionType")
+        _stateClick.value?.let {
+            val networkMeasureConfig =
+                NetworkMeasureConfig(server, uploadingUrl, downloadingUrl, it)
+            Log.d(TAG, "initNetworkMesure: ${_stateClick.value!!}")
 
-        networkMeasure =
-            NetworkMeasureFactory.createNetworkMeasure(context, networkMeasureConfig)
+            networkMeasure =
+                NetworkMeasureFactory.createNetworkMeasure(context, networkMeasureConfig)
+        }
+
     }
 
-    fun setNewDensity(value: Int) {
-        _density = value
-    }
-
-
-    private fun setValueConnectionType(value: ConnectionType) {
-        _connectionType = value
-    }
-
-
-    fun changeParameter() {
-        _speedData.value = mSpeedData
-    }
 
     fun clickTvMulti() {
         if (_stateClick.value == ConnectionType.SINGLE) {
             _stateClick.value = ConnectionType.MULTI
-            setValueConnectionType(ConnectionType.MULTI)
         }
     }
 
     fun clickTvSingle() {
         if (_stateClick.value == ConnectionType.MULTI) {
             _stateClick.value = ConnectionType.SINGLE
-            setValueConnectionType(ConnectionType.SINGLE)
         }
     }
 
-    fun setNetwork(network: NetworkItem) {
+    fun setNetwork(network: NetWorkViewItem) {
         this.networkItem = network
     }
 
 
-    fun getNetwork(): NetworkItem {
+    fun getNetwork(): NetWorkViewItem {
         return networkItem
     }
 
@@ -178,126 +186,68 @@ class MainTabModel : BaseViewModel() {
         }
     }
 
-    suspend fun connectServer(): Boolean {
+    suspend fun connectServer(context: Context): Boolean {
+
+        initNetworkMesure(context)
+        val mSpeedData = SpeedData(speedState = _speedData.value?.speedState ?: SpeedTestState.IDLE)
+
         return try {
+
             mSpeedData.speedState = SpeedTestState.CONNECTING
             pingStatics = networkMeasure.connect()
-            setPingResult()
+            pingStatics?.let {
+                _resultPing.value = "${it.timeAvg().convertNumber()}"
+                mSpeedData.averagePing = it.timeAvg().convertNumber()
+                _speedData.value = mSpeedData
+            }
             val result = networkMeasure.getMyNetworkInfo()
             checkValidNetworkType(result)
-            changeParameter()
+            _speedData.value = mSpeedData
             true
         } catch (e: MyNetworkException) {
             checkValidNetwork(e)
-            changeParameter()
+            _speedData.value = mSpeedData
             false
         }
+
     }
 
-    fun setPingResult() {
-        pingStatics?.let {
-            _resultPing.value = "${it.timeAvg().toInt()}"
-        }
-    }
-
-    fun getPingResult(): String? {
-        return _resultPing.value
-    }
-
-    fun getDownloadResult(): String? {
-        return _resultDownload.value
-    }
-
-    fun getUploadResult(): String? {
-        return _resultUpload.value
-    }
 
     private fun checkValidNetwork(e: MyNetworkException) {
         when (e.code) {
             NO_INTERNET_CODE -> {
-                mSpeedData.speedState = SpeedTestState.NO_INTERNET
+                _speedData.value?.speedState = SpeedTestState.NO_INTERNET
             }
             SERVER_NOT_REACH -> {
-                mSpeedData.speedState = SpeedTestState.NO_INTERNET
+                _speedData.value?.speedState = SpeedTestState.NO_INTERNET
             }
             MY_LOCAL_NETWORK_INTERRUPTED -> {
-                mSpeedData.speedState = SpeedTestState.NO_INTERNET
+                _speedData.value?.speedState = SpeedTestState.NO_INTERNET
             }
         }
-    }
-
-    suspend fun testUploadChanel(): Boolean {
-        var resultUpload = false
-        try {
-            mSpeedData.speedState = SpeedTestState.RUNNINGUPLOAD
-            changeParameter()
-            networkMeasure.testUploadChannel()
-            //FakeNetworkManager.testUploadChannel()
-                .flowOn(Dispatchers.IO)
-                .collect {
-                    val transferRate = it.rate
-                    maxTransferRateUpload = setMaxTransferRate(transferRate)
-                    mSpeedData.dataUpload.transferRate = transferRate
-                    mSpeedData.dataUpload.percent = it.percent
-                    Log.d(TAG, "NetworkChanel  testUploadChanel:   - percent :$it")
-                    listDataUpload.add(it)
-                    transferRateUpload = transferRate
-                    mSpeedData.maxTransferRateUpload = maxTransferRateUpload
-                    changeParameter()
-
-                }
-            mSpeedData.speedState = SpeedTestState.DONE
-
-
-            var sumRate = 0f
-            listDataUpload.forEach {
-                sumRate += it.rate
-            }
-            val valueRate = convertRateNetwork(sumRate)
-
-            _resultUpload.value = "$valueRate"
-            resultUpload = true
-
-        } catch (e: MyNetworkException) {
-            checkValidNetwork(e)
-            resultUpload = false
-        } finally {
-            changeParameter()
-        }
-        return resultUpload
     }
 
 
     suspend fun testDownloadChanel(): Boolean {
-        var resultDownload = false
+        var resultDownload: Boolean
+        var mSpeedData = SpeedData(speedState = _speedData.value?.speedState ?: SpeedTestState.IDLE)
         try {
             mSpeedData.speedState = SpeedTestState.RUNNINGDOWNLOAD
-            changeParameter()
+            _speedData.value = mSpeedData
             networkMeasure.testDownloadChannel()
-            //FakeNetworkManager.testDownloadChannel()
+//            FakeNetworkManager.testDownloadChannel()
                 .flowOn(Dispatchers.IO).collect {
-                    val transferRate = it.rate
+                    mSpeedData.rateUnit = _settingValue.value?.testingUnits ?: DataRateUnits.KBPS
 
-                    maxTransferRateDownload = setMaxTransferRate(transferRate)
-                    mSpeedData.dataDownload.transferRate = transferRate
+                    mSpeedData.maxTransferRateDownload = Math.max(it.rate, mSpeedData.maxTransferRateDownload)
+
+
+                    mSpeedData.maxSpeed = _settingValue.value?.gaugeScale ?: 100
+                    mSpeedData.dataDownload.transferRate = it.rate
                     mSpeedData.dataDownload.percent = it.percent
-
-                    Log.d(TAG, " NetworkChanel  testDownloadChanel:  - percent $it")
-                    listDataDownload.add(it)
-                    transferRateDownload = transferRate
-                    mSpeedData.maxTransferRateDownload = maxTransferRateDownload
-                    changeParameter()
+                    mSpeedData.listDataDownload.add(it)
+                    _speedData.value = mSpeedData
                 }
-
-
-            var sumRate = 0f
-            listDataDownload.forEach {
-                sumRate += it.rate
-            }
-            val valueRate = convertRateNetwork(sumRate)
-
-
-            _resultDownload.value = "$valueRate"
 
             resultDownload = true
 
@@ -305,59 +255,82 @@ class MainTabModel : BaseViewModel() {
             checkValidNetwork(e)
             resultDownload = false
         } finally {
-            changeParameter()
+            _speedData.value = mSpeedData
         }
-        Log.d(TAG, "startDometer:  resultDownload $resultDownload")
         return resultDownload
     }
 
-    private fun convertRateNetwork(sumRate: Float): Int {
-        return when (_unitState.value) {
-            DataRateUnits.KBPS -> {
-                ((sumRate / listDataDownload.size) * Constance.RATE_KBS).toInt()
-            }
-            DataRateUnits.MbPS -> {
-                ((sumRate / listDataDownload.size) * Constance.RATE_Mbps).toInt()
-            }
-            DataRateUnits.MBPS -> {
-                ((sumRate / listDataDownload.size) * Constance.RATE_MBS).toInt()
-            }
-            else -> {
-                -1
-            }
+
+    suspend fun testUploadChanel(): Boolean {
+        var resultUpload: Boolean
+        var mSpeedData = SpeedData(
+            speedState = _speedData.value?.speedState ?: SpeedTestState.IDLE,
+            listDataDownload = _speedData.value?.listDataDownload!!
+        )
+
+        try {
+            mSpeedData.speedState = SpeedTestState.RUNNINGUPLOAD
+            _speedData.value = mSpeedData
+            networkMeasure.testUploadChannel()
+//            FakeNetworkManager.testUploadChannel()
+                .flowOn(Dispatchers.IO)
+                .collect {
+                    mSpeedData.rateUnit = _settingValue.value?.testingUnits ?: DataRateUnits.KBPS
+                    mSpeedData.maxSpeed = _settingValue.value?.gaugeScale ?: 100
+
+                    mSpeedData.maxTransferRateUpload = Math.max(it.rate, mSpeedData.maxTransferRateUpload)
+
+                    mSpeedData.dataUpload.transferRate = it.rate
+                    mSpeedData.dataUpload.percent = it.percent
+
+                    mSpeedData.listDataUpload.add(it)
+
+                    _speedData.value = mSpeedData
+                }
+            mSpeedData.speedState = SpeedTestState.DONE
+
+            resultUpload = true
+
+        } catch (e: MyNetworkException) {
+            checkValidNetwork(e)
+            resultUpload = false
+        } finally {
+            _speedData.value = mSpeedData
         }
+        return resultUpload
     }
 
 
-    private fun setMaxTransferRate(tmp: Float): Float {
-        if (maxTransferRateDownload < tmp) {
-            return tmp
+    private fun convertUnitListRate(
+        listDatas: ArrayList<NetworkRate>,
+        dataRateUnits: DataRateUnits
+    ): Float {
+
+        var sum = 0f
+        listDatas.forEach {
+            sum += it.rate
         }
-        return maxTransferRateDownload
+        var valueRate = sum / listDatas.size
+        return when (dataRateUnits) {
+            DataRateUnits.KBPS -> {
+                (valueRate / Constance.RATE_KBS).convertNumber()
+            }
+            DataRateUnits.MbPS -> {
+                (valueRate / Constance.RATE_Mbps).convertNumber()
+            }
+            DataRateUnits.MBPS -> {
+                (valueRate / Constance.RATE_MBS).convertNumber()
+            }
+        }
     }
 
     fun restart() {
-        mSpeedData.dataDownload = DataNetwork(0f, 0f)
-        mSpeedData.dataUpload = DataNetwork(0f, 0f)
-        mSpeedData.speedState = SpeedTestState.IDLE
-        mSpeedData.maxTransferRateDownload = 0f
-        mSpeedData.maxTransferRateUpload = 0f
-        mSpeedData.averageDownload = 0f
-        mSpeedData.averageUpload = 0f
-        _resultPing.value = "0.0"
-        _resultDownload.value = "0.0"
-        _resultUpload.value = "0.0"
-        listDataUpload.clear()
-        listDataDownload.clear()
-        mSpeedData.listDataUpload.clear()
-        mSpeedData.listDataDownload.clear()
-        maxTransferRateDownload = 0f
-        maxTransferRateUpload = 0f
-        transferRateDownload = 0f
-        transferRateUpload = 0f
 
-        _density = Constance.DEFAULT_DENSITY_VALUE
-        changeParameter()
+        _resultPing.value = "0.0"
+        _resultUpload.value = 0f
+        _resultUpload.value = 0f
+
+
     }
 
 }

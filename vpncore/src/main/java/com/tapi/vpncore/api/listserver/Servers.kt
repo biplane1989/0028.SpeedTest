@@ -1,4 +1,4 @@
-package com.example.testretrofill2.server
+package com.tapi.vpncore.listserver
 
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root

@@ -1,23 +1,29 @@
 package com.tapi.a0028speedtest.functions.detail.screen
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.RelativeLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.base.BaseDialog
+import com.tapi.a0028speedtest.data.History
 import com.tapi.a0028speedtest.databinding.HistoryDetailDialogBinding
-import com.tapi.a0028speedtest.functions.detail.viewmodel.HistoryDetailViewModel
 import com.tapi.a0028speedtest.functions.detail.dialog.HistoryDetailDeleteDialog
+import com.tapi.a0028speedtest.functions.detail.viewmodel.HistoryDetailViewModel
 import com.tapi.a0028speedtest.functions.history.dateCreated
 import com.tapi.a0028speedtest.functions.history.getdownloadRate
 import com.tapi.a0028speedtest.functions.history.getupdateRate
 import com.tapi.a0028speedtest.util.Utils
-import com.tapi.a0028speedtest.data.History
 import kotlinx.coroutines.delay
+
 
 class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryDetailDeleteDialog.HistoryDetailDialogListener {
 
@@ -35,23 +41,23 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
         binding.networkProvidersAccountTv.text = it.client.networkProvider
         binding.userAccountTv.text = it.client.name
 
-        binding.latValueTv.text = it.server.lat
-        binding.lonValueTv.text = it.server.lon
+        binding.latValueTv.text = it.server.lat.toString()
+        binding.lonValueTv.text = it.server.lon.toString()
         binding.internalValueTv.text = it.client.ip
         binding.externalValueTv.text = it.externalIP
 
         lifecycleScope.launchWhenResumed {
-            delay(100)
-            var percentDownload = 0
-            for (item in it.downloadTrace) {
-                percentDownload++
-                binding.lineView.startDrawDownload(item, percentDownload.toFloat())
-            }
-            var percentUpload = 0
-            for (item in it.uploadTrace) {
-                percentUpload++
-                binding.lineView.startDrawUpload(item, percentUpload.toFloat())
-            }
+//            delay(100)
+//            var percentDownload = 0
+//            for (item in it.downloadTrace) {
+//                percentDownload++
+//                binding.lineView.startDrawDownload(item, percentDownload.toFloat())
+//            }
+//            var percentUpload = 0
+//            for (item in it.uploadTrace) {
+//                percentUpload++
+//                binding.lineView.startDrawUpload(item, percentUpload.toFloat())
+//            }
         }
 
     }
@@ -63,6 +69,7 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
         @JvmStatic
         fun newInstance(id: Int): HistoryDetailDialogFragment {
             val dialog = HistoryDetailDialogFragment()
+
             val bundle = Bundle()
             bundle.putInt(BUNDLE_KEY_ID, id)
             dialog.arguments = bundle
@@ -79,7 +86,7 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.HistoryDetailDialog)
+        setStyle(STYLE_NORMAL, R.style.HistoryDetailDialog)
 
     }
 

@@ -1,23 +1,20 @@
 package com.tapi.a0028speedtest.functions.maintab.adapters
 
 import android.content.Context
-import android.view.ContextThemeWrapper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.graphics.Color
+import android.view.*
 import android.widget.ImageView
-import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tapi.a0028speedtest.R
-import com.tapi.a0028speedtest.functions.maintab.objs.NetWorkView
-import com.tapi.a0028speedtest.functions.maintab.objs.NetworkItem
+import com.tapi.a0028speedtest.functions.maintab.objs.NetWorkViewItem
+import com.tapi.a0028speedtest.functions.maintab.popup.ItemType
+import com.tapi.a0028speedtest.functions.maintab.popup.NetworkPopupWindow
 
-class NetworkProviderAdapter(val mContext: Context, val event: NetworkListener) :
-        ListAdapter<NetWorkView, NetworkProviderAdapter.NetworkProviderHolder>(NetworkDiff()) {
+class NetworkProviderAdapter(val mContext: Context, val event: NetworkListener) : ListAdapter<NetWorkViewItem, NetworkProviderAdapter.NetworkProviderHolder>(NetworkDiff()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NetworkProviderHolder {
@@ -26,6 +23,14 @@ class NetworkProviderAdapter(val mContext: Context, val event: NetworkListener) 
     }
 
     override fun onBindViewHolder(holder: NetworkProviderHolder, position: Int, payloads: MutableList<Any>) {
+        val status = payloads.firstOrNull()
+        if (status != null) {
+            // update 1 phan
+            holder.updateView(getItem(position).favorite)
+        } else {
+            // update full
+            onBindViewHolder(holder, position)
+        }
         super.onBindViewHolder(holder, position, payloads)
     }
 
@@ -39,68 +44,98 @@ class NetworkProviderAdapter(val mContext: Context, val event: NetworkListener) 
                 holder.tvName.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             }
         }
-        holder.tvName.text = item.networkItem.nameNetwork
-        holder.tvLocation.text = item.networkItem.location
-
-
+        holder.tvName.text = item.server.sponsor
+        holder.tvLocation.text = item.server.country
+        holder.tvDistance.text = item.distance.toString()
+        if (item.favorite) {
+            holder.ivFavorite.visibility = View.VISIBLE
+        } else {
+            holder.ivFavorite.visibility = View.GONE
+        }
+        if (item.isSelect) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#363950"))
+        } else {
+            holder.itemView.setBackgroundResource(R.drawable.network_provider_item_bg)
+        }
     }
 
 
-    inner class NetworkProviderHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class NetworkProviderHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
         var tvName: TextView = itemView.findViewById(R.id.name_network_providers_item_tv)
         var tvLocation: TextView = itemView.findViewById(R.id.location_network_item_tv)
         var ivChoose: ImageView = itemView.findViewById(R.id.iv_choose)
+        var tvDistance: TextView = itemView.findViewById(R.id.km)
+        val ivFavorite: ImageView = itemView.findViewById(R.id.favorite)
 
         init {
             ivChoose.setOnClickListener(this)
             itemView.setOnClickListener {
-                event.changeServer(getItem(adapterPosition).networkItem)
+                event.changeServer(getItem(adapterPosition))
             }
+            itemView.setOnLongClickListener(this)
+
         }
 
         override fun onClick(v: View) {
             when (v.id) {
                 R.id.iv_choose -> {
-                    showMenuChoose()
+                    showMenuChoose(v)
                 }
             }
         }
 
-        private fun showMenuChoose() {
-            val wrapper = ContextThemeWrapper(mContext, R.style.PopupMenu)
-            PopupMenu(wrapper, ivChoose).apply {
-                inflate(R.menu.network_menu)
-                setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.choose_server -> {
-                            event.changeServer(getItem(adapterPosition).networkItem)
-                        }
-                        R.id.favorite_server -> {
+        override fun onLongClick(v: View): Boolean {
+            when(v.id){
+                R.id.iv_choose ->{
+                    showMenuChoose(v)
+                }
+            }
+            return true
+        }
 
-                        }
+        fun updateView(favorite: Boolean) {
+            if (favorite) {
+                ivFavorite.visibility = View.VISIBLE
+            } else {
+                ivFavorite.visibility = View.GONE
+            }
+        }
+
+        private fun showMenuChoose(view: View) {
+            val sortAudioPopupWindow = NetworkPopupWindow(view) {
+                when (it) {
+                    ItemType.FAVORITES -> {
+                        event.setFavorite(getItem(adapterPosition))
                     }
 
-                    false
+                    ItemType.CHANGE -> {
+                        event.changeServer(getItem(adapterPosition))
+                    }
                 }
-                show()
             }
+            sortAudioPopupWindow.show()
         }
     }
 
     interface NetworkListener {
-        fun changeServer(networkItem: NetworkItem)
-
+        fun changeServer(netWorkViewItem: NetWorkViewItem)
+        fun setFavorite(netWorkViewItem: NetWorkViewItem)
     }
 }
 
-class NetworkDiff : DiffUtil.ItemCallback<NetWorkView>() {
-    override fun areItemsTheSame(oldItem: NetWorkView, newItem: NetWorkView): Boolean {
-        return oldItem.networkItem == newItem.networkItem
+class NetworkDiff : DiffUtil.ItemCallback<NetWorkViewItem>() {
+    override fun areItemsTheSame(oldItem: NetWorkViewItem, newItem: NetWorkViewItem): Boolean {
+        return oldItem.server.url == newItem.server.url
     }
 
-    override fun areContentsTheSame(oldItem: NetWorkView, newItem: NetWorkView): Boolean {
-        return oldItem.networkItem.nameNetwork == newItem.networkItem.nameNetwork
+    override fun areContentsTheSame(oldItem: NetWorkViewItem, newItem: NetWorkViewItem): Boolean {
+//        return oldItem.networkItem.nameNetwork == newItem.networkItem.nameNetwork
+        return false
     }
 
+    override fun getChangePayload(oldItem: NetWorkViewItem, newItem: NetWorkViewItem): Any? {
 
+        if (oldItem.favorite == oldItem.favorite) return newItem        // muon update cai nao thi check cai do khac, con lai bang nhau
+        return null
+    }
 }

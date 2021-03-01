@@ -1,6 +1,7 @@
 package com.tapi.a0028speedtest.functions.maintab.dialogs
 
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +10,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.base.BaseDialog
+import com.tapi.a0028speedtest.data.DataRateUnits
 import com.tapi.a0028speedtest.databinding.ResultMaintabDialogBinding
-import com.tapi.a0028speedtest.functions.maintab.objs.NetworkItem
+import com.tapi.a0028speedtest.functions.maintab.objs.NETWORK_VIEW_ITEM_FAKE
+import com.tapi.a0028speedtest.functions.maintab.objs.NetWorkViewItem
 import com.tapi.nettraffic.NetworkRate
-import com.tapi.nettraffic.objects.NetworkType
 
 class ResultDometerDialog() : BaseDialog(), View.OnClickListener {
 
@@ -22,19 +24,20 @@ class ResultDometerDialog() : BaseDialog(), View.OnClickListener {
     lateinit var mCallback: ResultDialogListener
     private lateinit var listDataNetworksDownload: List<NetworkRate>
     private lateinit var listDataNetworksUpload: List<NetworkRate>
-    private var networkItem: NetworkItem = NetworkItem("VNPT", "HaNoi", NetworkType.WIFI)
+    private var networkItem: NetWorkViewItem = NETWORK_VIEW_ITEM_FAKE
     private var pingRs: String? = null
-    private var downloadRs: String? = null
-    private var uploadRS: String? = null
+    private var downloadRs: Float? = null
+    private var uploadRS:Float? = null
+    private lateinit var rateUnit: DataRateUnits
 
 
     fun getInstance(
         listDataDownload: ArrayList<NetworkRate>,
         listDataUpload: ArrayList<NetworkRate>,
         pingRs: String?,
-        downloadRs: String?,
-        uploadRs: String?,
-        networkItem: NetworkItem
+        downloadRs: Float?,
+        uploadRs: Float?,
+        networkItem: NetWorkViewItem, rateUnits: DataRateUnits
     ): ResultDometerDialog {
         val dialog = ResultDometerDialog()
         dialog.listDataNetworksDownload = ArrayList(listDataDownload)
@@ -43,6 +46,7 @@ class ResultDometerDialog() : BaseDialog(), View.OnClickListener {
         dialog.pingRs = pingRs
         dialog.uploadRS = uploadRs
         dialog.downloadRs = downloadRs
+        dialog.rateUnit = rateUnits
         return dialog
     }
 
@@ -80,18 +84,36 @@ class ResultDometerDialog() : BaseDialog(), View.OnClickListener {
             binding.pingResultTvBg.text = it
         }
         downloadRs?.let {
-            binding.downloadResultTvBg.text = it
+            binding.downloadResultTvBg.text = "$it"
         }
         uploadRS?.let {
-            binding.uploadResultTvBg.text = it
+            binding.uploadResultTvBg.text = "$it"
         }
 
-        if (networkItem.nameNetwork != "" && networkItem.location != "") {
+        /*if (networkItem.nameNetwork != "" && networkItem.location != "") {
             binding.networkName.text = networkItem.nameNetwork
             binding.networkLocationTv.text = networkItem.location
+        }*/
+
+        when(rateUnit){
+            DataRateUnits.KBPS->{
+               setUnitToText(getString(R.string.unit_kbs))
+            }
+            DataRateUnits.MbPS->{
+                setUnitToText(getString(R.string.unit_mbps))
+
+            }
+            DataRateUnits.MBPS->{
+                setUnitToText(getString(R.string.unit_mbs))
+            }
         }
 
         binding.againTvBg.setOnClickListener(this)
+    }
+
+    private fun setUnitToText(unit:String) {
+        binding.unitUploadTv.text = unit
+        binding.unitDownloadTv.text = unit
     }
 
 
@@ -104,9 +126,6 @@ class ResultDometerDialog() : BaseDialog(), View.OnClickListener {
         }
     }
 
-    interface ResultDialogListener {
-        fun testAgain()
-    }
 
 
     private fun fakeList(): List<NetworkRate> {
@@ -132,6 +151,12 @@ class ResultDometerDialog() : BaseDialog(), View.OnClickListener {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         mCallback.testAgain()
+    }
+
+
+
+    interface ResultDialogListener {
+        fun testAgain()
     }
 
 }

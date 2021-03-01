@@ -1,6 +1,7 @@
 package com.tapi.a0028speedtest.functions.maintab.screens
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -19,19 +20,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.base.BaseFragment
+import com.tapi.a0028speedtest.data.DataRateUnits
+import com.tapi.a0028speedtest.data.Setting
 import com.tapi.a0028speedtest.databinding.MainTabScreenBinding
 import com.tapi.a0028speedtest.functions.home.objects.SpeedTestState
-import com.tapi.a0028speedtest.functions.maintab.dialogs.NetworkProviderDialog
+import com.tapi.a0028speedtest.functions.maintab.dialogs.NetworkProviderActivity
+import com.tapi.a0028speedtest.functions.main.objs.Constance
 import com.tapi.a0028speedtest.functions.maintab.dialogs.ResultDometerDialog
-import com.tapi.a0028speedtest.functions.maintab.objs.NetworkItem
+import com.tapi.a0028speedtest.functions.maintab.objs.NetWorkViewItem
 import com.tapi.a0028speedtest.functions.maintab.viewmodels.MainTabModel
 import com.tapi.a0028speedtest.functions.maintab.viewmodels.SpeedData
 import com.tapi.a0028speedtest.ui.viewscustom.linespeedview.views.TypeLineView
+import com.tapi.a0028speedtest.util.Constances
 import com.tapi.a0028speedtest.util.Utils
 import com.tapi.nettraffic.NetUtil
+import com.tapi.nettraffic.objects.ConnectionType
 import com.tapi.nettraffic.objects.NetworkType
-import kotlinx.coroutines.*
-import java.util.*
+import com.tapi.vpncore.exceptions.MyNetworkException
+import com.tapi.vpncore.listserver.Server
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
+
 
 fun View.runAnimationIn() {
     val anim = AnimationUtils.loadAnimation(this.context, R.anim.alpha_in_anim)
@@ -44,94 +54,88 @@ fun View.runAnimationOut() {
 }
 
 class MainTabScreen : BaseFragment(), View.OnClickListener,
-    ResultDometerDialog.ResultDialogListener, NetworkProviderDialog.NetworkProviderListener {
+    ResultDometerDialog.ResultDialogListener, NetworkProviderActivity.NetworkProviderListener {
 
+    val NETWORK_PROVIDER_ACTIVITY = 2021
 
     private var startDometerJob: Job? = null
-    private lateinit var dialogNetworkProvider: NetworkProviderDialog
+    private lateinit var dialogNetworkProvider: NetworkProviderActivity
     private var toast: Toast? = null
     val TAG = MainTabScreen::class.java.name
     private var _binding: MainTabScreenBinding? = null
     private val binding get() = _binding!!
     private val mainTabModel: MainTabModel by viewModels()
-    var currentState = SpeedTestState.IDLE
-    lateinit var resultDialog: ResultDometerDialog
-
+    private var mSpeedData = SpeedData()
+    private lateinit var mNetworkType: NetworkType
+    private lateinit var mConnectionType: ConnectionType
+    private lateinit var resultDialog: ResultDometerDialog
 
     private val observerSpeedData = Observer<SpeedData> {
+        mSpeedData = it
 
-        currentState = it.speedState
+
         lifecycleScope.launchWhenResumed {
-
             if (it.speedState == SpeedTestState.RUNNINGDOWNLOAD) {
                 setSpeedometerColor(R.color.colorLineDownload)
+
                 binding.lineChar.startDrawDownload(
-                    it.dataDownload.transferRate,
+                    it.dataDownload.transferRate / it.maxSpeed,
                     it.dataDownload.percent
                 )
 
-                val maxTransferRate = it.maxTransferRateDownload
-                val speed =
-                    Utils.convertValue(
-                        0f,
-                        maxTransferRate,
-                        0f,
-                        it.maxSpeedRate.toFloat(),
-                        it.dataDownload.transferRate
-                    )
+                val speed = Utils.convertValue(
+                    0f,
+                    it.maxTransferRateDownload,
+                    0f,
+                    it.maxSpeed.toFloat(),
+                    value = it.dataDownload.transferRate
+                )
+
                 Log.d(
                     TAG,
-                    "maxTransferRate     Download:  ${it.maxTransferRateDownload} speed: $speed"
+                    "dataDownload:  maxTransferRateDownload ${it.maxTransferRateDownload} maxSpeed: ${it.maxSpeed}  - speed $speed  - rateUnit : ${it.rateUnit}"
                 )
+
                 if (speed > 0) {
                     binding.spRate.speedTo(speed, 500)
                 }
+
             }
 
 
             if (it.speedState == SpeedTestState.RUNNINGUPLOAD) {
                 if (it.dataUpload.percent > 0f) {
-                    val maxTransferRate = it.maxTransferRateUpload
                     val speed = Utils.convertValue(
-                        0f,
-                        maxTransferRate,
-                        0f,
-                        it.maxSpeedRate.toFloat(),
-                        it.dataUpload.transferRate
+                        0f, it.maxTransferRateUpload,
+                        0f, it.maxSpeed.toFloat(), value = it.dataUpload.transferRate
                     )
                     if (speed > 0) {
                         binding.spRate.speedTo(speed, 500)
                     }
 
-                    Log.d(
-                        TAG,
-                        "maxTransferRate     Upload:  ${it.maxTransferRateUpload}  Speed $speed "
-                    )
                     setSpeedometerColor(R.color.colorLineUpload)
                     binding.lineChar.startDrawUpload(
-                        it.dataUpload.transferRate,
+                        it.dataUpload.transferRate / it.maxSpeed,
                         it.dataUpload.percent
                     )
                 }
             }
 
 
-
             if (it.speedState == SpeedTestState.DONE) {
                 binding.spRate.speedTo(0f, 1000)
                 delay(2000)
 
-                if (mainTabModel.listDataDownload.size > 0) {
-                    resultDialog = ResultDometerDialog().getInstance(
-                        mainTabModel.listDataDownload,
-                        mainTabModel.listDataUpload,
-                        mainTabModel.getPingResult(),
-                        mainTabModel.getDownloadResult(),
-                        mainTabModel.getUploadResult(),
-                        mainTabModel.getNetwork()
-                    )
-                    resultDialog.setOnCallBack(this@MainTabScreen)
-                }
+                resultDialog = ResultDometerDialog().getInstance(
+                    it.listDataDownload,
+                    it.listDataUpload,
+                    mainTabModel.resultPing.value,
+                    mainTabModel.resultDownload.value,
+                    mainTabModel.resultUpload.value,
+                    mainTabModel.getNetwork(), it.rateUnit
+                )
+                resultDialog.setOnCallBack(this@MainTabScreen)
+
                 resultDialog.show(
                     this@MainTabScreen.childFragmentManager,
                     ResultDometerDialog::class.java.name
@@ -141,12 +145,48 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
         }
     }
 
+    private val settingObserver = Observer<Setting> {
+        Log.d(TAG, "connectServer  unitStateObserver: ${it}")
+        when (it.testingUnits) {
+            DataRateUnits.KBPS -> {
+
+                binding.spRate.unit = getString(R.string.unit_kbs)
+            }
+            DataRateUnits.MBPS -> {
+                binding.spRate.unit = getString(R.string.unit_mbs)
+            }
+            DataRateUnits.MbPS -> {
+                binding.spRate.unit = getString(R.string.unit_mbps)
+            }
+        }
+        binding.spRate.maxSpeed = it.gaugeScale.toFloat()
+        Log.d(TAG, "startDometer: $it")
+    }
+
 
     private val observernetworkType = Observer<NetworkType> {
+        mNetworkType = it
         if (it == NetworkType.NO_INTERNET || it == NetworkType.UNKNOWN) {
             hideViewNoInterner()
         } else {
-            showViewNoInterner()
+            showViewInternet()
+        }
+    }
+
+    private val stateClick = Observer<ConnectionType> {
+        mConnectionType = it
+    }
+
+    private val observerResultDownload = Observer<Float> {
+        if (mSpeedData.speedState == SpeedTestState.RUNNINGUPLOAD) {
+            binding.downloadResultTv.text = "$it"
+        }
+    }
+
+    private val observerResultUpload = Observer<Float> {
+
+        if (mSpeedData.speedState == SpeedTestState.DONE) {
+            binding.uploadResultTv.text = "$it"
         }
     }
 
@@ -157,7 +197,7 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
         savedInstanceState: Bundle?
     ): View {
         _binding = MainTabScreenBinding.inflate(inflater, container, false)
-        mainTabModel.initNetworkMesure(requireContext())
+
         binding.mainmodel = mainTabModel
         binding.lifecycleOwner = viewLifecycleOwner
         observers()
@@ -168,7 +208,6 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
 
     private fun initViews() {
         setColorWaveView()
-        mainTabModel.setNewDensity(binding.lineChar.getDensityUnit())
         binding.circleWaveView.setOnClickListener(this)
         binding.telecomIv.setOnClickListener(this)
         binding.networkProviderTv.setOnClickListener(this)
@@ -190,15 +229,34 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
     private fun observers() {
         mainTabModel.speedData.observe(viewLifecycleOwner, observerSpeedData)
         mainTabModel.networkType.observe(viewLifecycleOwner, observernetworkType)
+        mainTabModel.settingValue.observe(viewLifecycleOwner, settingObserver)
+        mainTabModel.stateClick.observe(viewLifecycleOwner, stateClick)
+        mainTabModel.resultDownload.observe(viewLifecycleOwner, observerResultDownload)
+        mainTabModel.resultUpload.observe(viewLifecycleOwner, observerResultUpload)
 
     }
 
     fun getColor(color: Int): Int {
-        return ContextCompat.getColor(
-            requireContext(),
-            color
-        )
+        return ContextCompat.getColor(requireContext(), color)
 
+    }
+
+    private fun convertRateNetwork(rate: Float, rateUnits: DataRateUnits): Float {
+
+        return when (rateUnits) {
+            DataRateUnits.KBPS -> {
+                (rate / Constance.RATE_KBS)
+            }
+            DataRateUnits.MbPS -> {
+                (rate / Constance.RATE_Mbps)
+            }
+            DataRateUnits.MBPS -> {
+                (rate / Constance.RATE_MBS)
+            }
+            else -> {
+                -1f
+            }
+        }
     }
 
     @SuppressLint("ShowToast")
@@ -207,10 +265,9 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
             toast!!.cancel()
             toast = null
             toast = Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT)
-        } else
-            if (toast == null) {
-                toast = Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT)
-            }
+        } else if (toast == null) {
+            toast = Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT)
+        }
         toast!!.show()
 
 
@@ -227,14 +284,6 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
             binding.circleWaveView -> {
                 startDometer()
             }
-            /*   binding.networkProviderTv -> {
-                   resultDialog = ResultDometerDialog().getInstance(
-                       mainTabModel.listDataDownload,
-                       mainTabModel.listDataUpload
-                   )
-                   resultDialog.setOnCallBack(this@MainTabScreen)
-                   resultDialog.show(childFragmentManager, ResultDometerDialog::class.java.name)
-               }*/
 
             binding.closeProcessIv -> {
                 lifecycleScope.launchWhenResumed {
@@ -242,11 +291,24 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
                 }
             }
             binding.telecomIv -> {
-                dialogNetworkProvider = NetworkProviderDialog(this)
-                dialogNetworkProvider.show(
-                    childFragmentManager,
-                    NetworkProviderDialog::class.java.name
-                )
+                val intent = Intent(requireContext(), NetworkProviderActivity::class.java)
+                startActivityForResult(intent, NETWORK_PROVIDER_ACTIVITY)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == NETWORK_PROVIDER_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                val server: Server? = data?.getParcelableExtra(Constances.INTENT_KEY_SERVER)
+                server?.let {
+                    Toast.makeText(requireContext(), "server : ${it.sponsor}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
             }
         }
     }
@@ -260,6 +322,9 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
         binding.spRate.speedTo(0f, 0)
         showAndHideView(binding.childResult, binding.childCt)
         binding.closeProcessIv.visibility = View.GONE
+        binding.downloadResultTv.text = getString(R.string.default_value_rate)
+        binding.uploadResultTv.text = getString(R.string.default_value_rate)
+
     }
 
 
@@ -270,17 +335,16 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
             showAndHideView(binding.circleWaveView, binding.connectView)
             binding.closeProcessIv.visibility = View.VISIBLE
 
-            val isConnect = mainTabModel.connectServer()
+            val isConnect = mainTabModel.connectServer(requireContext())
             if (isConnect) {
                 showAndHideView(binding.connectView, binding.spRate)
                 binding.spRate.startAnim()
-                binding.lineChar.setLineGap(5)
                 if (mainTabModel.testDownloadChanel()) {
                     binding.spRate.speedTo(0f, 1000)
                     delay(1010)
 
                     if (mainTabModel.testUploadChanel()) {
-//
+                        saveHistoryToDB()
                     } else {
                         //exception can't test upload
                     }
@@ -295,13 +359,26 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
         }
     }
 
+    suspend fun saveHistoryToDB() {
+        /* val host = Host("a", "31231.12312", "123.456", "456.788", "1.1.1.1", "hello")
+         val history = History(
+             1,
+             host,
+             host,
+             mSpeedData.averageDownload.toInt(),
+             mSpeedData.averageUpload.toInt(),
+             mSpeedData.averagePing.toInt(),
+             mSpeedData.listDataDownload,
+             mSpeedData.listDataUpload,
+             "google.com",
+             System.currentTimeMillis(),
+             mNetworkType, mConnectionType
+         )
+         DBHelperFactory.getDBHelper().saveHistory(history)*/
+    }
+
     private fun setSpeedometerColor(color: Int) {
-        binding.spRate.setSpeedometerColor(
-            ContextCompat.getColor(
-                requireContext(),
-                color
-            )
-        )
+        binding.spRate.setSpeedometerColor(ContextCompat.getColor(requireContext(), color))
     }
 
 
@@ -319,10 +396,10 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
         resultDialog.dismiss()
     }
 
-    override fun changeSevrer(networkItem: NetworkItem) {
-        mainTabModel.setNetwork(networkItem)
-        dialogNetworkProvider.dismiss()
-        binding.telecomRsTv.text = networkItem.nameNetwork
+    override fun changeSevrer(netWorkViewItem: NetWorkViewItem) {
+        mainTabModel.setNetwork(netWorkViewItem)
+//        dialogNetworkProvider.dismiss()
+        binding.telecomRsTv.text = netWorkViewItem.server.sponsor
     }
 
 
@@ -334,14 +411,21 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
         }
     }
 
-
     fun hideViewNoInterner() {
         binding.childMaintab.visibility = View.GONE
         binding.childNointernet.visibility = View.VISIBLE
     }
 
     fun showViewNoInterner() {
+        lifecycleScope.launchWhenResumed {
+            resetAllLayout()
+        }
 
+        binding.childMaintab.visibility = View.VISIBLE
+        binding.childNointernet.visibility = View.GONE
+    }
+
+    fun showViewInternet() {
         binding.childMaintab.visibility = View.VISIBLE
         binding.childNointernet.visibility = View.GONE
     }
@@ -352,39 +436,37 @@ class MainTabScreen : BaseFragment(), View.OnClickListener,
             try {
                 NetUtil.getNetworkType(requireContext())
                 if (isNetworkConnected(requireContext())) {
-
                     when (NetUtil.getNetworkType(requireContext())) {
                         NetworkType._2G -> {
                             Log.d(TAG, "networkProviderResult: 2g")
-                            binding.networkProviderResultTv.text = "2G"
+                            binding.networkProviderResultTv.text = getString(R.string.maintab_value_2g)
                         }
                         NetworkType._3G -> {
                             Log.d(TAG, "networkProviderResult: 3g")
-                            binding.networkProviderResultTv.text = "3G"
+                            binding.networkProviderResultTv.text =  getString(R.string.maintab_value_3g)
                         }
                         NetworkType._4G -> {
                             Log.d(TAG, "networkProviderResult: 4g")
-                            binding.networkProviderResultTv.text = "4G"
+                            binding.networkProviderResultTv.text =  getString(R.string.maintab_value_4g)
                         }
                         NetworkType._5G -> {
                             Log.d(TAG, "networkProviderResult: 5g")
-                            binding.networkProviderResultTv.text = "5G"
+                            binding.networkProviderResultTv.text =  getString(R.string.maintab_value_5g)
                         }
                         NetworkType.WIFI -> {
                             Log.d(TAG, "networkProviderResult: wifi")
-                            binding.networkProviderResultTv.text = "Wifi"
+                            binding.networkProviderResultTv.text =  getString(R.string.maintab_value_wifi)
                         }
                     }
                     Log.d(TAG, "onReceive: to connect")
                     showViewNoInterner()
                 } else {
                     Log.d(TAG, "onReceive: Non connect")
-                    lifecycleScope.launchWhenResumed {
-                        resetAllLayout()
-                    }
                     hideViewNoInterner()
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
+            } catch (e: MyNetworkException) {
                 e.printStackTrace()
             }
         }

@@ -1,6 +1,6 @@
 package com.tapi.a0028speedtest.data
-
 import com.tapi.nettraffic.objects.ConnectionType
+import com.tapi.vpncore.listserver.Server
 import com.tapi.vpncore.objects.Host
 
 enum class NetworkType{
@@ -9,7 +9,7 @@ enum class NetworkType{
 
 data class History(val id: Int,
                    val client: Host,
-                   val server: Host,
+                   val server: Server,
                    val downloadRate: Int,
                    val updateRate: Int,
                    val pingRate: Int,
