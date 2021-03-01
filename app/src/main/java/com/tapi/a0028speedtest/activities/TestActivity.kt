@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.tapi.a0028speedtest.R
-import com.tapi.a0028speedtest.functions.maintab.dialogs.NetworkProviderActivity
 import com.tapi.a0028speedtest.functions.maintab.objs.NetWorkViewItem
 import com.tapi.vpncore.NetworkFetcherImpl
 import com.tapi.vpncore.exceptions.DATA_NULL

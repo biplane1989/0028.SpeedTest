@@ -14,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        android:fitsSystemWindows="true"
-        tools:context=".functions.maintab.dialogs.NetworkProviderActivity">
+        tools:context=".activities.NetworkProviderActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

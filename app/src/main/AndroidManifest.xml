@@ -13,10 +13,11 @@
 
         android:theme="@style/AppTheme">
 
-        <activity android:name=".functions.maintab.dialogs.NetworkProviderActivity">
-        </activity>
+        <activity android:name=".activities.NetworkProviderActivity"
+            android:theme="@style/FullScreen"/>
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +26,7 @@
         </activity>
 
         <activity android:name=".activities.TestActivity">
+
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 

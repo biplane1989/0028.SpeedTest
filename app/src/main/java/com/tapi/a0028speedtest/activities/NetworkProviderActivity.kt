@@ -1,4 +1,4 @@
-package com.tapi.a0028speedtest.functions.maintab.dialogs
+package com.tapi.a0028speedtest.activities
 
 import android.content.Context
 import android.content.Intent
@@ -117,16 +117,6 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
         _binding = NetworkProviderDialogBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-
     }
 
     override fun onResume() {

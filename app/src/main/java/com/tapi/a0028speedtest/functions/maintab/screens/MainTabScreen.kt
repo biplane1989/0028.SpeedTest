@@ -24,7 +24,7 @@ import com.tapi.a0028speedtest.data.DataRateUnits
 import com.tapi.a0028speedtest.data.Setting
 import com.tapi.a0028speedtest.databinding.MainTabScreenBinding
 import com.tapi.a0028speedtest.functions.home.objects.SpeedTestState
-import com.tapi.a0028speedtest.functions.maintab.dialogs.NetworkProviderActivity
+import com.tapi.a0028speedtest.activities.NetworkProviderActivity
 import com.tapi.a0028speedtest.functions.main.objs.Constance
 import com.tapi.a0028speedtest.functions.maintab.dialogs.ResultDometerDialog
 import com.tapi.a0028speedtest.functions.maintab.objs.NetWorkViewItem
