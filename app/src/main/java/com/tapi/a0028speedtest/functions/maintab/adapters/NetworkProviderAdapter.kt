@@ -45,7 +45,7 @@ class NetworkProviderAdapter(val mContext: Context, val event: NetworkListener) 
             }
         }
         holder.tvName.text = item.server.sponsor
-        holder.tvLocation.text = item.server.country
+        holder.tvLocation.text = item.server.name
         holder.tvDistance.text = item.distance.toString()
         if (item.favorite) {
             holder.ivFavorite.visibility = View.VISIBLE

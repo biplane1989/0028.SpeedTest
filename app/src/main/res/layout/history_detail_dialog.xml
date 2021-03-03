@@ -151,17 +151,19 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="28dp"
+                    android:maxLines="1"
+                    android:text="444444444444444444444444"
                     app:layout_constraintEnd_toStartOf="@id/download_tv"
                     app:layout_constraintStart_toStartOf="@id/background"
                     app:layout_constraintTop_toBottomOf="@id/ping_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.tapi.a0028speedtest.ui.history.HistoryTitleTextView
                     android:id="@+id/ping_mbp_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center"
-                    android:text="@string/history_detail_mbps"
+                    text_value="@{viewmodel.settingValue}"
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="@id/ping_tv"
@@ -193,17 +195,19 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="28dp"
+                    android:maxLines="1"
+                    android:text="444444444444444444444444"
                     app:layout_constraintEnd_toStartOf="@id/upload_tv"
                     app:layout_constraintStart_toEndOf="@id/ping_tv"
                     app:layout_constraintTop_toTopOf="@id/ping_tv" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.tapi.a0028speedtest.ui.history.HistoryTitleTextView
                     android:id="@+id/download_mbp_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center"
-                    android:text="@string/history_detail_mbps"
+                    text_value="@{viewmodel.settingValue}"
                     android:textColor="@color/white"
                     android:textSize="14dp"
 
@@ -235,18 +239,20 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="28dp"
+                    android:maxLines="1"
+                    android:text="444444444444444444444444"
                     app:layout_constraintEnd_toEndOf="@id/background"
                     app:layout_constraintStart_toEndOf="@id/download_tv"
                     app:layout_constraintTop_toTopOf="@id/ping_tv" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.tapi.a0028speedtest.ui.history.HistoryTitleTextView
                     android:id="@+id/upload_mbp_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center"
-                    android:text="@string/history_detail_mbps"
+                    text_value="@{viewmodel.settingValue}"
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="@id/upload_tv"
@@ -278,7 +284,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/connections_tv"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center_vertical"
@@ -293,17 +299,17 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/connections_account_tv"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="@dimen/common_padding_start_end"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center_vertical"
                     android:textColor="#5EC7D3"
                     android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="@id/connections_iv"
+                   android:text="sssssssssssssss"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/connections_tv"
-                    app:layout_constraintTop_toTopOf="@id/connections_iv" />
+                    app:layout_constraintTop_toTopOf="@id/connections_tv" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/network_providers_iv"
@@ -314,12 +320,12 @@
                     android:scaleType="centerInside"
                     android:src="@drawable/info_history_network_providers"
                     app:layout_constraintStart_toStartOf="@id/background"
-                    app:layout_constraintTop_toBottomOf="@id/connections_iv" />
+                    app:layout_constraintTop_toBottomOf="@id/connections_account_tv" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/network_providers_tv"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center_vertical"
@@ -334,14 +340,16 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/network_providers_account_tv"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="@dimen/common_padding_start_end"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center_vertical"
                     android:textColor="#5EC7D3"
                     android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="@id/network_providers_tv"
+                    android:text="sssssssssssssssssssssssssssssssssssssssssss
+sssssssssssssssssssssssssssssssssssssssssssssssss
+sssssssssssssssssssssssssssssssssssssssssss"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/network_providers_tv"
                     app:layout_constraintTop_toTopOf="@id/network_providers_tv" />
@@ -355,12 +363,12 @@
                     android:scaleType="centerInside"
                     android:src="@drawable/info_history_screen_user"
                     app:layout_constraintStart_toStartOf="@id/background"
-                    app:layout_constraintTop_toBottomOf="@id/network_providers_iv" />
+                    app:layout_constraintTop_toBottomOf="@id/network_providers_account_tv" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/user_tv"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center_vertical"
@@ -375,14 +383,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/user_account_tv"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="@dimen/common_padding_start_end"
                     android:fontFamily="@font/font_roboto_regular"
                     android:gravity="center_vertical"
                     android:textColor="#5EC7D3"
                     android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="@id/user_tv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/user_tv"
                     app:layout_constraintTop_toTopOf="@id/user_tv" />
@@ -397,7 +404,7 @@
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     app:layout_constraintStart_toStartOf="@id/user_tv"
-                    app:layout_constraintTop_toBottomOf="@id/user_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/user_account_tv" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/lat_tv"
@@ -414,13 +421,14 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/lat_value_tv"
-                    android:layout_width="wrap_content"
+                    android:text="4444444444444444444444444444ssssssssss4444444"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/font_roboto_regular"
                     android:textColor="#5EC7D3"
                     android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="@id/lat_tv"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/lat_tv"
                     app:layout_constraintTop_toTopOf="@id/lat_tv" />
 
@@ -435,17 +443,20 @@
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="@id/location_tv"
                     app:layout_constraintStart_toStartOf="@+id/location_tv"
-                    app:layout_constraintTop_toBottomOf="@id/lat_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/lat_value_tv" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/lon_value_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="99999999999999999999999999999999999999999999999999
+000000000000000000000000000000000000000000000
+00000000"
+                    android:layout_marginEnd="16dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/font_roboto_regular"
                     android:textColor="#5EC7D3"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="@id/lon_tv"
                     app:layout_constraintStart_toEndOf="@id/lon_tv"
                     app:layout_constraintTop_toTopOf="@id/lon_tv" />
 
@@ -460,17 +471,17 @@
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="@id/location_tv"
                     app:layout_constraintStart_toStartOf="@+id/location_tv"
-                    app:layout_constraintTop_toBottomOf="@id/lon_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/lon_value_tv" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/internal_value_tv"
-                    android:layout_width="wrap_content"
+                    android:text="333333333333"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/font_roboto_regular"
                     android:textColor="#5EC7D3"
                     android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="@id/internal_tv"
                     app:layout_constraintStart_toEndOf="@id/internal_tv"
                     app:layout_constraintTop_toTopOf="@id/internal_tv" />
 
@@ -485,17 +496,19 @@
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="@id/location_tv"
                     app:layout_constraintStart_toStartOf="@+id/location_tv"
-                    app:layout_constraintTop_toBottomOf="@id/internal_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/internal_value_tv" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/external_value_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="sssssssssssssssssssssssssssssskkkkkkkkkkkkkkkkkkkkkkkkkk
+                    kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkks"
                     android:fontFamily="@font/font_roboto_regular"
                     android:textColor="#5EC7D3"
                     android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="@id/external_tv"
                     app:layout_constraintStart_toEndOf="@id/external_tv"
                     app:layout_constraintTop_toTopOf="@id/external_tv" />
 

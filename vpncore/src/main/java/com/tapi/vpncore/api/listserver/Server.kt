@@ -8,28 +8,14 @@ import org.simpleframework.xml.Root
 
 
 @Root(strict = false, name = "server")
-data class Server @JvmOverloads constructor(
-    @field: Attribute(name = "url") var url: String = "",
-    @field: Attribute(name = "lat") var lat: Double = 0.0,
-    @field: Attribute(name = "lon") var lon: Double = 0.0,
-    @field: Attribute(name = "name") var name: String = "",
-    @field: Attribute(name = "country") var country: String = "",
-    @field: Attribute(name = "cc") var cc: String = "",
-    @field: Attribute(name = "sponsor") var sponsor: String = "",
-    @field: Attribute(name = "id") var id: Long = 0,
-    @field: Attribute(name = "host") var host: String = ""
+data class Server @JvmOverloads constructor(@field: Attribute(name = "url") var url: String = "", @field: Attribute(name = "lat") var lat: Double = 0.0, @field: Attribute(name = "lon") var lon: Double = 0.0, @field: Attribute(name = "name") var name: String = "", @field: Attribute(name = "country") var country: String = "", @field: Attribute(name = "cc") var cc: String = "", @field: Attribute(name = "sponsor") var sponsor: String = "", @field: Attribute(name = "id") var id: Long = 0, @field: Attribute(name = "host") var host: String = ""
 
-): Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString().toString(),
-        parcel.readDouble(),
-        parcel.readDouble(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readLong(),
-        parcel.readString().toString()) {
+) : Parcelable {
+    constructor(parcel: Parcel) : this(parcel.readString()
+        .toString(), parcel.readDouble(), parcel.readDouble(), parcel.readString()
+        .toString(), parcel.readString().toString(), parcel.readString()
+        .toString(), parcel.readString().toString(), parcel.readLong(), parcel.readString()
+        .toString()) {
     }
 
     fun getDomain(): String {
@@ -38,6 +24,10 @@ data class Server @JvmOverloads constructor(
 
     fun getPort(): String {
         return host.split(":").get(1)
+    }
+
+    fun getDownloadUrl(): String {
+        return url.substring(0, url.lastIndexOf("/")) + "/random2000x2000.jpg"
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

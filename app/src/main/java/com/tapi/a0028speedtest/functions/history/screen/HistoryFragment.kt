@@ -8,15 +8,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.tapi.a0028speedtest.base.BaseFragment
 import com.tapi.a0028speedtest.databinding.HistoryFragmentBinding
-import com.tapi.a0028speedtest.functions.history.HistoryViewModel
-import com.tapi.a0028speedtest.functions.history.SortType
+import com.tapi.a0028speedtest.functions.history.viewmodel.HistoryViewModel
+import com.tapi.a0028speedtest.functions.history.viewmodel.SortType
 import com.tapi.a0028speedtest.functions.history.adapter.HistoryAdapter
 import com.tapi.a0028speedtest.functions.history.dialog.HistoryDeleteDialog
 import com.tapi.a0028speedtest.functions.history.dialog.HistoryDeleteDialog.HistoryDialogListener
 import com.tapi.a0028speedtest.functions.detail.screen.HistoryDetailDialogFragment
-import com.tapi.a0028speedtest.util.Utils
 import com.tapi.a0028speedtest.data.History
 import com.tapi.a0028speedtest.functions.common.VipDialogFragment
+import com.tapi.a0028speedtest.util.Constances
 
 class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListener {
 
@@ -51,6 +51,7 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
         binding.deleteButton.setOnClickListener(this)
         binding.shareButton.setOnClickListener(this)
         binding.testStartButton.setOnClickListener(this)
+        binding.vipButton.setOnClickListener(this)
     }
 
     private fun initRecycleView() {
@@ -71,7 +72,7 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
     private fun onItemClicked(item: History) {
         if (childFragmentManager.findFragmentByTag(HistoryDetailDialogFragment.TAG) == null) {
             val dialog = HistoryDetailDialogFragment.newInstance(item.id)
-            
+
             dialog.show(childFragmentManager, HistoryDetailDialogFragment.TAG)
         }
     }
@@ -90,9 +91,16 @@ class HistoryFragment : BaseFragment(), View.OnClickListener, HistoryDialogListe
                 }
             }
             binding.shareButton -> {
-                Utils.shareFileAudio(requireContext(), "tomato", null)          // share data
+//                Utils.shareFileAudio(requireContext(), "tomato", null)          // share data
             }
             binding.testStartButton -> {
+                sendAction(Constances.ACTION_TEST_REPEAT)
+            }
+            binding.vipButton -> {
+                if (childFragmentManager.findFragmentByTag(VipDialogFragment.TAG) == null) {
+                    val dialog = VipDialogFragment()
+                    dialog.show(childFragmentManager, VipDialogFragment.TAG)
+                }
             }
         }
     }

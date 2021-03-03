@@ -14,8 +14,7 @@
         android:id="@+id/historyScreen"
         android:name="com.tapi.a0028speedtest.functions.history.screen.HistoryFragment"
         android:label="fragment_history_screen"
-        tools:layout="@layout/history_fragment">
-    </fragment>
+        tools:layout="@layout/history_fragment"/>
     <fragment
         android:id="@+id/homeScreen"
         android:name="com.tapi.a0028speedtest.functions.home.screen.HomeScreen"

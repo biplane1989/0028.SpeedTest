@@ -1,10 +1,10 @@
-package com.tapi.a0028speedtest.functions.maintab.broastcast
+package com.tapi.a0028speedtest.functions.maintab.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-class NetworkBroasdcast : BroadcastReceiver() {
+class NetworkBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
     }

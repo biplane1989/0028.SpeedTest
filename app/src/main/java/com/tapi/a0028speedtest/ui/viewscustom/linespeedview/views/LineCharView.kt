@@ -66,7 +66,6 @@ class LineCharView : View {
 
     fun init(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) {
         lineDrawer.init()
-//        lineUpload.init()
         initAttributeSet(context, attrs, defStyleAttr)
     }
 
@@ -92,16 +91,13 @@ class LineCharView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         lineDrawer.onDraw(canvas)
-//        lineUpload.onDraw(canvas)
     }
 
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         if (w != 0 && height != 0) {
-            Log.d("TAG", "onSizeChanged: width $w height $h  ")
             lineDrawer.onSizeChange()
-//            lineUpload.onSizeChange()
         }
     }
 
@@ -115,7 +111,7 @@ class LineCharView : View {
     }
 
     fun startDrawDownload(list: List<NetworkRate>) {
-        lineDrawer.startDrawLineDownload(list)
+           lineDrawer.startDrawLineDownload(list)
     }
 
 
@@ -141,7 +137,6 @@ class LineCharView : View {
 
     private fun setRatioSmoothLine(ratio: Int) {
         lineDrawer.setPrSmooth(ratio)
-//        lineUpload.setPrSmooth(ratio)
     }
 
     /***
@@ -150,7 +145,6 @@ class LineCharView : View {
 
     fun setDensityScreen(density: Int) {
         lineDrawer.setDensityScreen(density)
-//        lineUpload.setDensityScreen(density)
     }
 
     fun getDensityUnit(): Int {

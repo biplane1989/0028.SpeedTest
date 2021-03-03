@@ -20,7 +20,7 @@
         <item name="android:windowExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="HistoryDetailDialog" parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+    <style name="HistoryDetailDialog" parent="@style/Theme.AppCompat.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@color/callassistantColorBgDialog</item>
@@ -37,7 +37,7 @@
 
     </style>
 
-    <style name="DefaultDialogTheme" parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+    <style name="DefaultDialogTheme" parent="@style/Theme.AppCompat.Light">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@color/callassistantColorBgDialog</item>

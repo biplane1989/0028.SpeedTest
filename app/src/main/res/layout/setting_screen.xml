@@ -19,671 +19,679 @@
             type="com.tapi.a0028speedtest.functions.setting.viewmodels.SettingViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_color">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_vipic"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/common_ic_vip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/speedtest_tv"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:fontFamily="@font/font_roboto_bold"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/common_padding_start_end"
+            android:paddingEnd="@dimen/common_padding_start_end"
+            android:text="@string/setting_screen_speedtest_title"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@id/iv_vipic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_color">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/speedtest_tv">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:id="@+id/iv_vipic"
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"
-                android:scaleType="centerInside"
-                android:src="@drawable/common_ic_vip"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/speedtest_tv"
-                android:layout_width="0dp"
-                android:layout_height="?actionBarSize"
-                android:fontFamily="@font/font_roboto_bold"
-                android:gravity="start|center_vertical"
-                android:paddingStart="@dimen/common_padding_start_end"
-                android:paddingEnd="@dimen/common_padding_start_end"
-                android:text="@string/setting_screen_speedtest_title"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="italic"
-                app:layout_constraintEnd_toStartOf="@id/iv_vipic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_testting"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:fontFamily="@font/font_roboto_bold"
-                android:gravity="center"
-                android:text="@string/setting_screen_tv_testing"
-                android:textColor="#FFFFFF"
-                android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/speedtest_tv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/setting_bg"
-                app:layout_constraintDimensionRatio="H,1080:878"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/speedtest_tv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_bg_testting"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="113dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_bg_view"
-                app:layout_constraintTop_toBottomOf="@+id/tv_testting" />
+                android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_units_bg"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="@string/setting_screen_units"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@id/tv_scale"
-                app:layout_constraintEnd_toStartOf="@+id/tv_mbp"
-                app:layout_constraintStart_toStartOf="@id/iv_bg_testting"
-                app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_testting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:gravity="center"
+                    android:text="@string/setting_screen_tv_testing"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
-                android:id="@+id/tv_mbp"
-                is_selected="@{viewmodel.speedLiveData==DataRateUnits.MbPS}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:onClick="@{() -> viewmodel.onClickMbpSeepd()}"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@string/setting_screen_mbp_s"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@id/tv_mbp_value"
-                app:layout_constraintEnd_toStartOf="@+id/tv_mb"
-                app:layout_constraintStart_toEndOf="@+id/tv_units_bg"
-                app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/setting_bg"
+                    app:layout_constraintDimensionRatio="H,1080:878"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
-                android:id="@+id/tv_mb"
-                is_selected="@{viewmodel.speedLiveData==DataRateUnits.MBPS}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:onClick="@{() -> viewmodel.onClickMbSeepd()}"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@string/setting_screen_mb_s"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@id/tv_mb_value"
-                app:layout_constraintEnd_toStartOf="@+id/tv_kb"
-                app:layout_constraintStart_toEndOf="@+id/tv_mbp"
-                app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_bg_testting"
+                    android:layout_width="match_parent"
+                    android:layout_height="113dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_bg_view"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_testting" />
 
-            <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
-                android:id="@+id/tv_kb"
-                is_selected="@{viewmodel.speedLiveData==DataRateUnits.KBPS}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:onClick="@{() -> viewmodel.onClickKbSpeed()}"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@string/setting_screen_kb_s"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@id/tv_kb_value"
-                app:layout_constraintEnd_toEndOf="@id/iv_bg_testting"
-                app:layout_constraintStart_toEndOf="@+id/tv_mb"
-                app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_units_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/setting_screen_units"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_scale"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_mbp"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_testting"
+                    app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
 
+                <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
+                    android:id="@+id/tv_mbp"
+                    is_selected="@{viewmodel.speedLiveData==DataRateUnits.MbPS}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickMbpSeepd()}"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/setting_screen_mbp_s"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_mbp_value"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_mb"
+                    app:layout_constraintStart_toEndOf="@+id/tv_units_bg"
+                    app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_scale"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="18dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@string/setting_screen_scale"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
-                app:layout_constraintEnd_toStartOf="@+id/tv_mbp_value"
-                app:layout_constraintStart_toStartOf="@id/iv_bg_testting"
-                app:layout_constraintTop_toBottomOf="@+id/tv_units_bg" />
+                <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
+                    android:id="@+id/tv_mb"
+                    is_selected="@{viewmodel.speedLiveData==DataRateUnits.MBPS}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickMbSeepd()}"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/setting_screen_mb_s"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_mb_value"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_kb"
+                    app:layout_constraintStart_toEndOf="@+id/tv_mbp"
+                    app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
 
-            <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
-                android:id="@+id/tv_mbp_value"
-                is_selected="@{viewmodel.speedValueLiveData==DataRateUnits.MbPS}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/setting_screen_bg_textview"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:onClick="@{() -> viewmodel.onClickMbpValueSeepd()}"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@{viewmodel.mbpValue}"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
-                app:layout_constraintEnd_toStartOf="@+id/tv_mb_value"
-                app:layout_constraintStart_toEndOf="@+id/tv_scale"
-                app:layout_constraintTop_toBottomOf="@+id/tv_mbp" />
-
-            <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
-                android:id="@+id/tv_mb_value"
-                is_selected="@{viewmodel.speedValueLiveData==DataRateUnits.MBPS}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/setting_screen_bg_textview"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:onClick="@{() -> viewmodel.onClickMbValueSeepd()}"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@{viewmodel.mbValue}"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
-                app:layout_constraintEnd_toStartOf="@+id/tv_kb_value"
-                app:layout_constraintStart_toEndOf="@+id/tv_mbp_value"
-                app:layout_constraintTop_toBottomOf="@id/tv_mb" />
-
-            <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
-                android:id="@+id/tv_kb_value"
-                is_selected="@{viewmodel.speedValueLiveData==DataRateUnits.KBPS}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/setting_screen_bg_textview"
-                android:fontFamily="@font/font_roboto_regular"
-                android:gravity="center"
-                android:onClick="@{() -> viewmodel.onClickKbValueSeepd()}"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@{viewmodel.kbValue}"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
-                app:layout_constraintEnd_toEndOf="@id/iv_bg_testting"
-                app:layout_constraintStart_toEndOf="@+id/tv_mb_value"
-                app:layout_constraintTop_toBottomOf="@+id/tv_kb" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/network_name"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/font_roboto_bold"
-                android:gravity="center"
-                android:text="@string/setting_screen_network_signal_scanning"
-                android:textColor="#FFFFFF"
-                android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_bg_testting" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:checked="@{viewmodel.onNetWorkSignalScanningSwitchIsSelected}"
-                android:onClick="@{()->viewmodel.clickedNetWorkSignalScanningSwitch()}"
-                android:theme="@style/Theme.switch"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_bg_testting" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_bg_learn_more"
-                android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_bg_view"
-                app:layout_constraintTop_toBottomOf="@+id/network_name" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/learn_more_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/font_roboto_regular"
-                android:paddingStart="30dp"
-                android:paddingTop="12dp"
-                android:paddingEnd="30dp"
-                android:text="@string/setting_screen_learn_more"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintTop_toTopOf="@id/iv_bg_learn_more" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/adchoice_tv"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_bg_textview"
-                android:fontFamily="@font/font_roboto_bold"
-                android:gravity="start|center_vertical"
-                android:text="@string/setting_screen_adchoice"
-                android:textColor="#FFFFFF"
-                android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_bg_learn_more" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="40dp"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_bg_learn_more" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/restore_iv"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/adchoice_tv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/restore_purcahse_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_creen_restore_purchase"
-                app:layout_constraintBottom_toBottomOf="@+id/restore_iv"
-                app:layout_constraintEnd_toEndOf="@id/restore_iv"
-                app:layout_constraintStart_toStartOf="@id/restore_iv"
-                app:layout_constraintTop_toTopOf="@id/restore_iv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/remove_iv"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/restore_iv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/remove_ads_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_remove_ads"
-                app:layout_constraintBottom_toBottomOf="@+id/remove_iv"
-                app:layout_constraintEnd_toEndOf="@id/remove_iv"
-                app:layout_constraintStart_toStartOf="@id/remove_iv"
-                app:layout_constraintTop_toTopOf="@id/remove_iv" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/help_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/font_roboto_bold"
-                android:gravity="center"
-                android:text="@string/setting_screen_help"
-                android:textColor="#FFFFFF"
-                android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/remove_iv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/speedtest_help_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/help_tv" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/speedtest_help_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_speedtest_help"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/speedtest_help_iv"
-                app:layout_constraintStart_toStartOf="@id/speedtest_help_iv"
-                app:layout_constraintTop_toTopOf="@id/speedtest_help_iv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/speedtest_help_next_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/speedtest_help_iv"
-                app:layout_constraintEnd_toEndOf="@id/speedtest_help_iv"
-                app:layout_constraintTop_toTopOf="@id/speedtest_help_iv" />
+                <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
+                    android:id="@+id/tv_kb"
+                    is_selected="@{viewmodel.speedLiveData==DataRateUnits.KBPS}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickKbSpeed()}"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/setting_screen_kb_s"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_kb_value"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_testting"
+                    app:layout_constraintStart_toEndOf="@+id/tv_mb"
+                    app:layout_constraintTop_toTopOf="@+id/iv_bg_testting" />
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/language_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/speedtest_help_iv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_scale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="18dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/setting_screen_scale"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_mbp_value"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_testting"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_units_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/language_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_language"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@id/language_tv"
-                app:layout_constraintStart_toStartOf="@id/language_iv"
-                app:layout_constraintTop_toTopOf="@id/language_iv" />
+                <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
+                    android:id="@+id/tv_mbp_value"
+                    is_selected="@{viewmodel.speedValueLiveData==DataRateUnits.MbPS}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="18dp"
+                    android:background="@drawable/setting_screen_bg_textview"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickMbpValueSeepd()}"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@{viewmodel.mbpValue}"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_mb_value"
+                    app:layout_constraintStart_toEndOf="@+id/tv_scale"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mbp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/language_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_screen_english"
-                android:textColor="#A9A9A9"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/language_iv"
-                app:layout_constraintStart_toStartOf="@id/language_title_tv"
-                app:layout_constraintTop_toBottomOf="@id/language_title_tv" />
+                <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
+                    android:id="@+id/tv_mb_value"
+                    is_selected="@{viewmodel.speedValueLiveData==DataRateUnits.MBPS}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="18dp"
+                    android:background="@drawable/setting_screen_bg_textview"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickMbValueSeepd()}"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@{viewmodel.mbValue}"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_kb_value"
+                    app:layout_constraintStart_toEndOf="@+id/tv_mbp_value"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mb" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/language_next_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/language_iv"
-                app:layout_constraintEnd_toEndOf="@id/language_iv"
-                app:layout_constraintTop_toTopOf="@id/language_iv" />
+                <com.tapi.a0028speedtest.ui.setting.DataRateUnitView
+                    android:id="@+id/tv_kb_value"
+                    is_selected="@{viewmodel.speedValueLiveData==DataRateUnits.KBPS}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="18dp"
+                    android:background="@drawable/setting_screen_bg_textview"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickKbValueSeepd()}"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@{viewmodel.kbValue}"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_testting"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_testting"
+                    app:layout_constraintStart_toEndOf="@+id/tv_mb_value"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_kb" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/give_us_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/language_iv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/network_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:gravity="center"
+                    android:text="@string/setting_screen_network_signal_scanning"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_bg_testting" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/give_us_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_give_us_feedback"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/give_us_iv"
-                app:layout_constraintStart_toStartOf="@id/give_us_iv"
-                app:layout_constraintTop_toTopOf="@id/give_us_iv" />
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:checked="@{viewmodel.onNetWorkSignalScanningSwitchIsSelected}"
+                    android:onClick="@{()->viewmodel.clickedNetWorkSignalScanningSwitch()}"
+                    android:theme="@style/Theme.switch"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_bg_testting" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/give_us_feedback_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/give_us_iv"
-                app:layout_constraintEnd_toEndOf="@id/give_us_iv"
-                app:layout_constraintTop_toTopOf="@id/give_us_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_bg_learn_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="98dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_bg_view"
+                    app:layout_constraintTop_toBottomOf="@+id/network_name" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/about_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/give_us_iv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/learn_more_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:paddingStart="30dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="30dp"
+                    android:text="@string/setting_screen_learn_more"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintTop_toTopOf="@id/iv_bg_learn_more" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/about_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_about_speedtest"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/about_iv"
-                app:layout_constraintStart_toStartOf="@id/about_iv"
-                app:layout_constraintTop_toTopOf="@id/about_iv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/adchoice_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_bg_textview"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/setting_screen_adchoice"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_bg_learn_more" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/about_next_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/about_iv"
-                app:layout_constraintEnd_toEndOf="@id/about_iv"
-                app:layout_constraintTop_toTopOf="@id/about_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="40dp"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_bg_learn_more" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/privacy_policy_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/about_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/restore_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/adchoice_tv" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/privacy_policy_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_privacy_policy"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/privacy_policy_iv"
-                app:layout_constraintStart_toStartOf="@id/privacy_policy_iv"
-                app:layout_constraintTop_toTopOf="@id/privacy_policy_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/restore_purcahse_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_creen_restore_purchase"
+                    app:layout_constraintBottom_toBottomOf="@+id/restore_iv"
+                    app:layout_constraintEnd_toEndOf="@id/restore_iv"
+                    app:layout_constraintStart_toStartOf="@id/restore_iv"
+                    app:layout_constraintTop_toTopOf="@id/restore_iv" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/privacy_policy_next_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/privacy_policy_iv"
-                app:layout_constraintEnd_toEndOf="@id/privacy_policy_iv"
-                app:layout_constraintTop_toTopOf="@id/privacy_policy_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/remove_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/restore_iv" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/terms_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/privacy_policy_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/remove_ads_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_remove_ads"
+                    app:layout_constraintBottom_toBottomOf="@+id/remove_iv"
+                    app:layout_constraintEnd_toEndOf="@id/remove_iv"
+                    app:layout_constraintStart_toStartOf="@id/remove_iv"
+                    app:layout_constraintTop_toTopOf="@id/remove_iv" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/terms_iv_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_terms_of_use"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/terms_iv"
-                app:layout_constraintStart_toStartOf="@id/terms_iv"
-                app:layout_constraintTop_toTopOf="@id/terms_iv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/help_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/font_roboto_bold"
+                    android:gravity="center"
+                    android:text="@string/setting_screen_help"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/remove_iv" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/terms_iv_next_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/terms_iv"
-                app:layout_constraintEnd_toEndOf="@id/terms_iv"
-                app:layout_constraintTop_toTopOf="@id/terms_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/speedtest_help_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/help_tv" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/rate_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/terms_iv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/speedtest_help_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_speedtest_help"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/speedtest_help_iv"
+                    app:layout_constraintStart_toStartOf="@id/speedtest_help_iv"
+                    app:layout_constraintTop_toTopOf="@id/speedtest_help_iv" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/rate_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_rate_app"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/rate_iv"
-                app:layout_constraintStart_toStartOf="@id/rate_iv"
-                app:layout_constraintTop_toTopOf="@id/rate_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/speedtest_help_next_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/speedtest_help_iv"
+                    app:layout_constraintEnd_toEndOf="@id/speedtest_help_iv"
+                    app:layout_constraintTop_toTopOf="@id/speedtest_help_iv" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/rate_next_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/rate_iv"
-                app:layout_constraintEnd_toEndOf="@id/rate_iv"
-                app:layout_constraintTop_toTopOf="@id/rate_iv" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/version_iv"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/common_padding_start_end"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/common_padding_start_end"
-                android:background="@drawable/setting_screen_select_bg"
-                app:layout_constraintTop_toBottomOf="@+id/rate_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/language_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/speedtest_help_iv" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/version_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/font_roboto_regular"
-                android:text="@string/setting_screen_version"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@id/version_tv"
-                app:layout_constraintStart_toStartOf="@id/version_iv"
-                app:layout_constraintTop_toTopOf="@id/version_iv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/language_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_language"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toTopOf="@id/language_tv"
+                    app:layout_constraintStart_toStartOf="@id/language_iv"
+                    app:layout_constraintTop_toTopOf="@id/language_iv" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/version_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#A9A9A9"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/version_iv"
-                app:layout_constraintStart_toStartOf="@id/version_title_tv"
-                app:layout_constraintTop_toBottomOf="@id/version_title_tv" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/language_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_screen_english"
+                    android:textColor="#A9A9A9"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/language_iv"
+                    app:layout_constraintStart_toStartOf="@id/language_title_tv"
+                    app:layout_constraintTop_toBottomOf="@id/language_title_tv" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/version_next_iv"
-                android:layout_width="@dimen/setting_screen_iv_height"
-                android:layout_height="@dimen/setting_screen_iv_height"
-                android:scaleType="centerInside"
-                android:src="@drawable/setting_screen_next_ic"
-                app:layout_constraintBottom_toBottomOf="@id/version_iv"
-                app:layout_constraintEnd_toEndOf="@id/version_iv"
-                app:layout_constraintTop_toTopOf="@id/version_iv" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/language_next_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/language_iv"
+                    app:layout_constraintEnd_toEndOf="@id/language_iv"
+                    app:layout_constraintTop_toTopOf="@id/language_iv" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/give_us_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/language_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/give_us_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_give_us_feedback"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/give_us_iv"
+                    app:layout_constraintStart_toStartOf="@id/give_us_iv"
+                    app:layout_constraintTop_toTopOf="@id/give_us_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/give_us_feedback_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/give_us_iv"
+                    app:layout_constraintEnd_toEndOf="@id/give_us_iv"
+                    app:layout_constraintTop_toTopOf="@id/give_us_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/about_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/give_us_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/about_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_about_speedtest"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/about_iv"
+                    app:layout_constraintStart_toStartOf="@id/about_iv"
+                    app:layout_constraintTop_toTopOf="@id/about_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/about_next_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/about_iv"
+                    app:layout_constraintEnd_toEndOf="@id/about_iv"
+                    app:layout_constraintTop_toTopOf="@id/about_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/privacy_policy_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/about_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/privacy_policy_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_privacy_policy"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/privacy_policy_iv"
+                    app:layout_constraintStart_toStartOf="@id/privacy_policy_iv"
+                    app:layout_constraintTop_toTopOf="@id/privacy_policy_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/privacy_policy_next_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/privacy_policy_iv"
+                    app:layout_constraintEnd_toEndOf="@id/privacy_policy_iv"
+                    app:layout_constraintTop_toTopOf="@id/privacy_policy_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/terms_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/privacy_policy_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/terms_iv_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_terms_of_use"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/terms_iv"
+                    app:layout_constraintStart_toStartOf="@id/terms_iv"
+                    app:layout_constraintTop_toTopOf="@id/terms_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/terms_iv_next_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/terms_iv"
+                    app:layout_constraintEnd_toEndOf="@id/terms_iv"
+                    app:layout_constraintTop_toTopOf="@id/terms_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/rate_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/terms_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_rate_app"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/rate_iv"
+                    app:layout_constraintStart_toStartOf="@id/rate_iv"
+                    app:layout_constraintTop_toTopOf="@id/rate_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/rate_next_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/rate_iv"
+                    app:layout_constraintEnd_toEndOf="@id/rate_iv"
+                    app:layout_constraintTop_toTopOf="@id/rate_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/version_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/common_padding_start_end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/common_padding_start_end"
+                    android:background="@drawable/setting_screen_select_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/rate_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/version_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/setting_screen_version"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toTopOf="@id/version_tv"
+                    app:layout_constraintStart_toStartOf="@id/version_iv"
+                    app:layout_constraintTop_toTopOf="@id/version_iv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/version_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#A9A9A9"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@id/version_iv"
+                    app:layout_constraintStart_toStartOf="@id/version_title_tv"
+                    app:layout_constraintTop_toBottomOf="@id/version_title_tv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/version_next_iv"
+                    android:layout_width="@dimen/setting_screen_iv_height"
+                    android:layout_height="@dimen/setting_screen_iv_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/setting_screen_next_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/version_iv"
+                    app:layout_constraintEnd_toEndOf="@id/version_iv"
+                    app:layout_constraintTop_toTopOf="@id/version_iv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

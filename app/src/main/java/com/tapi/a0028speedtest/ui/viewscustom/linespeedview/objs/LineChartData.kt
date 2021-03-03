@@ -22,6 +22,7 @@ class LineChartData : Iterable<FloatArray> {
         mIndex = -1
         mListCoords.clear()
         totalPoint = 0
+        mMaxYValue =0f
     }
 
     fun clearPoint() {

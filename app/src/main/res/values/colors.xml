@@ -69,4 +69,5 @@
     <color name="colorLineUpload">#FFA723</color>
     <color name="colorLineDownload">#5EC7D3</color>
     <color name="backgroundPopup">#363950</color>
+    <color name="colorProgress">#00FFFFFF</color>
 </resources>

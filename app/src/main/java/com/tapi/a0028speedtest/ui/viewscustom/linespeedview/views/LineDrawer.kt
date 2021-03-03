@@ -12,11 +12,11 @@ import kotlin.math.pow
 class LineDrawer(val lineView: LineCharView) {
 
 
+    private val TAG: String = LineDrawer::class.java.name
     private lateinit var oldPointDownload: PointF
     private lateinit var newPointDownload: PointF
     private val mPathRunningDownload = Path()
 
-    private var maxTransferRate = -1f
     private var ratioSmooth = Constance.DEFAULT_SMOOTH
     private var densityScreen = Constance.DEFAULT_DENSITY_VALUE
 
@@ -26,11 +26,13 @@ class LineDrawer(val lineView: LineCharView) {
     private lateinit var lineChartDataDownload: LineChartData
     var colorPaintDownload = Color.parseColor("#F44336")
 
+    var listTmpDownload = ArrayList<NetworkRate>()
+    var listTmpUpload = ArrayList<NetworkRate>()
 
     private lateinit var oldPointUpload: PointF
     private lateinit var newPointUpload: PointF
     private val mPathRunningUpload = Path()
-    private var maxTransferRateUpload = -1f
+
     private lateinit var oldMiddlePointUpload: PointF
     private lateinit var newMiddlePointUpload: PointF
     var colorPaintUpload = Color.GREEN
@@ -63,10 +65,29 @@ class LineDrawer(val lineView: LineCharView) {
 
 
     fun onSizeChange() {
+        Log.d("TAG", "onSizeChange: start")
         mWidth = lineView.width.toFloat()
         mHeight = lineView.height.toFloat()
         lineChartDataDownload.setMaxYAxis(mHeight)
         lineChartDataUpload.setMaxYAxis(mHeight)
+
+        if (mHeight != 0f && mWidth != 0f) {
+
+            drawLine(listTmpDownload, lineChartDataDownload)
+            drawLine(listTmpUpload, lineChartDataUpload)
+            lineView.invalidate()
+        }
+    }
+
+    private fun drawLine(listNetworks: ArrayList<NetworkRate>, lineChartData: LineChartData) {
+        Log.d(TAG, "drawLine: ${listNetworks.size}")
+        for (i in listNetworks.indices) {
+            val posX = (listNetworks[i].percent) * mWidth
+            val point = PointF(posX, listNetworks[i].rate)
+
+            lineChartData.setMaxYAxis(mHeight)
+            lineChartData.addPoint(point.x, point.y)
+        }
     }
 
 
@@ -80,63 +101,43 @@ class LineDrawer(val lineView: LineCharView) {
     }
 
     fun startDrawLineDownload(rate: Float, percent: Float) {
-        maxTransferRate = setMaxTransferRate(rate)
-       
-        val point = PointF((percent) * mWidth, rate)
-        Log.d("startDrawLineDownload", "checkPointX: $point  randomrate    percent $percent")
 
+        val point = PointF((percent) * mWidth, rate)
         lineChartDataDownload.setMaxYAxis(mHeight)
         lineChartDataDownload.addPoint(point.x, point.y)
         lineView.invalidate()
 
-
     }
 
-
-
-
-
     fun startDrawLineUpload(rate: Float, percent: Float) {
-        maxTransferRateUpload = setMaxTransferRate(rate)
-        /*     val point = PointF(
-                 percent * mWidth / densityScreen,
-                 data
-             )  */
-       
+
+
         val point = PointF(
-            (percent ) * mWidth,
+            (percent) * mWidth,
             rate
         )
-
-        Log.d("startDrawLineUpload", "checkPointX: $point  randomrate ")
 
         lineChartDataUpload.setMaxYAxis(mHeight)
         lineChartDataUpload.addPoint(point.x, point.y)
         lineView.invalidate()
 
     }
+
     fun startDrawLineDownload(listData: List<NetworkRate>) {
         for (i in listData.indices) {
-            maxTransferRate = setMaxTransferRate(listData[i].rate)
-           
-//            val posX = Utils.convertValue(0f, densityScreen.toFloat(), 0f, mWidth, listData[i].percent)
-            val posX = (listData[i].percent ) * mWidth
+            val posX = (listData[i].percent) * mWidth
             val point = PointF(posX, listData[i].rate)
-
+            listTmpDownload.add(listData[i])
             lineChartDataDownload.setMaxYAxis(mHeight)
             lineChartDataDownload.addPoint(point.x, point.y)
         }
-        lineView.invalidate()
-
     }
 
     fun startDrawLineUpload(listData: List<NetworkRate>) {
         for (i in listData.indices) {
-            maxTransferRateUpload = setMaxTransferRate(listData[i].rate)
-           
-            val posX = (listData[i].percent ) * mWidth
+            val posX = (listData[i].percent) * mWidth
             val point = PointF(posX, listData[i].rate)
-            
+            listTmpUpload.add(listData[i])
             lineChartDataUpload.setMaxYAxis(mHeight)
             lineChartDataUpload.addPoint(point.x, point.y)
         }
@@ -234,12 +235,7 @@ class LineDrawer(val lineView: LineCharView) {
         this.ratioSmooth = ratio
     }
 
-    private fun setMaxTransferRate(speed: Float): Float {
-        if (maxTransferRate < speed) {
-            return speed
-        }
-        return maxTransferRate
-    }
+
 
     fun setGapDownload(ratio: Int) {
         lineChartDataDownload.setGap(ratio)
@@ -273,6 +269,8 @@ class LineDrawer(val lineView: LineCharView) {
 
 
     fun resetLineChar(typeLineView: TypeLineView) {
+        listTmpUpload.clear()
+        listTmpDownload.clear()
         when (typeLineView) {
             TypeLineView.ALL -> {
                 resetLineCharDownload()
@@ -289,14 +287,12 @@ class LineDrawer(val lineView: LineCharView) {
     }
 
     private fun resetLineCharDownload() {
-        maxTransferRate = -1f
         lineChartDataDownload.reset()
         mPathRunningDownload.reset()
         lineView.invalidate()
     }
 
     private fun resetLineCharUpload() {
-        maxTransferRateUpload = -1f
         lineChartDataUpload.reset()
         mPathRunningUpload.reset()
         lineView.invalidate()

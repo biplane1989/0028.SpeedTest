@@ -19,6 +19,9 @@ import java.net.NetworkInterface
 import java.util.*
 import kotlin.math.pow
 import com.tapi.a0028speedtest.R
+import com.tapi.a0028speedtest.data.DataRateUnits
+import com.tapi.a0028speedtest.functions.main.objs.Constance
+import com.tapi.a0028speedtest.functions.maintab.viewmodels.convertNumber
 
 typealias OnSpeedChangeListener = (gauge: Gauge, isSpeedUp: Boolean, isByTremble: Boolean) -> Unit
 typealias OnSectionChangeListener = (previousSection: Section?, newSection: Section?) -> Unit
@@ -56,20 +59,34 @@ object Utils {
         return ((value - min1) * ((max2 - min2) / (max1 - min1)) + min2)
     }
 
-    fun shareFileAudio(context: Context, text: String, pkgName: String?): Boolean {
-        return try {
-            val intent = Intent()
-            if (pkgName != null) {
-                intent.`package` = pkgName
+//    fun shareFileAudio(context: Context, text: String, pkgName: String?): Boolean {
+//        return try {
+//            val intent = Intent()
+//            if (pkgName != null) {
+//                intent.`package` = pkgName
+//            }
+//            intent.action = Intent.ACTION_SEND
+//            intent.putExtra(Intent.EXTRA_STREAM, text)
+//            intent.type = "audio/*"
+//            context.startActivity(Intent.createChooser(intent, context.resources.getString(R.string.Choose_in_app_inten)))
+//            true
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            false
+//        }
+//    }
+
+     fun convertRateNetwork(rate: Float, dataRateUnits: DataRateUnits): Float {
+        return when (dataRateUnits) {
+            DataRateUnits.KBPS -> {
+                (rate / Constance.RATE_KBS).convertNumber()
             }
-            intent.action = Intent.ACTION_SEND
-            intent.putExtra(Intent.EXTRA_STREAM, text)
-            intent.type = "audio/*"
-            context.startActivity(Intent.createChooser(intent, context.resources.getString(R.string.Choose_in_app_inten)))
-            true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            false
+            DataRateUnits.MbPS -> {
+                (rate / Constance.RATE_Mbps).convertNumber()
+            }
+            DataRateUnits.MBPS -> {
+                (rate / Constance.RATE_MBS).convertNumber()
+            }
         }
     }
 
@@ -110,7 +127,7 @@ object Utils {
         mapFunc: (x: X?, y: Y?) -> Z
     ): MutableLiveData<Z> {
 
-        var result = MediatorLiveData<Z>()
+        val result = MediatorLiveData<Z>()
         result.addSource(sourceX) {
             result.value = mapFunc(it, sourceY.value)
         }
@@ -143,7 +160,7 @@ object Utils {
     }
 
     fun updateLocale(c: Context, localeToSwitchTo: Locale) {        // update ngôn ngữ hệ thống
-        var context = c
+        val context = c
         val resources: Resources = context.resources
         val configuration = resources.configuration
 
@@ -151,4 +168,14 @@ object Utils {
         resources.updateConfiguration(configuration, resources.displayMetrics)
     }
 
+     fun convertDataRate(dataRateUnits: String, data: Float): Float {
+        when (dataRateUnits) {
+            DataRateUnits.MBPS.toString() -> return data / (1024 * 1024f * 8)
+
+            DataRateUnits.MbPS.toString() -> return data / (1024f * 1024)
+
+            DataRateUnits.KBPS.toString() -> return data / (1024 * 8f)
+        }
+        return 0f
+    }
 }

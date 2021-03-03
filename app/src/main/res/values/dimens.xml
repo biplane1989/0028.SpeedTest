@@ -12,4 +12,6 @@
     <dimen name="d_5">5dp</dimen>
     <dimen name="d_18">18dp</dimen>
     <dimen name="d_02">0.2dp</dimen>
+    <dimen name="d_50">50dp</dimen>
+    <dimen name="d_40">40dp</dimen>
 </resources>

@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.tapi.a0028speedtest.R
+import com.tapi.a0028speedtest.base.BaseDialog
 import com.tapi.a0028speedtest.buttongradient.Rainbow
 import com.tapi.a0028speedtest.buttongradient.contextColor
 import com.tapi.a0028speedtest.databinding.CommonVipDialogLayoutBinding
+import com.tapi.a0028speedtest.util.Constances
 
 enum class UpgradeCode {
     WEEK, MONTH, YEAR
 }
 
-class VipDialogFragment(val listener: VipDialogListener) : DialogFragment(), View.OnClickListener {
+class VipDialogFragment : BaseDialog(), View.OnClickListener {
     private var _binding: CommonVipDialogLayoutBinding? = null
     private val binding get() = _binding!!
     private var upgradeCode: UpgradeCode = UpgradeCode.YEAR
@@ -94,11 +96,6 @@ class VipDialogFragment(val listener: VipDialogListener) : DialogFragment(), Vie
         }
     }
 
-
-    interface VipDialogListener {
-        fun actionUpgate()
-    }
-
     override fun onClick(v: View?) {
         when (v) {
             binding.cardWeek -> {
@@ -111,7 +108,7 @@ class VipDialogFragment(val listener: VipDialogListener) : DialogFragment(), Vie
                 selectedCard(binding.cardMonth)
             }
             binding.cardUpgateNow -> {
-                listener.actionUpgate()
+                sendAction(Constances.ACTION_UPGRADE_VIP)
                 dismiss()
             }
             binding.back -> {

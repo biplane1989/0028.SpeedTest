@@ -4,6 +4,8 @@ import android.accounts.NetworkErrorException
 
 object Constances {
 
+    val ACTION_TEST_REPEAT = "ACTION_TEST_REPEAT"
+    val ACTION_UPGRADE_VIP = "ACTION_UPGRADE_VIP"
     val INTENT_KEY_SERVER="INTENT_KEY_SERVER"
     val NETWORK_PROVIDER_FAVORITE = "NETWORK_PROVIDER_FAVORITE"
 

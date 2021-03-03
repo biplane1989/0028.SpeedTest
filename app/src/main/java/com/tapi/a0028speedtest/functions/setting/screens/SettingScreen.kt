@@ -23,7 +23,7 @@ import com.tapi.a0028speedtest.util.Utils
 import java.util.*
 
 
-class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListener, VipDialogFragment.VipDialogListener, ThankDialog.ThankDialogListener {
+class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListener, ThankDialog.ThankDialogListener {
 
     private var _binding: SettingScreenBinding? = null
     private val binding get() = _binding!!
@@ -56,7 +56,7 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
         binding.removeIv.setOnClickListener(this)
         binding.speedtestHelpIv.setOnClickListener(this)
         binding.languageIv.setOnClickListener(this)
-        binding.giveUsFeedbackIv.setOnClickListener(this)
+        binding.giveUsIv.setOnClickListener(this)
         binding.aboutIv.setOnClickListener(this)
         binding.privacyPolicyIv.setOnClickListener(this)
         binding.termsIv.setOnClickListener(this)
@@ -84,15 +84,15 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
     }
 
     override fun onOKListener(typeLanguage: Int) {      // ok listener Language dialog
-        when(typeLanguage){
-            LanguageDialog.ENGLISH_TYPE->{
+        when (typeLanguage) {
+            LanguageDialog.ENGLISH_TYPE -> {
                 PreferencesHelper.putString(PreferencesHelper.APP_LANGUAGE, "en")
                 val myLocale = Locale("en")
                 Utils.updateLocale(requireContext(), myLocale)
                 binding.languageTv.text = resources.getString(R.string.setting_screen_language_dialog_english)
                 requireActivity().recreate()
             }
-            LanguageDialog.VIET_NAM_TYPE->{
+            LanguageDialog.VIET_NAM_TYPE -> {
                 PreferencesHelper.putString(PreferencesHelper.APP_LANGUAGE, "vi")
                 val myLocale = Locale("vi")
                 Utils.updateLocale(requireContext(), myLocale)
@@ -111,8 +111,9 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
                 ToastMessage.show("adchoiceTv")
             }
             binding.restoreIv -> {
+
                 if (childFragmentManager.findFragmentByTag(VipDialogFragment.TAG) == null) {
-                    val dialog = VipDialogFragment(this)
+                    val dialog = VipDialogFragment()
                     dialog.show(childFragmentManager, VipDialogFragment.TAG)
                 }
             }
@@ -149,16 +150,11 @@ class SettingScreen : BaseFragment(), LanguageDialogListener, View.OnClickListen
             }
             binding.ivVipic -> {
                 if (childFragmentManager.findFragmentByTag(VipDialogFragment.TAG) == null) {
-                    val dialog = VipDialogFragment(this)
+                    val dialog = VipDialogFragment()
                     dialog.show(childFragmentManager, VipDialogFragment.TAG)
                 }
             }
         }
-    }
-
-    //todo
-    override fun actionUpgate() {
-        Log.d(TAG, "actionUpgate: vipdialogFragment")
     }
 
     //todo

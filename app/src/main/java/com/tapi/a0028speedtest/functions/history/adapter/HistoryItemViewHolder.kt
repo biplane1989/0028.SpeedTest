@@ -16,6 +16,8 @@ class HistoryItemViewHolder(val binding: HistoryItemBinding) : RecyclerView.View
 
     fun bind(item: History, listener: (History) -> Unit) {
         binding.date.text = item.dateCreated
+
+
         binding.download.text = item.getdownloadRate
         binding.upload.text = item.getupdateRate
 

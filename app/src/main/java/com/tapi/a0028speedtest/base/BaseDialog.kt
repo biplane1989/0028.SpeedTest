@@ -8,6 +8,7 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -16,22 +17,18 @@ import kotlinx.coroutines.launch
 private const val DIALOG_STYLE_KEY = "DIALOG_STYLE_KEY"
 
 abstract class BaseDialog : DialogFragment() {
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        dialog?.window?.let { window ->
-            arguments?.let {
-                val style = it.getInt(DIALOG_STYLE_KEY, -1)
-                if (style != -1) {
-                    window.attributes.windowAnimations = style
-                }
+    protected fun sendAction(actionName: String, data: Any? = null) {
+        lifecycleScope.launchWhenResumed {
+            getBaseActivity()?.let {
+                it.sendAction(actionName, data)
             }
         }
     }
 
-    fun setStyle(style: Int) {
-        arguments?.putInt(DIALOG_STYLE_KEY, style) ?: let {
-            val bundle = Bundle()
-            bundle.putInt(DIALOG_STYLE_KEY, style)
+    protected fun getBaseActivity(): BaseActivity? {
+        if (activity != null) {
+            return activity as BaseActivity
         }
+        return null
     }
 }

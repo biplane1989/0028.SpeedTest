@@ -16,6 +16,7 @@ import com.tapi.a0028speedtest.R
 import com.tapi.a0028speedtest.base.BaseDialog
 import com.tapi.a0028speedtest.data.History
 import com.tapi.a0028speedtest.databinding.HistoryDetailDialogBinding
+import com.tapi.a0028speedtest.functions.common.VipDialogFragment
 import com.tapi.a0028speedtest.functions.detail.dialog.HistoryDetailDeleteDialog
 import com.tapi.a0028speedtest.functions.detail.viewmodel.HistoryDetailViewModel
 import com.tapi.a0028speedtest.functions.history.dateCreated
@@ -46,18 +47,9 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
         binding.internalValueTv.text = it.client.ip
         binding.externalValueTv.text = it.externalIP
 
-        lifecycleScope.launchWhenResumed {
-//            delay(100)
-//            var percentDownload = 0
-//            for (item in it.downloadTrace) {
-//                percentDownload++
-//                binding.lineView.startDrawDownload(item, percentDownload.toFloat())
-//            }
-//            var percentUpload = 0
-//            for (item in it.uploadTrace) {
-//                percentUpload++
-//                binding.lineView.startDrawUpload(item, percentUpload.toFloat())
-//            }
+        binding.lineView.post {
+            binding.lineView.startDrawDownload(it.downloadTrace)
+            binding.lineView.startDrawUpload(it.uploadTrace)
         }
 
     }
@@ -80,7 +72,10 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = HistoryDetailDialogBinding.inflate(inflater, container, false)
 
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.historyItem.observe(viewLifecycleOwner, historyItemObserver)
+
         return binding.root
     }
 
@@ -97,6 +92,7 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
         binding.backButton.setOnClickListener(this)
         binding.deleteButton.setOnClickListener(this)
         binding.shareButton.setOnClickListener(this)
+        binding.vipButton.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
@@ -117,10 +113,14 @@ class HistoryDetailDialogFragment : BaseDialog(), View.OnClickListener, HistoryD
 
             }
             binding.shareButton -> {
-                Utils.shareFileAudio(requireContext(), "orange", null)      // share data
+//                Utils.shareFileAudio(requireContext(), "orange", null)      // share data
+
             }
             binding.vipButton -> {
-
+                if (childFragmentManager.findFragmentByTag(VipDialogFragment.TAG) == null) {
+                    val dialog = VipDialogFragment()
+                    dialog.show(childFragmentManager, VipDialogFragment.TAG)
+                }
             }
         }
     }

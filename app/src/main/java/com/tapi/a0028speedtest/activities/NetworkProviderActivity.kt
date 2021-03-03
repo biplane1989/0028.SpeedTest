@@ -13,6 +13,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tapi.a0028speedtest.base.BaseActivity
@@ -43,7 +44,7 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
         }
     }
 
-    private val observerExceptionNetwork = Observer<ExceptionNetwork> {excepton ->
+    private val observerExceptionNetwork = Observer<ExceptionNetwork> { excepton ->
         excepton?.let {
             when (it) {
                 ExceptionNetwork.SERVER_NOT_REACH -> {
@@ -117,6 +118,10 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
         _binding = NetworkProviderDialogBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        binding.edtSearch.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) showKeyboard(v)
+        })
     }
 
     override fun onResume() {
@@ -133,6 +138,11 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
         networkModel.exceptionNetWork.observe(this, observerExceptionNetwork)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        hideKeyboard(findViewById(android.R.id.content))
+    }
+
     private fun initLists() {
         networkAdapter = NetworkProviderAdapter(this, this)
         binding.rvNetwork.layoutManager = LinearLayoutManager(this)
@@ -143,7 +153,7 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
     override fun onClick(v: View) {
         when (v) {
             binding.ivSearch -> {
-                showLayoutSearch()
+                showLayoutSearch(v)
             }
             binding.backDialogTv -> {
                 val returnIntent = Intent()
@@ -155,8 +165,6 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
             }
             binding.ivBack -> {
                 hideLayoutSearch(v)
-                searchNetwork("")
-                binding.edtSearch.setText("")
             }
             binding.automaticTv -> {
                 networkModel.chooseAutoNetwork()
@@ -164,13 +172,16 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
         }
     }
 
-    private fun showLayoutSearch() {
-        showKeyboard()
+    private fun showLayoutSearch(v: View) {
+        showKeyboard(v)
+        binding.edtSearch.requestFocus()
         binding.childSearch.visibility = View.VISIBLE
         binding.childActionbar.visibility = View.INVISIBLE
     }
 
     private fun hideLayoutSearch(v: View) {
+        binding.edtSearch.setText("")
+        searchNetwork("")
         hideKeyboard(v)
         binding.childSearch.visibility = View.INVISIBLE
         binding.childActionbar.visibility = View.VISIBLE
@@ -182,13 +193,14 @@ class NetworkProviderActivity : BaseActivity(), View.OnClickListener, NetworkPro
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
-    private fun showKeyboard() {
-        binding.edtSearch.requestFocus()
+    private fun showKeyboard(v: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+        imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT)
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
     override fun changeServer(netWorkViewItem: NetWorkViewItem) {
+        hideKeyboard(findViewById(android.R.id.content))
         if (netWorkViewItem.server.sponsor.isNotEmpty()) {
             changeNetworkServer(netWorkViewItem)         //Todo  listener bắt từ diloag về Framgnet
         }

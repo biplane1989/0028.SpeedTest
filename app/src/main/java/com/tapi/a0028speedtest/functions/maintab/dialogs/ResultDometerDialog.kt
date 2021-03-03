@@ -73,12 +73,12 @@ class ResultDometerDialog() : BaseDialog(), View.OnClickListener {
 
     private fun init() {
 
-        lifecycleScope.launchWhenResumed {
-            binding.lineCharBg.post {
+
+
                 binding.lineCharBg.startDrawDownload(listDataNetworksDownload)
                 binding.lineCharBg.startDrawUpload(listDataNetworksUpload)
-            }
-        }
+
+
 
         pingRs?.let {
             binding.pingResultTvBg.text = it

@@ -1,14 +1,14 @@
-package com.tapi.a0028speedtest.functions.history
+package com.tapi.a0028speedtest.functions.history.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
 import com.tapi.a0028speedtest.base.BaseViewModel
+import com.tapi.a0028speedtest.core.settting.SettingManagerImpl
+import com.tapi.a0028speedtest.data.DataRateUnits
 import com.tapi.a0028speedtest.data.History
-import com.tapi.a0028speedtest.data.NetworkType
 import com.tapi.a0028speedtest.database.DBHelper
 import com.tapi.a0028speedtest.database.DBHelperFactory
-import com.tapi.nettraffic.objects.ConnectionType
-import com.tapi.vpncore.objects.Host
+import com.tapi.a0028speedtest.util.Utils
 import kotlinx.coroutines.*
 
 enum class SortType {
@@ -17,6 +17,7 @@ enum class SortType {
 
 class HistoryViewModel : BaseViewModel() {
     private val dbHelper: DBHelper = DBHelperFactory.getDBHelper()
+
     private val _sortType = MutableLiveData<SortType>(SortType.TYPE_ASC)
     val sortType: LiveData<SortType> get() = _sortType
 
@@ -24,6 +25,8 @@ class HistoryViewModel : BaseViewModel() {
     val listHistory: LiveData<List<History>> = _listHistory
 
     private val _listHistoryItem = dbHelper.getHistoryItems()
+
+    private val _settingType = SettingManagerImpl.settingType
 
     private var convertItemJob: Job? = null
 
@@ -34,6 +37,10 @@ class HistoryViewModel : BaseViewModel() {
         it == null || it.isEmpty()
     }
 
+    val settingValue: LiveData<DataRateUnits> = SettingManagerImpl.getSetting().map {
+        it.testingUnits
+    }
+
     init {
         _listHistory.addSource(_sortType) {
             convertItemJob?.cancel()
@@ -42,13 +49,36 @@ class HistoryViewModel : BaseViewModel() {
             }
         }
         _listHistory.addSource(_listHistoryItem) {
-//            _loading.value = true
+            convertItemJob?.cancel()
+            convertItemJob = viewModelScope.launch {
+                convertListHistoryViewItem()
+            }
+        }
+        _listHistory.addSource(_settingType) {
             convertItemJob?.cancel()
             convertItemJob = viewModelScope.launch {
                 convertListHistoryViewItem()
             }
         }
     }
+
+//    private suspend fun changeDataRate() = withContext(Dispatchers.Default) {
+//            _listHistoryItem.value?.let {
+//                val newList = ArrayList<History>()
+//                for (item in it) {
+//                    val newItem = item.copy()
+//                    newItem.downloadRate = convertDataRate(_settingType.value?.testingUnits.toString(), newItem.downloadRate)
+//                    newItem.updateRate = convertDataRate(_settingType.value?.testingUnits.toString(), newItem.updateRate)
+//                    newList.add(newItem)
+//                }
+//
+//                if (isActive) {
+//                    withContext(Dispatchers.Main) {
+//                        _listHistory.value = newList
+//                    }
+//                }
+//        }
+//    }
 
     private suspend fun convertListHistoryViewItem() = withContext(Dispatchers.Default) {
         _listHistoryItem.value?.let {
@@ -66,20 +96,24 @@ class HistoryViewModel : BaseViewModel() {
                 else -> listItem.sortedBy { it.created }
             }
 
+            val newList = ArrayList<History>()
+            for (item in listItem) {
+                val newItem = item.copy()
+                newItem.downloadRate = Utils.convertDataRate(_settingType.value?.testingUnits.toString(), newItem.downloadRate)
+                newItem.updateRate = Utils.convertDataRate(_settingType.value?.testingUnits.toString(), newItem.updateRate)
+                newList.add(newItem)
+            }
+
             if (isActive) {
                 withContext(Dispatchers.Main) {
-                    _listHistory.value = listItem
+                    _listHistory.value = newList
                     if (_loading.value != false) {
                         _loading.value = false
                     }
                 }
             }
-            for (item in listItem) {
-                Log.d("giangtd", "item id: " + item.id)
-            }
         }
     }
-
 
     fun sortType() {
         if (_sortType.value == SortType.TYPE_ASC) _sortType.value = SortType.TYPE_DES else _sortType.value = SortType.TYPE_ASC

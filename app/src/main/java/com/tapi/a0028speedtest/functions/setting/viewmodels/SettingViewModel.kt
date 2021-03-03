@@ -46,12 +46,17 @@ class SettingViewModel : BaseViewModel() {
             var scaleType = DataRateUnits.MbPS
             Log.d("001", "data get : " + it.gaugeScale)
             when (it.gaugeScale) {
-                Constances.SETTING_MBP_VALUE_100 -> scaleType = DataRateUnits.MbPS
+                Constances.SETTING_MBP_VALUE_100 -> {
+                    if (it.testingUnits == DataRateUnits.MbPS) {
+                        scaleType = DataRateUnits.MbPS
+                    } else {
+                        scaleType = DataRateUnits.KBPS
+                    }
+                }
                 Constances.SETTING_MBP_VALUE_500 -> scaleType = DataRateUnits.MBPS
                 Constances.SETTING_MBP_VALUE_1000 -> scaleType = DataRateUnits.KBPS
                 Constances.SETTING_MB_VALUE_10 -> scaleType = DataRateUnits.MbPS
                 Constances.SETTING_MB_VALUE_50 -> scaleType = DataRateUnits.MBPS
-                Constances.SETTING_MB_VALUE_100 -> scaleType = DataRateUnits.KBPS
                 Constances.SETTING_KB_VALUE_5000 -> scaleType = DataRateUnits.MbPS
                 Constances.SETTING_KB_VALUE_10000 -> scaleType = DataRateUnits.MBPS
                 Constances.SETTING_KB_VALUE_15000 -> scaleType = DataRateUnits.KBPS

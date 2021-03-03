@@ -54,8 +54,7 @@ class NetworkProviderModel(application: Application) : BaseAndroidViewModel(appl
     }
 
     init {
-        viewModelScope.launch {
-            withContext(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
                 try {
                     val networkType = NetUtil.getNetworkType(mContext)
                     host = network.getMyNetwork(mContext)
@@ -78,19 +77,20 @@ class NetworkProviderModel(application: Application) : BaseAndroidViewModel(appl
                         }
                     }
                 } catch (e: MyNetworkException) {           // host
-                    when (e.code) {
-                        SERVER_NOT_REACH -> {
-                            _exceptionNetwork.value = ExceptionNetwork.SERVER_NOT_REACH
-                        }
-                        NOT_CONNECTED -> {
-                            _exceptionNetwork.value = ExceptionNetwork.NOT_CONNECTED
-                        }
-                        DATA_NULL -> {
-                            _exceptionNetwork.value = ExceptionNetwork.DATA_NULL
+                    withContext(Dispatchers.Main){
+                        when (e.code) {
+                            SERVER_NOT_REACH -> {
+                                _exceptionNetwork.value = (ExceptionNetwork.SERVER_NOT_REACH)
+                            }
+                            NOT_CONNECTED -> {
+                                _exceptionNetwork.value = (ExceptionNetwork.NOT_CONNECTED)
+                            }
+                            DATA_NULL -> {
+                                _exceptionNetwork.value = (ExceptionNetwork.DATA_NULL)
+                            }
                         }
                     }
                 }
-            }
         }
 
         _networkData.addSource(_searchServer) {

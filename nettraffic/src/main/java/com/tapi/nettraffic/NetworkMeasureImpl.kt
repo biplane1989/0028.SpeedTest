@@ -13,10 +13,14 @@ import com.tapi.nettraffic.exceptions.NOT_CONNECTED
 import com.tapi.nettraffic.exceptions.NO_INTERNET_CODE
 import com.tapi.nettraffic.exceptions.SERVER_NOT_REACH
 import com.tapi.nettraffic.objects.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 
 internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMeasureConfig) :
     NetworkMeasure {
@@ -41,7 +45,7 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                 for (i in 1..config.pingTimes) {
                     packets.add(NetUtil.ping(config.server))
                 }
-                return PingStatistics(packets)
+               return  PingStatistics(packets)
             }
 
         } else {
@@ -49,6 +53,11 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
         }
         return PingStatistics(makeICMPNotReachToDest(config.pingTimes))
 
+    }
+    inline fun <reified E : Any> ProducerScope<E>.offerSafe(element: E) {
+        if (isActive) {
+            offer(element)
+        }
     }
 
     @ExperimentalCoroutinesApi
@@ -59,9 +68,10 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                 var countCompletedTimes = 0
                 speedTestSocket.addSpeedTestListener(object : ISpeedTestListener {
                     override fun onCompletion(report: SpeedTestReport) {
+                        Log.d("TAG", "onCompletion:   ${report.transferRateBit} ")
                         countCompletedTimes++
                         if (config.connectionType == ConnectionType.SINGLE) {
-                            offer(NetworkRate(1f, report.getTransferRateBit().toFloat()))
+                            offerSafe(NetworkRate(1f, report.transferRateBit.toFloat()))
                             close()
                         } else {
                             if (countCompletedTimes == DEFAULT_REPEAT_TIMES_TO_MULTI_MODE) {
@@ -74,12 +84,17 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
 
                     override fun onProgress(percent: Float, report: SpeedTestReport) {
                         if (config.connectionType == ConnectionType.SINGLE) {
-                            offer(NetworkRate(percent/100f, report.getTransferRateBit().toFloat()))
+                            offerSafe(
+                                NetworkRate(
+                                    percent / 100f,
+                                    report.transferRateBit.toFloat()
+                                )
+                            )
                         } else {
-                            offer(
+                            offerSafe(
                                 NetworkRate(
                                     (countCompletedTimes + percent / 100f) / DEFAULT_REPEAT_TIMES_TO_MULTI_MODE,
-                                    report.getTransferRateBit().toFloat()
+                                    report.transferRateBit.toFloat()
                                 )
                             )
                         }
@@ -118,9 +133,11 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                 speedTestSocket.addSpeedTestListener(object : ISpeedTestListener {
                     override fun onCompletion(report: SpeedTestReport) {
 
+                        Log.d("TAG", "onCompletion: testUploadChannel  ${report.transferRateBit} ")
+
                         countCompletedTimes++
                         if (config.connectionType == ConnectionType.SINGLE) {
-                            offer(NetworkRate(1f, report.getTransferRateBit().toFloat()))
+                            offerSafe(NetworkRate(1f, report.transferRateBit.toFloat()))
                             close()
                         } else {
                             if (countCompletedTimes == DEFAULT_REPEAT_TIMES_TO_MULTI_MODE) {
@@ -135,14 +152,18 @@ internal class NetworkMeasureImpl(val appContext: Context, val config: NetworkMe
                     }
 
                     override fun onProgress(percent: Float, report: SpeedTestReport) {
-
                         if (config.connectionType == ConnectionType.SINGLE) {
-                            offer(NetworkRate(percent/100f, report.getTransferRateBit().toFloat()))
-                        } else {
-                            offer(
+                            offerSafe(
                                 NetworkRate(
-                                    (countCompletedTimes + percent / 100f)  / DEFAULT_REPEAT_TIMES_TO_MULTI_MODE,
-                                    report.getTransferRateBit().toFloat()
+                                    percent / 100f,
+                                    report.transferRateBit.toFloat()
+                                )
+                            )
+                        } else {
+                            offerSafe(
+                                NetworkRate(
+                                    (countCompletedTimes + percent / 100f) / DEFAULT_REPEAT_TIMES_TO_MULTI_MODE,
+                                    report.transferRateBit.toFloat()
                                 )
                             )
                         }

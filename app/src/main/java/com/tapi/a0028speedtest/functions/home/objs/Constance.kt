@@ -1,6 +1,8 @@
 package com.tapi.a0028speedtest.functions.main.objs
 
 object Constance {
+    const val MOVE_DURATION_PREV_STATE = 1000L
+    const val DEFAULT_MOVE_DURATION=500L
     const val DEFAULT_DENSITY_VALUE = 100
     const val DENSITY_VALUE = 2000
 

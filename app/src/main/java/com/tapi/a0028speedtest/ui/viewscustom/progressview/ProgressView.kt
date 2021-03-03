@@ -1,4 +1,4 @@
-package com.tapi.a0028speedtest.ui.viewscustom.connectview
+package com.tapi.a0028speedtest.ui.viewscustom.progressview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,17 +10,15 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.tapi.a0028speedtest.R
-import com.tapi.a0028speedtest.ui.viewscustom.progressview.BorderDrawer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class ConnectView(private val mContext: Context, attrs: AttributeSet?) :
+class ProgressView( val mContext: Context, attrs: AttributeSet?) :
     View(mContext, attrs) {
     private val mpaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val borderDrawer = BorderDrawer(this)
-    private val textDrawer = TextDrawer(this)
 
     private val typeArray =
         context.theme.obtainStyledAttributes(attrs, R.styleable.ConnectViewStyleable, 0, 0)
@@ -29,28 +27,20 @@ class ConnectView(private val mContext: Context, attrs: AttributeSet?) :
         CoroutineScope(Dispatchers.Main + SupervisorJob()).launch {
             startAnim()
         }
-        borderDrawer.changeStrokeWidth(6f)
+        borderDrawer.changeStrokeWidth(5f)
     }
 
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setColorPaint(context)
-        canvas.drawCircle(
-                width / 2f,
-                height / 2f,
-                borderDrawer.drawingRect.width() / 2f - 12f,
-                mpaint
-        )
+
         borderDrawer.onDraw(canvas)
-        textDrawer.drawText(canvas)
 
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         borderDrawer.onSizeChanged()
-        textDrawer.onSizeChanged()
     }
 
     private fun setColorPaint(context: Context) {
@@ -63,10 +53,10 @@ class ConnectView(private val mContext: Context, attrs: AttributeSet?) :
         positions[1] = 0.2f
         positions[2] = 0.6f
         val gradient = SweepGradient(
-                width / 2f,
-                height / 2f,
-                colors.toIntArray(),
-                positions
+            width / 2f,
+            height / 2f,
+            colors.toIntArray(),
+            positions
         )
         val matrix = Matrix()
         matrix.setRotate(180f, 0f, height / 2f)
@@ -75,24 +65,17 @@ class ConnectView(private val mContext: Context, attrs: AttributeSet?) :
         mpaint.style = Paint.Style.FILL
     }
 
-    fun refreshTheLayout() {
-        invalidate()
-        requestLayout()
-    }
 
-    fun updateView() {
-        invalidate()
-    }
 
     suspend fun startAnim() {
         borderDrawer.start()
-        textDrawer.startAnim()
     }
 
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         borderDrawer.onRelease()
-        textDrawer.onRelease()
     }
+
+
 }

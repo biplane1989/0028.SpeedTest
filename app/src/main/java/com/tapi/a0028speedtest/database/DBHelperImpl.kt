@@ -6,6 +6,8 @@ import com.tapi.a0028speedtest.data.History
 import com.tapi.a0028speedtest.data.NetworkType
 import com.tapi.a0028speedtest.database.entities.FavoriteEntity
 import com.tapi.a0028speedtest.database.entities.HistoryEntity
+import com.tapi.a0028speedtest.ui.viewscustom.linespeedview.objs.DataNetwork
+import com.tapi.nettraffic.NetworkRate
 import com.tapi.nettraffic.objects.ConnectionType
 import com.tapi.vpncore.listserver.Server
 import com.tapi.vpncore.objects.Host
@@ -82,6 +84,53 @@ fun List<Float>.encode(): String {
     return listJson.toString()
 }
 
+fun String.decodeToListDataNetwork(): List<NetworkRate> {
+    val jsonArray = JSONArray(this)
+    val arrResult = ArrayList<NetworkRate>()
+    for (i in 0 until jsonArray.length()) {
+        arrResult.add(jsonArray.get(i).toString().decodeNetworkRate())
+    }
+    return arrResult
+}
+
+fun List<NetworkRate>.encodeDataNetwork(): String {
+    val listJson = JSONArray()
+    for (item in this) {
+        listJson.put(item.endco())
+    }
+    return listJson.toString()
+}
+
+fun String.decodeDataNetwork() : DataNetwork{
+    val jsonObject = JSONObject(this)
+    return DataNetwork(
+        jsonObject.getDouble("percent").toFloat(),
+        jsonObject.getDouble("transferRate").toFloat()
+    )
+}
+
+fun DataNetwork.endco(): String{
+    val objectJson = JSONObject()
+    objectJson.put("percent", percent)
+    objectJson.put("transferRate", transferRate)
+    return objectJson.toString()
+}
+
+fun NetworkRate.endco(): String{
+    val objectJson = JSONObject()
+    objectJson.put("percent", percent)
+    objectJson.put("rate", rate)
+    return objectJson.toString()
+}
+
+fun String.decodeNetworkRate() : NetworkRate{
+    val jsonObject = JSONObject(this)
+    return NetworkRate(
+        jsonObject.getDouble("percent").toFloat(),
+        jsonObject.getDouble("rate").toFloat()
+    )
+}
+
 fun History.toEntity(): HistoryEntity {
     return HistoryEntity(
         this.id,
@@ -90,8 +139,8 @@ fun History.toEntity(): HistoryEntity {
         downloadRate,
         updateRate,
         this.pingRate,
-        downloadTrace.encode(),
-        uploadTrace.encode(),
+        downloadTrace.encodeDataNetwork(),
+        uploadTrace.encodeDataNetwork(),
         externalIP,
         created,
         networkType.toString(),
@@ -119,8 +168,8 @@ fun HistoryEntity.toHistory(): History {
         downloadRate,
         updateRate,
         pingRate,
-        downloadTrace.decodeToListFloat(),
-        uploadTrace.decodeToListFloat(),
+        downloadTrace.decodeToListDataNetwork(),
+        uploadTrace.decodeToListDataNetwork(),
         externalIP,
         created,
         networkType,

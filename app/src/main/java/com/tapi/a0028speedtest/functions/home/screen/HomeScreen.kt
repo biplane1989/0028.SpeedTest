@@ -12,6 +12,7 @@ import com.tapi.a0028speedtest.base.BaseFragment
 import com.tapi.a0028speedtest.databinding.HomeScreenBinding
 import com.tapi.a0028speedtest.functions.home.adapter.HomeViewPagerAdapter
 import com.tapi.a0028speedtest.functions.home.viewmodel.HomeViewModel
+import com.tapi.a0028speedtest.util.Constances
 
 
 class HomeScreen : BaseFragment(), View.OnClickListener {
@@ -67,6 +68,13 @@ class HomeScreen : BaseFragment(), View.OnClickListener {
             override fun onPageScrollStateChanged(state: Int) {}
         })
 
+    }
+
+    override fun onActionReceived(actionName: String, data: Any?): Boolean {
+        if (actionName == Constances.ACTION_TEST_REPEAT){
+            binding.viewPager.setCurrentItem(0)
+        }
+        return super.onActionReceived(actionName, data)
     }
 
     override fun onDestroyView() {
