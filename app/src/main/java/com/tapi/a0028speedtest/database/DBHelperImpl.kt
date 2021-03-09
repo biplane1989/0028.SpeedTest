@@ -1,6 +1,7 @@
 package com.tapi.a0028speedtest.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.tapi.a0028speedtest.data.History
 import com.tapi.a0028speedtest.data.NetworkType
@@ -11,9 +12,9 @@ import com.tapi.nettraffic.NetworkRate
 import com.tapi.nettraffic.objects.ConnectionType
 import com.tapi.vpncore.listserver.Server
 import com.tapi.vpncore.objects.Host
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.collections.ArrayList
 
 fun Host.encode(): String {
     val objectJson = JSONObject()
@@ -179,6 +180,32 @@ fun HistoryEntity.toHistory(): History {
 
 class DBHelperImpl : DBHelper {
 
+    val dbScop = CoroutineScope(Dispatchers.Default)
+    private var job: Job? = null
+    var litsHistoryDB = MutableLiveData<List<History>>()
+
+    init {
+        dbScop.launch {
+            while (true) {
+                job?.let {
+                    if (!it.isCompleted) {
+                        it.cancelAndJoin()
+                    }
+                }
+                job = dbScop.launch {
+                    getData()
+                }
+            }
+        }
+    }
+
+    private suspend fun getData() = coroutineScope {
+        litsHistoryDB = SpeedTestDatabase.get().historyDAO.getAll()
+            .map { entities ->                                   // map nay la map cua tranfromtion.map
+                entities.map { it.toHistory() }                  // map nay la cua collection
+            }
+    }
+
     override suspend fun saveHistory(item: History) {
         SpeedTestDatabase.get().historyDAO.insert(item.toEntity())
     }
@@ -192,10 +219,11 @@ class DBHelperImpl : DBHelper {
     }
 
     override fun getHistoryItems(): LiveData<List<History>> {
-        return SpeedTestDatabase.get().historyDAO.getAll()
-            .map { entities ->                                   // map nay la map cua tranfromtion.map
-                entities.map { it.toHistory() }                  // map nay la cua collection
-            }
+        return litsHistoryDB
+//        return SpeedTestDatabase.get().historyDAO.getAll()
+//            .map { entities ->                                   // map nay la map cua tranfromtion.map
+//                entities.map { it.toHistory() }                  // map nay la cua collection
+//            }
     }
 
     override suspend fun getHistoryItemById(id: Int): History? {

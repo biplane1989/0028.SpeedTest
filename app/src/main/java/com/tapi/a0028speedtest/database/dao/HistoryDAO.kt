@@ -1,7 +1,10 @@
 package com.tapi.a0028speedtest.database.dao
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.lifecycle.MutableLiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.tapi.a0028speedtest.database.entities.HistoryEntity
 
 @Dao
@@ -17,7 +20,7 @@ interface HistoryDAO {
     suspend fun insert(historyEntity: List<HistoryEntity>)
 
     @Query("SELECT * FROM history")
-    fun getAll(): LiveData<List<HistoryEntity>>
+    fun getAll(): MutableLiveData<List<HistoryEntity>>
 
     @Query("DELETE FROM history WHERE id = :id")
     suspend fun delete(id: Int)
